@@ -727,7 +727,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 310,
     phone: "051-622-0922",
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=900&q=85",
+    image: require("../../assets/thebay_bakery.jpg"),
     tags: ["오픈런 열풍", "크림 맘모스", "모찌빵", "빵지순례"],
     distance: "약 8.7km",
     hotelDistanceInfo: "거리: 약 8.7km · 차량 약 20~25분",
