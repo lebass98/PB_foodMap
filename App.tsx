@@ -755,23 +755,10 @@ export default function App() {
           ) : (
             /* LIST VIEW with Glassmorphic Cards */
             <ScrollView
-              className="flex-1 px-5 pt-4 bg-slate-50"
+              className="flex-1 px-5 pt-3 bg-slate-50"
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ paddingBottom: 40 }}
             >
-              {/* Header Banner with Premium Glass Gradient */}
-              <View className="bg-gradient-to-r from-[#1856FF] to-[#3A344E] bg-[#1856FF] rounded-3xl p-5 mb-4 shadow-lg shadow-blue-500/20 border border-white/20">
-                <View className="flex-row items-center mb-1">
-                  <Sparkles size={16} color="#BFD3FE" />
-                  <Text className="text-xs font-extrabold text-blue-100 ml-1 font-sans">
-                    해운대 씨클라우드 호텔 기준
-                  </Text>
-                </View>
-                <Text className="text-lg font-black text-white leading-tight font-sans">
-                  부산 대표 핫플레이스{"\n"}맛집 & 가볼만한곳 BEST 47
-                </Text>
-              </View>
-
               {/* List Controls */}
               <View className="flex-row items-center justify-between mb-3">
                 <Text className="text-sm font-bold text-[#141414] font-sans">
