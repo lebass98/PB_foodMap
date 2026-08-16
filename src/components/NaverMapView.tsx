@@ -193,14 +193,15 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       border-top: 7px solid #E89558;
     }
 
-    /* Active State (Selected with Glass Glow) */
+    /* Active State (Selected Seamless Solid / Gradient with no white border) */
     .custom-marker.active {
       background: linear-gradient(135deg, #F97316, #EA580C) !important;
       color: #ffffff !important;
-      border-color: #ffffff !important;
+      border: 2px solid #EA580C !important;
+      border-color: #EA580C !important;
       transform: translate(-50%, -100%) scale(1.18) !important;
       z-index: 9999 !important;
-      box-shadow: 0 10px 30px rgba(234, 88, 12, 0.55), 0 0 0 3px rgba(249, 115, 22, 0.25) !important;
+      box-shadow: 0 8px 24px rgba(234, 88, 12, 0.45) !important;
     }
     .custom-marker.active::after {
       border-top-color: #EA580C !important;
@@ -209,8 +210,11 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
     .custom-marker.attraction.active {
       background: linear-gradient(135deg, #1856FF, #0F2B8E) !important;
       color: #ffffff !important;
-      border-color: #ffffff !important;
-      box-shadow: 0 10px 30px rgba(24, 86, 255, 0.55), 0 0 0 3px rgba(24, 86, 255, 0.25) !important;
+      border: 2px solid #0F2B8E !important;
+      border-color: #0F2B8E !important;
+      transform: translate(-50%, -100%) scale(1.18) !important;
+      z-index: 9999 !important;
+      box-shadow: 0 8px 24px rgba(24, 86, 255, 0.45) !important;
     }
     .custom-marker.attraction.active::after {
       border-top-color: #0F2B8E !important;
