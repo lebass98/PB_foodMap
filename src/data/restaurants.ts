@@ -1712,7 +1712,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 1430,
     phone: "051-607-6361",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=900&q=85",
+    image: require("../../assets/dongsaengmal.jpg"),
     tags: ["해운대스카이라인뷰", "광안대교정면", "갈맷길시작점", "동생말포토존", "24시간개방"],
     distance: "약 10.5km",
     hotelDistanceInfo: "거리: 약 10.5km · 차량 약 20~25분 (광안대교 경유)",
