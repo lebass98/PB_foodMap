@@ -294,11 +294,43 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
 
     window.selectMarker = function(id) {
       selectedId = String(id);
-      document.querySelectorAll('.custom-marker').forEach(el => el.classList.remove('active'));
+      
+      // 1. 모든 마커 DOM 클래스 및 부모 z-index 리셋
+      document.querySelectorAll('.custom-marker').forEach(el => {
+        el.classList.remove('active');
+        if (el.parentElement) {
+          el.parentElement.style.zIndex = '100';
+        }
+      });
+
+      // 2. 지도 마커 인스턴스 (Naver/Leaflet) zIndex 최상위 승격
+      restaurantMarkers.forEach(item => {
+        if (String(item.id) === String(id)) {
+          if (item.marker && item.marker.setZIndex) {
+            item.marker.setZIndex(99999);
+          }
+          if (item.marker && item.marker.setZIndexOffset) {
+            item.marker.setZIndexOffset(99999);
+          }
+        } else {
+          if (item.marker && item.marker.setZIndex) {
+            item.marker.setZIndex(100);
+          }
+          if (item.marker && item.marker.setZIndexOffset) {
+            item.marker.setZIndexOffset(0);
+          }
+        }
+      });
+
+      // 3. 선택된 타겟 DOM 엘리먼트 및 부모 레이어 zIndex 최상위 적용
       const target = document.getElementById('marker-' + id);
       if (target) {
         target.classList.add('active');
+        if (target.parentElement) {
+          target.parentElement.style.zIndex = '99999';
+        }
       }
+
       sendToReactNative({ type: 'SELECT_RESTAURANT', id: String(id) });
     };
 
@@ -451,10 +483,37 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
         }
       } else if (data.type === 'SET_SELECTED') {
         selectedId = String(data.id);
-        document.querySelectorAll('.custom-marker').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.custom-marker').forEach(el => {
+          el.classList.remove('active');
+          if (el.parentElement) {
+            el.parentElement.style.zIndex = '100';
+          }
+        });
+
+        restaurantMarkers.forEach(item => {
+          if (String(item.id) === String(data.id)) {
+            if (item.marker && item.marker.setZIndex) {
+              item.marker.setZIndex(99999);
+            }
+            if (item.marker && item.marker.setZIndexOffset) {
+              item.marker.setZIndexOffset(99999);
+            }
+          } else {
+            if (item.marker && item.marker.setZIndex) {
+              item.marker.setZIndex(100);
+            }
+            if (item.marker && item.marker.setZIndexOffset) {
+              item.marker.setZIndexOffset(0);
+            }
+          }
+        });
+
         const target = document.getElementById('marker-' + data.id);
         if (target) {
           target.classList.add('active');
+          if (target.parentElement) {
+            target.parentElement.style.zIndex = '99999';
+          }
         }
       } else if (data.type === 'UPDATE_USER_LOCATION') {
         userLoc = { latitude: data.lat, longitude: data.lng };
