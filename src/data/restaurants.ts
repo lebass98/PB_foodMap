@@ -1414,7 +1414,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 4520,
     phone: "051-204-1444",
-    image: "https://images.unsplash.com/photo-1535139262971-c51845709a48?w=900&q=85",
+    image: require("../../assets/gamcheon_culture_village.jpg"),
     tags: ["한국관광100선5회", "어린왕자포토존", "한국의마추픽추", "계단식파스텔마을", "골목길투어"],
     distance: "약 22.0km",
     hotelDistanceInfo: "거리: 약 22.0km · 차량 약 40~50분 (광안·부산항·남항대교 경유)",
