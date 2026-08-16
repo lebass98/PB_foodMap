@@ -2,6 +2,8 @@
 
 부산 해운대 씨클라우드 호텔 기준 **줄 서는 부산 12대 핫플레이스 맛집**을 한눈에 탐색하고, 실시간 차량 도로망 경로 및 네이버 내비게이션 길안내를 제공하는 React Native (Expo) 기반 모바일/웹 맛집 지도 애플리케이션입니다.
 
+🌐 **웹 라이브 데모 (GitHub Pages)**: [https://lebass98.github.io/PB_foodMap/](https://lebass98.github.io/PB_foodMap/)
+
 ---
 
 ## 📱 주요 기능 (Key Features)
@@ -35,6 +37,7 @@
 - **Icons**: Lucide React Native
 - **Typography**: Pretendard Font Family (Regular, Medium, SemiBold, Bold)
 - **Location & Routing**: `expo-location`, OSRM Driving Route API
+- **CI/CD & Hosting**: GitHub Actions (`deploy-pages.yml`) & GitHub Pages
 
 ---
 
@@ -50,6 +53,12 @@ npm install
 npx expo start -c
 ```
 - 터미널에 나타나는 QR 코드를 스마트폰 **Expo Go** 앱으로 스캔하거나, `w` 키를 눌러 웹 브라우저에서 실행할 수 있습니다.
+
+### 3. 웹 정적 빌드 및 배포
+```bash
+npx expo export --platform web
+```
+- `main` 브랜치에 코드를 푸시하면 GitHub Actions를 통해 GitHub Pages에 자동 배포됩니다.
 
 ---
 
@@ -69,6 +78,8 @@ npx expo start -c
   - 상단 헤더 출발지 텍스트 제거 및 **`표범맛집 🐆`** 정중앙 타이틀 배치.
   - 상단 뷰 모드 토글 및 하단 카드 차량 경로 버튼 아이콘 전용(Icon-only)으로 심플화.
   - 우측 위치찾기 버튼 아래 세로형 확대/축소(`+ / -`) 컨트롤러 추가.
+- **GitHub Actions & GitHub Pages 자동 배포 구축**:
+  - `.github/workflows/deploy-pages.yml` 워크플로우를 생성하여 `main` 브랜치 푸시 시 Expo 웹 자동 빌드 및 GitHub Pages 배포 연동.
 - **Git 저장소 연결 및 규칙 정의**:
   - 원격 저장소(`https://github.com/lebass98/PB_foodMap.git`) 연동 및 작업 규칙(`AGENTS.md`) 추가.
   - macOS 외장하드 임시 파일(`._*`) 자동 일괄 삭제 규칙 및 정리 스크립트 적용.
