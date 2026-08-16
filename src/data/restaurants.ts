@@ -1105,7 +1105,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 1650,
     phone: "051-467-0177",
-    image: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=900&q=85",
+    image: require("../../assets/shinbalwon.jpg"),
     tags: ["1951년 개업", "70년 전통", "차이나타운 만두 명가", "군만두"],
     distance: "약 17.5km",
     hotelDistanceInfo: "거리: 약 17.5km · 차량 약 35~45분 (부산역 맞은편)",
