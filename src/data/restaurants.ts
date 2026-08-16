@@ -870,7 +870,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 1450,
     phone: "051-746-3730",
-    image: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=900&q=85",
+    image: require("../../assets/haemok.jpg"),
     tags: ["미쉐린 빕구르망", "생활의 달인", "히츠마부시", "카이센동", "호텔 도보 5분"],
     distance: "약 400m",
     hotelDistanceInfo: "거리: 약 400m · 차량 약 2~3분 (호텔 바로 뒤편이라 도보 5분 권장)",
