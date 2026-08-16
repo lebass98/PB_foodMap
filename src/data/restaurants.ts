@@ -1930,7 +1930,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 3120,
     phone: "051-605-4065",
-    image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=900&q=85",
+    image: require("../../assets/hwangnyeongsan.jpg"),
     tags: ["부산1등야경", "360도파노라마", "광안대교야경", "서면도심뷰", "벚꽃드라이브"],
     distance: "약 14.0km",
     hotelDistanceInfo: "거리: 약 14.0km · 차량 약 30~35분",
