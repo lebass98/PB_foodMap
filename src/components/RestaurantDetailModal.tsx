@@ -66,6 +66,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
   };
 
   const isAttraction = restaurant.mainType === "attraction";
+  const isParking = restaurant.mainType === "parking";
 
   return (
     <Modal
@@ -131,11 +132,19 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             {/* Category Tag Badge */}
             <View
               className={`absolute top-16 left-5 ${
-                isAttraction ? "bg-[#1856FF]" : "bg-[#E89558]"
+                isParking
+                  ? "bg-emerald-600"
+                  : isAttraction
+                  ? "bg-[#1856FF]"
+                  : "bg-[#E89558]"
               } px-3 py-1 rounded-full shadow-md border border-white/30`}
             >
               <Text className="text-xs font-black text-white font-sans">
-                {isAttraction ? "🎡 가볼만한곳" : "🍽️ 맛집"}
+                {isParking
+                  ? "🅿️ 공영주차장"
+                  : isAttraction
+                  ? "🎡 가볼만한곳"
+                  : "🍽️ 맛집"}
               </Text>
             </View>
           </View>
@@ -168,14 +177,20 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                 <View
                   key={idx}
                   className={`${
-                    isAttraction
+                    isParking
+                      ? "bg-emerald-50/80 border-emerald-200/80"
+                      : isAttraction
                       ? "bg-blue-50/80 border-blue-200/80"
                       : "bg-orange-50/80 border-orange-200/80"
                   } px-2.5 py-1 rounded-lg border shadow-xs`}
                 >
                   <Text
                     className={`text-xs font-bold ${
-                      isAttraction ? "text-[#1856FF]" : "text-[#CE7636]"
+                      isParking
+                        ? "text-emerald-700"
+                        : isAttraction
+                        ? "text-[#1856FF]"
+                        : "text-[#CE7636]"
                     } font-sans`}
                   >
                     #{tag}
@@ -200,10 +215,12 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               <TouchableOpacity
                 onPress={handleShowMapRoute}
                 activeOpacity={0.8}
-                className="flex-1 bg-blue-50/90 border border-blue-200 py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98"
+                className={`flex-1 ${
+                  isParking ? "bg-emerald-50/90 border-emerald-200" : "bg-blue-50/90 border-blue-200"
+                } border py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98`}
               >
-                <Route size={16} color="#1856FF" />
-                <Text className="text-xs font-black text-[#1856FF] ml-1.5 font-sans">
+                <Route size={16} color={isParking ? "#059669" : "#1856FF"} />
+                <Text className={`text-xs font-black ${isParking ? "text-emerald-700" : "text-[#1856FF]"} ml-1.5 font-sans`}>
                   지도 경로 보기
                 </Text>
               </TouchableOpacity>
@@ -215,7 +232,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             {/* Address & Operating Hours Glass Card */}
             <View className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card flex flex-col gap-3.5">
               <View className="flex-row items-start">
-                <MapPin size={16} color="#1856FF" className="mt-0.5" />
+                <MapPin size={16} color={isParking ? "#059669" : "#1856FF"} className="mt-0.5" />
                 <View className="flex-1 ml-2.5">
                   <Text className="text-xs font-bold text-[#141414] font-sans">
                     주소
@@ -229,10 +246,10 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               <View className="h-px bg-slate-100" />
 
               <View className="flex-row items-start">
-                <Clock size={16} color="#1856FF" className="mt-0.5" />
+                <Clock size={16} color={isParking ? "#059669" : "#1856FF"} className="mt-0.5" />
                 <View className="flex-1 ml-2.5">
                   <Text className="text-xs font-bold text-[#141414] font-sans">
-                    이용 / 영업시간 및 휴무일
+                    {isParking ? "운영시간 및 휴무일" : "이용 / 영업시간 및 휴무일"}
                   </Text>
                   <Text className="text-xs text-slate-600 mt-0.5 font-sans leading-relaxed">
                     {restaurant.operatingHours}
@@ -254,7 +271,11 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             {/* Menu / Admission Pricing Glass Card */}
             <View className="flex flex-col gap-3">
               <Text className="text-lg font-black text-[#141414] font-sans">
-                {isAttraction ? "이용 요금 & 주요 코스" : "대표 메뉴 & 가격"}
+                {isParking
+                  ? "주차 요금 & 할인 혜택"
+                  : isAttraction
+                  ? "이용 요금 & 주요 코스"
+                  : "대표 메뉴 & 가격"}
               </Text>
               <View className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card flex flex-col gap-3.5">
                 {restaurant.menuItems.map((menu, index) => (
@@ -269,9 +290,9 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                     <View className="flex-row justify-between items-center">
                       <View className="flex-row items-center flex-1 mr-2">
                         {menu.isSignature && (
-                          <View className="bg-[#1856FF] px-1.5 py-0.5 rounded mr-1.5">
+                          <View className={`${isParking ? "bg-emerald-600" : "bg-[#1856FF]"} px-1.5 py-0.5 rounded mr-1.5`}>
                             <Text className="text-[10px] font-bold text-white font-sans">
-                              대표
+                              {isParking ? "기본" : "대표"}
                             </Text>
                           </View>
                         )}
@@ -279,7 +300,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                           {menu.name}
                         </Text>
                       </View>
-                      <Text className="text-sm font-black text-[#1856FF] font-sans">
+                      <Text className={`text-sm font-black ${isParking ? "text-emerald-700" : "text-[#1856FF]"} font-sans`}>
                         {menu.price}
                       </Text>
                     </View>
@@ -293,12 +314,14 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               </View>
             </View>
 
-            {/* Video Timestamp Review Glass Card */}
-            <View className="bg-blue-50/80 border border-blue-200/80 rounded-3xl p-5 shadow-card">
+            {/* Video Timestamp / Parking Tips Review Glass Card */}
+            <View className={`${isParking ? "bg-emerald-50/80 border-emerald-200/80" : "bg-blue-50/80 border-blue-200/80"} rounded-3xl p-5 shadow-card`}>
               <View className="flex-row items-center mb-2.5">
-                <PlayCircle size={17} color="#1856FF" />
+                <PlayCircle size={17} color={isParking ? "#059669" : "#1856FF"} />
                 <Text className="text-sm font-bold text-slate-900 ml-1.5 font-sans">
-                  {isAttraction
+                  {isParking
+                    ? "주차 요금 체계 & 인근 연계 명소 (1km 반경)"
+                    : isAttraction
                     ? "영상 속 상세 리뷰 & 여행 꿀팁 (타임스탬프)"
                     : "영상 속 상세 리뷰 & 메뉴 평 (타임스탬프)"}
                 </Text>

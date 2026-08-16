@@ -45,6 +45,7 @@ import {
   Moon,
   FerrisWheel,
   Ticket,
+  CircleParking,
 } from "lucide-react-native";
 import { NaverMapView, NaverMapViewRef } from "./src/components/NaverMapView";
 import { RestaurantDetailModal } from "./src/components/RestaurantDetailModal";
@@ -76,6 +77,15 @@ const ATTRACTION_CATEGORIES = [
   { id: "culture", name: "사찰/문화마을/시장 (8)", icon: Ticket },
   { id: "cafe", name: "기장 오션뷰카페 (3)", icon: Coffee },
   { id: "theme", name: "과학관/체험 (3)", icon: FerrisWheel },
+];
+
+const PARKING_CATEGORIES = [
+  { id: "all", name: "전체 공영주차장 (22)", icon: CircleParking },
+  { id: "haeundae", name: "해운대/송정/미포 (5)", icon: MapPin },
+  { id: "gwangalli", name: "광안리/민락/남구 (5)", icon: MapPin },
+  { id: "yeongdo", name: "영도/태종대/흰여울 (4)", icon: MapPin },
+  { id: "nampo", name: "남포/자갈치/초량/감천 (6)", icon: MapPin },
+  { id: "gijang", name: "기장/오시리아/용궁사 (2)", icon: MapPin },
 ];
 
 const ALL_CATEGORIES = [
@@ -239,6 +249,7 @@ export default function App() {
   const currentCategories = useMemo(() => {
     if (mainTab === "food") return FOOD_CATEGORIES;
     if (mainTab === "attraction") return ATTRACTION_CATEGORIES;
+    if (mainTab === "parking") return PARKING_CATEGORIES;
     return ALL_CATEGORIES;
   }, [mainTab]);
 
@@ -257,10 +268,12 @@ export default function App() {
       return { ...item, userDistanceNum: 999999 };
     })
       .filter((item) => {
-        // 1. 메인 섹션 탭 필터
+        // 1. 메인 섹션 탭 필터 (사용자 요구사항: 전체 탭에서는 주차장을 제외하고, 주차장 탭 활성화 시에만 노출)
+        if (mainTab === "all" && item.mainType === "parking") return false;
         if (mainTab === "food" && item.mainType !== "food") return false;
         if (mainTab === "attraction" && item.mainType !== "attraction")
           return false;
+        if (mainTab === "parking" && item.mainType !== "parking") return false;
 
         // 2. 카테고리 필터
         if (mainTab === "all") {
@@ -270,6 +283,22 @@ export default function App() {
             return item.mainType === "attraction";
           if (activeCategory !== "all" && item.category !== activeCategory)
             return false;
+        } else if (mainTab === "parking") {
+          if (activeCategory === "haeundae") {
+            return ["p1", "p2", "p3", "p4", "p5"].includes(item.id);
+          }
+          if (activeCategory === "gwangalli") {
+            return ["p6", "p7", "p8", "p9", "p10"].includes(item.id);
+          }
+          if (activeCategory === "yeongdo") {
+            return ["p11", "p12", "p13", "p14"].includes(item.id);
+          }
+          if (activeCategory === "nampo") {
+            return ["p15", "p16", "p17", "p18", "p19", "p20"].includes(item.id);
+          }
+          if (activeCategory === "gijang") {
+            return ["p21", "p22"].includes(item.id);
+          }
         } else {
           if (activeCategory !== "all" && item.category !== activeCategory) {
             return false;
@@ -389,8 +418,8 @@ export default function App() {
           </View>
         </View>
 
-        {/* Main Section Tab: [전체 (47)] / [🍽️ 맛집 (15)] / [🎡 가볼만한곳 (32)] */}
-        <View className="bg-white/95 px-5 pt-2.5 pb-2">
+        {/* Main Section Tab: [전체 (47)] / [🍽️ 맛집 (15)] / [🎡 가볼만한곳 (32)] / [🅿️ 주차장 (22)] */}
+        <View className="bg-white/95 px-4 pt-2.5 pb-2">
           <View className="flex-row bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 shadow-xs">
             <TouchableOpacity
               onPress={() => {
@@ -403,11 +432,11 @@ export default function App() {
               }`}
             >
               <Text
-                className={`text-xs font-black font-sans ${
+                className={`text-[11px] font-black font-sans ${
                   mainTab === "all" ? "text-[#141414]" : "text-slate-500"
                 }`}
               >
-                전체 (47)
+                전체(47)
               </Text>
             </TouchableOpacity>
 
@@ -422,11 +451,11 @@ export default function App() {
               }`}
             >
               <Text
-                className={`text-xs font-black font-sans ${
+                className={`text-[11px] font-black font-sans ${
                   mainTab === "food" ? "text-white" : "text-slate-600"
                 }`}
               >
-                🍽️ 맛집 (15)
+                🍽️맛집(15)
               </Text>
             </TouchableOpacity>
 
@@ -441,11 +470,30 @@ export default function App() {
               }`}
             >
               <Text
-                className={`text-xs font-black font-sans ${
+                className={`text-[11px] font-black font-sans ${
                   mainTab === "attraction" ? "text-white" : "text-slate-600"
                 }`}
               >
-                🎡 가볼만한곳 (32)
+                🎡명소(32)
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setMainTab("parking");
+                setActiveCategory("all");
+              }}
+              activeOpacity={0.8}
+              className={`flex-1 py-2 rounded-xl items-center justify-center flex-row ${
+                mainTab === "parking" ? "bg-emerald-600 shadow-sm shadow-emerald-600/30" : ""
+              }`}
+            >
+              <Text
+                className={`text-[11px] font-black font-sans ${
+                  mainTab === "parking" ? "text-white" : "text-slate-600"
+                }`}
+              >
+                🅿️주차장(22)
               </Text>
             </TouchableOpacity>
           </View>
@@ -697,7 +745,9 @@ export default function App() {
                         {/* Hotel Distance Badge */}
                         <View
                           className={`${
-                            selectedPlace.mainType === "attraction"
+                            selectedPlace.mainType === "parking"
+                              ? "bg-emerald-50/80 border-emerald-100"
+                              : selectedPlace.mainType === "attraction"
                               ? "bg-blue-50/80 border-blue-100"
                               : "bg-orange-50/80 border-orange-100"
                           } px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center`}
@@ -705,14 +755,18 @@ export default function App() {
                           <Car
                             size={11}
                             color={
-                              selectedPlace.mainType === "attraction"
+                              selectedPlace.mainType === "parking"
+                                ? "#059669"
+                                : selectedPlace.mainType === "attraction"
                                 ? "#1856FF"
                                 : "#CE7636"
                             }
                           />
                           <Text
                             className={`text-[10.5px] font-bold ${
-                              selectedPlace.mainType === "attraction"
+                              selectedPlace.mainType === "parking"
+                                ? "text-emerald-700"
+                                : selectedPlace.mainType === "attraction"
                                 ? "text-[#1856FF]"
                                 : "text-[#CE7636]"
                             } ml-1 font-sans`}
@@ -741,7 +795,9 @@ export default function App() {
                       onPress={() => handleStartDrivingRoute(selectedPlace)}
                       activeOpacity={0.8}
                       className={`w-12 h-12 ${
-                        selectedPlace.mainType === "attraction"
+                        selectedPlace.mainType === "parking"
+                          ? "bg-emerald-600 shadow-emerald-600/25"
+                          : selectedPlace.mainType === "attraction"
                           ? "bg-[#1856FF] shadow-blue-500/25"
                           : "bg-[#E89558] shadow-orange-500/25"
                       } rounded-2xl items-center justify-center shadow-md active:scale-95`}
@@ -762,7 +818,13 @@ export default function App() {
               {/* List Controls */}
               <View className="flex-row items-center justify-between mb-3">
                 <Text className="text-sm font-bold text-[#141414] font-sans">
-                  전체 ({filteredPlaces.length}곳)
+                  {mainTab === "parking"
+                    ? `공영주차장 (${filteredPlaces.length}곳)`
+                    : mainTab === "food"
+                    ? `맛집 (${filteredPlaces.length}곳)`
+                    : mainTab === "attraction"
+                    ? `명소 (${filteredPlaces.length}곳)`
+                    : `전체 (${filteredPlaces.length}곳)`}
                 </Text>
 
                 <TouchableOpacity
@@ -792,6 +854,7 @@ export default function App() {
               {filteredPlaces.map((item) => {
                 const isFav = favorites.includes(item.id);
                 const isAttraction = item.mainType === "attraction";
+                const isParking = item.mainType === "parking";
 
                 return (
                   <TouchableOpacity
@@ -825,11 +888,19 @@ export default function App() {
                       </View>
                       <View
                         className={`absolute top-3 left-3 ${
-                          isAttraction ? "bg-[#1856FF]" : "bg-[#E89558]"
+                          isParking
+                            ? "bg-emerald-600"
+                            : isAttraction
+                            ? "bg-[#1856FF]"
+                            : "bg-[#E89558]"
                         } px-2.5 py-1 rounded-full border border-white/30`}
                       >
                         <Text className="text-[10px] font-black text-white font-sans">
-                          {isAttraction ? "🎡 가볼만한곳" : "🍽️ 맛집"}
+                          {isParking
+                            ? "🅿️ 공영주차장"
+                            : isAttraction
+                            ? "🎡 가볼만한곳"
+                            : "🍽️ 맛집"}
                         </Text>
                       </View>
                     </View>
@@ -861,12 +932,12 @@ export default function App() {
                         {item.highlight}
                       </Text>
 
-                      {/* Video Review Summary Box */}
-                      <View className="bg-blue-50/80 border border-blue-200/60 rounded-2xl p-3 mb-3">
+                      {/* Review / Parking Summary Box */}
+                      <View className={`${isParking ? "bg-emerald-50/80 border-emerald-200/60" : "bg-blue-50/80 border-blue-200/60"} border rounded-2xl p-3 mb-3`}>
                         <View className="flex-row items-center mb-1">
-                          <PlayCircle size={13} color="#1856FF" />
+                          <PlayCircle size={13} color={isParking ? "#059669" : "#1856FF"} />
                           <Text className="text-[11px] font-bold text-slate-900 ml-1 font-sans">
-                            {isAttraction ? "여행 추천 꿀팁:" : "영상 추천 평:"}
+                            {isParking ? "주차 꿀팁 & 연계:" : isAttraction ? "여행 추천 꿀팁:" : "영상 추천 평:"}
                           </Text>
                         </View>
                         <Text
@@ -894,14 +965,18 @@ export default function App() {
                             <View
                               key={idx}
                               className={`${
-                                isAttraction
+                                isParking
+                                  ? "bg-emerald-50 border-emerald-100"
+                                  : isAttraction
                                   ? "bg-blue-50 border-blue-100"
                                   : "bg-orange-50 border-orange-100"
                               } px-2 py-0.5 rounded-md border`}
                             >
                               <Text
                                 className={`text-[10px] font-bold ${
-                                  isAttraction
+                                  isParking
+                                    ? "text-emerald-700"
+                                    : isAttraction
                                     ? "text-[#1856FF]"
                                     : "text-[#CE7636]"
                                 } font-sans`}

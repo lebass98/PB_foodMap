@@ -168,6 +168,14 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       border-top-color: #1856FF;
     }
 
+    .custom-marker.parking {
+      border-color: #059669;
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.24), 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .custom-marker.parking::after {
+      border-top-color: #059669;
+    }
+
     .custom-marker:hover {
       transform: translate(-50%, -100%) scale(1.08);
       background: #ffffff;
@@ -218,6 +226,19 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
     }
     .custom-marker.attraction.active::after {
       border-top-color: #0F2B8E !important;
+    }
+
+    .custom-marker.parking.active {
+      background: linear-gradient(135deg, #059669, #047857) !important;
+      color: #ffffff !important;
+      border: 2px solid #047857 !important;
+      border-color: #047857 !important;
+      transform: translate(-50%, -100%) scale(1.18) !important;
+      z-index: 9999 !important;
+      box-shadow: 0 8px 24px rgba(5, 150, 105, 0.45) !important;
+    }
+    .custom-marker.parking.active::after {
+      border-top-color: #047857 !important;
     }
 
     .marker-star {
@@ -394,14 +415,16 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
 
           restaurants.forEach(item => {
             const isActive = String(item.id) === String(selectedId);
+            const isParking = item.mainType === 'parking';
             const isAttraction = item.mainType === 'attraction';
-            const iconPrefix = isAttraction ? '🎡 ' : '';
+            const iconPrefix = isParking ? '🅿️ ' : isAttraction ? '🎡 ' : '';
+            const typeClass = isParking ? 'parking' : isAttraction ? 'attraction' : '';
             const marker = new naver.maps.Marker({
               position: new naver.maps.LatLng(item.latitude, item.longitude),
               map: mapInstance,
               icon: {
                 content: \`
-                  <div class="custom-marker \${isAttraction ? 'attraction' : ''} \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
+                  <div class="custom-marker \${typeClass} \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
                     <span class="custom-marker-title">\${iconPrefix}\${item.name}</span>
                     <span class="marker-star">★ \${item.rating}</span>
                   </div>
@@ -433,12 +456,14 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
 
       restaurants.forEach(item => {
         const isActive = String(item.id) === String(selectedId);
+        const isParking = item.mainType === 'parking';
         const isAttraction = item.mainType === 'attraction';
-        const iconPrefix = isAttraction ? '🎡 ' : '';
+        const iconPrefix = isParking ? '🅿️ ' : isAttraction ? '🎡 ' : '';
+        const typeClass = isParking ? 'parking' : isAttraction ? 'attraction' : '';
         const customIcon = L.divIcon({
           className: 'custom-div-icon',
           html: \`
-            <div class="custom-marker \${isAttraction ? 'attraction' : ''} \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
+            <div class="custom-marker \${typeClass} \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
               <span class="custom-marker-title">\${iconPrefix}\${item.name}</span>
               <span class="marker-star">★ \${item.rating}</span>
             </div>

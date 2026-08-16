@@ -13,12 +13,12 @@ export interface ReviewItem {
   content: string;
 }
 
-export type MainSectionType = "all" | "food" | "attraction";
+export type MainSectionType = "all" | "food" | "attraction" | "parking";
 
 export interface Place {
   id: string;
   name: string;
-  mainType: "food" | "attraction"; // 맛집 vs 가볼만한곳
+  mainType: "food" | "attraction" | "parking"; // 맛집 vs 가볼만한곳 vs 주차장
   category: string; // 한식, 일식, 중식, 베이커리, 해변, 전망대, 테마파크, 야경 등
   categoryLabel: string;
   location: string;
