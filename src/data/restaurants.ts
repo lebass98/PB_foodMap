@@ -2149,7 +2149,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 2680,
     phone: "051-419-4067",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85",
+    image: require("../../assets/huinnyeoul_village.jpg"),
     tags: ["부산의산토리니", "변호인촬영지", "해안터널실루엣역광", "절벽라면", "오션뷰소품샵"],
     distance: "약 21.0km",
     hotelDistanceInfo: "거리: 약 21.0km · 차량 약 35~45분 (부산항대교 경유)",
