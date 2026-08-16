@@ -2222,7 +2222,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 3450,
     phone: "051-405-8745",
-    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&q=85",
+    image: require("../../assets/taejongdae.jpg"),
     tags: ["수직절벽기암괴석", "다누비열차", "주전자섬조망", "대마도뷰", "태종사수국"],
     distance: "약 25.0km",
     hotelDistanceInfo: "거리: 약 25.0km · 차량 약 45~55분 (광안·부산항대교 경유)",
