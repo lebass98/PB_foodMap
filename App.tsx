@@ -316,11 +316,11 @@ export default function App() {
       <View className="flex-1 items-center justify-center bg-white">
         <Image
           source={require("./assets/glory_logo.png")}
-          className="w-16 h-16 rounded-2xl mb-4 shadow-md"
-          resizeMode="cover"
+          className="w-12 h-12 rounded-xl mb-3"
+          resizeMode="contain"
         />
-        <ActivityIndicator size="large" color="#1856FF" />
-        <Text className="mt-3 text-sm text-slate-600 font-bold font-sans">
+        <ActivityIndicator size="small" color="#1856FF" />
+        <Text className="mt-3 text-xs text-slate-600 font-bold font-sans">
           Glory Travel 로딩 중...
         </Text>
       </View>
@@ -335,23 +335,23 @@ export default function App() {
         {/* Top Header with Glassmorphism & Glory Travel Logo */}
         <View className="bg-white/90 backdrop-blur-xl px-5 pt-3 pb-3 flex-row items-center justify-between border-b border-slate-100 relative shadow-sm">
           {/* Left Brand Logo Badge */}
-          <View className="w-24 flex-row items-center">
+          <View className="w-20 flex-row items-center">
             <Image
               source={require("./assets/glory_logo.png")}
-              className="w-9 h-9 rounded-xl border border-blue-200/80 shadow-sm"
-              resizeMode="cover"
+              className="w-7 h-7 rounded-lg"
+              resizeMode="contain"
             />
           </View>
 
           {/* Center App Title */}
           <View className="flex-row items-center justify-center">
-            <Text className="text-xl font-black text-[#141414] tracking-tight font-sans">
+            <Text className="text-lg font-black text-[#141414] tracking-tight font-sans">
               Glory Travel
             </Text>
           </View>
 
           {/* Right View Mode Toggle (Map <-> List: Icon only) */}
-          <View className="w-24 flex-row justify-end">
+          <View className="w-20 flex-row justify-end">
             <View className="flex-row bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 items-center shadow-xs">
               <TouchableOpacity
                 onPress={() => setViewMode("map")}
