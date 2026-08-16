@@ -36,18 +36,18 @@ body {
 }
 
 .glass-modal {
-  background: rgba(255, 255, 255, 0.58) !important;
-  backdrop-filter: blur(32px) saturate(210%) !important;
-  -webkit-backdrop-filter: blur(32px) saturate(210%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.75) !important;
-  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.25) !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 20px 60px 0 rgba(24, 86, 255, 0.12) !important;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.52) !important;
-  backdrop-filter: blur(22px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  background: rgba(255, 255, 255, 0.80) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
   box-shadow: 0 12px 36px -4px rgba(24, 86, 255, 0.09), 0 4px 12px -2px rgba(0, 0, 0, 0.03) !important;
 }
 
