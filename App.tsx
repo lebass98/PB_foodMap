@@ -79,15 +79,15 @@ const ATTRACTION_CATEGORIES = [
 ];
 
 const ALL_CATEGORIES = [
-  { id: "all", name: "전체 (20곳)", icon: Sparkles },
-  { id: "food_all", name: "맛집 전체", icon: Utensils },
-  { id: "attraction_all", name: "가볼만한곳 전체", icon: FerrisWheel },
-  { id: "beach", name: "해변/바다", icon: Palmtree },
-  { id: "korean", name: "한식", icon: Utensils },
-  { id: "japanese", name: "일식", icon: Fish },
-  { id: "cafe", name: "베이커리", icon: Coffee },
-  { id: "view", name: "전망대", icon: Camera },
-  { id: "night", name: "야경", icon: Moon },
+  { id: "all", name: "전체 (30곳)", icon: Sparkles },
+  { id: "food_all", name: "맛집 (12곳)", icon: Utensils },
+  { id: "attraction_all", name: "가볼만한곳 (18곳)", icon: FerrisWheel },
+  { id: "beach", name: "해변/해변열차", icon: Palmtree },
+  { id: "view", name: "전망대/스카이워크", icon: Camera },
+  { id: "culture", name: "역사/문화/시장", icon: Ticket },
+  { id: "korean", name: "한식/국밥", icon: Utensils },
+  { id: "cafe", name: "베이커리/디저트", icon: Coffee },
+  { id: "theme", name: "과학관/체험", icon: FerrisWheel },
 ];
 
 export default function App() {
@@ -364,7 +364,7 @@ export default function App() {
           </View>
         </View>
 
-        {/* Main Section Tab: [전체 (20)] / [🍽️ 맛집 (12)] / [🎡 가볼만한곳 (8)] */}
+        {/* Main Section Tab: [전체 (30)] / [🍽️ 맛집 (12)] / [🎡 가볼만한곳 (18)] */}
         <View className="bg-white px-5 pt-2.5 pb-2">
           <View className="flex-row bg-slate-100 p-1 rounded-2xl border border-slate-200/80">
             <TouchableOpacity
@@ -382,7 +382,7 @@ export default function App() {
                   mainTab === "all" ? "text-slate-900" : "text-slate-500"
                 }`}
               >
-                전체 (20)
+                전체 (30)
               </Text>
             </TouchableOpacity>
 
@@ -420,7 +420,7 @@ export default function App() {
                   mainTab === "attraction" ? "text-white" : "text-slate-600"
                 }`}
               >
-                🎡 가볼만한곳 (8)
+                🎡 가볼만한곳 (18)
               </Text>
             </TouchableOpacity>
           </View>
