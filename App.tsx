@@ -502,27 +502,39 @@ export default function App() {
                 center={HOTEL_COORDINATES}
               />
 
-              {/* Driving Route Top Dashboard */}
+              {/* In-App Driving Route Top Dashboard */}
               {drivingRoute && selectedPlace && (
-                <View className="absolute top-3 left-4 right-4 bg-white/95 backdrop-blur-xl rounded-2xl p-3.5 border border-orange-200 shadow-xl shadow-orange-100 flex-row items-center justify-between">
+                <View className="absolute top-3 left-4 right-4 bg-white/95 backdrop-blur-xl rounded-3xl p-4 border border-orange-200 shadow-2xl shadow-orange-200/50 flex-row items-center justify-between z-50">
                   <View className="flex-row items-center flex-1 mr-2">
-                    <View className="w-10 h-10 rounded-xl bg-orange-500 items-center justify-center mr-3 shadow-md shadow-orange-200">
-                      <Car size={20} color="#ffffff" />
+                    <View
+                      className={`w-12 h-12 rounded-2xl ${
+                        selectedPlace.mainType === "attraction"
+                          ? "bg-sky-600 shadow-sky-200"
+                          : "bg-orange-500 shadow-orange-200"
+                      } items-center justify-center mr-3 shadow-md`}
+                    >
+                      <Car size={24} color="#ffffff" />
                     </View>
                     <View className="flex-1">
                       <View className="flex-row items-center">
-                        <Text className="text-sm font-black text-orange-600 font-sans">
-                          차량 약 {drivingRoute.durationText}
+                        <Text
+                          className={`text-base font-black ${
+                            selectedPlace.mainType === "attraction"
+                              ? "text-sky-700"
+                              : "text-orange-600"
+                          } font-sans`}
+                        >
+                          차량 약 {drivingRoute.durationText} 소요
                         </Text>
-                        <Text className="text-xs text-slate-500 ml-2 font-sans">
+                        <Text className="text-xs font-bold text-slate-500 ml-2 font-sans">
                           ({drivingRoute.distanceText})
                         </Text>
                       </View>
                       <Text
-                        className="text-xs text-slate-700 font-medium mt-0.5 font-sans"
+                        className="text-xs text-slate-700 font-semibold mt-0.5 font-sans"
                         numberOfLines={1}
                       >
-                        {selectedPlace.name} 방면 실시간 주행 경로
+                        씨클라우드 호텔 ➔ {selectedPlace.name} 가는 길
                       </Text>
                     </View>
                   </View>
@@ -530,9 +542,9 @@ export default function App() {
                   <TouchableOpacity
                     onPress={handleClearRoute}
                     activeOpacity={0.7}
-                    className="w-7 h-7 rounded-full bg-slate-100 items-center justify-center border border-slate-200"
+                    className="w-8 h-8 rounded-full bg-slate-100 items-center justify-center border border-slate-200"
                   >
-                    <X size={14} color="#64748b" />
+                    <X size={16} color="#64748b" />
                   </TouchableOpacity>
                 </View>
               )}
