@@ -55,7 +55,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `[표범여행] ${restaurant.name}\n위치: ${restaurant.address}\n${restaurant.hotelDistanceInfo}\n\n${restaurant.highlight}`,
+        message: `[Glory Travel] ${restaurant.name}\n위치: ${restaurant.address}\n${restaurant.hotelDistanceInfo}\n\n${restaurant.highlight}`,
       });
     } catch (e) {}
   };

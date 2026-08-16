@@ -314,9 +314,14 @@ export default function App() {
   if (!fontsLoaded) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
+        <Image
+          source={require("./assets/glory_logo.png")}
+          className="w-16 h-16 rounded-2xl mb-4 shadow-md"
+          resizeMode="cover"
+        />
         <ActivityIndicator size="large" color="#1856FF" />
-        <Text className="mt-3 text-sm text-slate-500 font-medium font-sans">
-          표범여행 로딩 중...
+        <Text className="mt-3 text-sm text-slate-600 font-bold font-sans">
+          Glory Travel 로딩 중...
         </Text>
       </View>
     );
@@ -327,19 +332,21 @@ export default function App() {
       <SafeAreaView className="flex-1 bg-white font-sans" edges={["top"]}>
         <StatusBar style="dark" />
 
-        {/* Top Header with Glassmorphism */}
+        {/* Top Header with Glassmorphism & Glory Travel Logo */}
         <View className="bg-white/90 backdrop-blur-xl px-5 pt-3 pb-3 flex-row items-center justify-between border-b border-slate-100 relative shadow-sm">
-          {/* Left Balance Spacer with Leopard Badge */}
+          {/* Left Brand Logo Badge */}
           <View className="w-24 flex-row items-center">
-            <View className="w-8 h-8 rounded-full bg-blue-50 items-center justify-center border border-blue-200/80 shadow-xs">
-              <Text className="text-base">🐆</Text>
-            </View>
+            <Image
+              source={require("./assets/glory_logo.png")}
+              className="w-9 h-9 rounded-xl border border-blue-200/80 shadow-sm"
+              resizeMode="cover"
+            />
           </View>
 
           {/* Center App Title */}
           <View className="flex-row items-center justify-center">
             <Text className="text-xl font-black text-[#141414] tracking-tight font-sans">
-              표범여행
+              Glory Travel
             </Text>
           </View>
 

@@ -105,7 +105,7 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>표범여행 지도</title>
+  <title>Glory Travel 지도</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
