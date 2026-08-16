@@ -3017,7 +3017,7 @@ export const SAMPLE_PLACES: Place[] = [
     categoryLabel: "역사문화/모노레일",
     location: "부산 동구 초량동",
     address: "부산 동구 초량동 994-80",
-    roadAddress: "부산 동구 영초위길 19",
+    roadAddress: "부산 동구 영초윗길 19",
     latitude: 35.1189,
     longitude: 129.0345,
     rating: 4.7,

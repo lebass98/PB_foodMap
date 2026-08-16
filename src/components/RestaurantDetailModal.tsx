@@ -225,9 +225,20 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               </View>
             </View>
 
-            <Text className="text-xs font-bold text-[#1856FF] mb-2.5 font-sans">
-              {restaurant.categoryLabel} · {restaurant.location}
-            </Text>
+            <View className="flex-row items-center flex-wrap gap-1.5 mb-2.5">
+              <Text className={`text-xs font-bold ${isParking ? "text-emerald-700" : "text-[#1856FF]"} font-sans`}>
+                {restaurant.categoryLabel}
+              </Text>
+              <Text className="text-xs text-slate-400 font-sans">·</Text>
+              <View className={`${isParking ? "bg-emerald-100/90" : "bg-blue-100/90"} px-1.5 py-0.5 rounded`}>
+                <Text className={`text-[10px] font-black ${isParking ? "text-emerald-800" : "text-[#1856FF]"} font-sans`}>
+                  도로명
+                </Text>
+              </View>
+              <Text className="text-xs text-slate-700 font-semibold font-sans">
+                {restaurant.roadAddress || restaurant.address}
+              </Text>
+            </View>
 
             <Text className="text-sm text-slate-700 leading-relaxed font-medium mb-4 font-sans">
               {restaurant.highlight}

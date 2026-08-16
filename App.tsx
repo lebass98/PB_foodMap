@@ -753,20 +753,34 @@ export default function App() {
                             </Text>
                           </View>
 
-                          <Text
-                            className="text-[11px] text-slate-700 mt-1 font-sans font-medium"
-                            numberOfLines={1}
-                          >
-                            {selectedPlace.address}
-                          </Text>
-                          {selectedPlace.roadAddress && (
+                          {/* Jibun Address */}
+                          <View className="flex-row items-center mt-1">
+                            <View className="bg-slate-200/90 px-1 py-0.5 rounded mr-1">
+                              <Text className="text-[9px] font-bold text-slate-700 font-sans">지번</Text>
+                            </View>
                             <Text
-                              className="text-[10px] text-slate-500 font-sans mt-0.5"
+                              className="text-[11px] text-slate-700 font-medium font-sans flex-1"
                               numberOfLines={1}
                             >
-                              <Text className="font-bold text-[#1856FF]">[도로명] </Text>
-                              {selectedPlace.roadAddress}
+                              {selectedPlace.address}
                             </Text>
+                          </View>
+
+                          {/* Road Address */}
+                          {selectedPlace.roadAddress && (
+                            <View className="flex-row items-center mt-0.5">
+                              <View className={`${selectedPlace.mainType === "parking" ? "bg-emerald-100/90" : "bg-blue-100/90"} px-1 py-0.5 rounded mr-1`}>
+                                <Text className={`text-[9px] font-black ${selectedPlace.mainType === "parking" ? "text-emerald-800" : "text-[#1856FF]"} font-sans`}>
+                                  도로명
+                                </Text>
+                              </View>
+                              <Text
+                                className="text-[11px] text-slate-800 font-semibold font-sans flex-1"
+                                numberOfLines={1}
+                              >
+                                {selectedPlace.roadAddress}
+                              </Text>
+                            </View>
                           )}
                         </View>
 
@@ -970,15 +984,29 @@ export default function App() {
                         </View>
                       </View>
 
-                      <View className="mb-2">
-                        <Text className="text-xs text-slate-700 font-medium font-sans">
-                          {item.address} · <Text className="text-slate-500">{item.categoryLabel}</Text>
-                        </Text>
-                        {item.roadAddress && (
-                          <Text className="text-[11px] text-slate-500 font-sans mt-0.5" numberOfLines={1}>
-                            <Text className="font-bold text-[#1856FF]">[도로명] </Text>
-                            {item.roadAddress}
+                      <View className="mb-2.5">
+                        {/* Jibun Address */}
+                        <View className="flex-row items-center mb-1">
+                          <View className="bg-slate-200/90 px-1.5 py-0.5 rounded mr-1.5">
+                            <Text className="text-[9px] font-bold text-slate-700 font-sans">지번</Text>
+                          </View>
+                          <Text className="text-xs text-slate-700 font-medium font-sans flex-1" numberOfLines={1}>
+                            {item.address} · <Text className="text-slate-500">{item.categoryLabel}</Text>
                           </Text>
+                        </View>
+
+                        {/* Road Address */}
+                        {item.roadAddress && (
+                          <View className="flex-row items-center">
+                            <View className={`${item.mainType === "parking" ? "bg-emerald-100/90" : "bg-blue-100/90"} px-1.5 py-0.5 rounded mr-1.5`}>
+                              <Text className={`text-[9px] font-black ${item.mainType === "parking" ? "text-emerald-800" : "text-[#1856FF]"} font-sans`}>
+                                도로명
+                              </Text>
+                            </View>
+                            <Text className="text-xs text-slate-800 font-semibold font-sans flex-1" numberOfLines={1}>
+                              {item.roadAddress}
+                            </Text>
+                          </View>
                         )}
                       </View>
 
