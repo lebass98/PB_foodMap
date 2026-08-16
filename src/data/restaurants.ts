@@ -2294,7 +2294,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 1980,
     phone: "051-749-5700",
-    image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=900&q=85",
+    image: require("../../assets/dalmaji_road.jpg"),
     tags: ["달맞이언덕", "해운대탑티어뷰", "뷰맛집카페", "벚꽃드라이브", "해월정"],
     distance: "약 2.5km",
     hotelDistanceInfo: "거리: 약 2.5km · 차량 약 7~10분",
