@@ -43,7 +43,7 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
     const webViewRef = useRef<WebView>(null);
     const iframeRef = useRef<HTMLIFrameElement>(null);
 
-    // 최신 props 참조 유지 (클로저 이슈 방지)
+    // 최신 props 참조 유지
     const restaurantsRef = useRef(restaurants);
     restaurantsRef.current = restaurants;
     const onSelectRestaurantRef = useRef(onSelectRestaurant);
@@ -95,7 +95,7 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       }
     }, []);
 
-    // HTML을 memoize하여 selectedRestaurantId나 route 변경 시 WebView/iframe이 리로드(깜박임)되지 않도록 방지
+    // Glassmorphism 및 Pretendard가 100% 적용된 고화질 지도 HTML
     const mapHtml = useMemo(() => {
       const serializedRestaurants = JSON.stringify(restaurants);
 
@@ -105,7 +105,7 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FoodMap</title>
+  <title>표범여행 지도</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -115,7 +115,13 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       : ""
   }
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; 
+      -webkit-font-smoothing: antialiased;
+    }
     html, body, #map { width: 100%; height: 100%; overflow: hidden; background-color: #f8fafc; }
     
     .custom-div-icon {
@@ -124,28 +130,30 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       pointer-events: auto !important;
     }
 
-    /* 맛집(오렌지) & 가볼만한곳(에메랄드/블루) 말풍선 마커 */
+    /* Glassmorphism Frosted Glass Markers */
     .custom-marker {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
-      background: #ffffff;
-      border: 2.5px solid #f97316;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid #E89558;
       border-radius: 9999px;
-      padding: 6px 13px;
-      box-shadow: 0 4px 14px rgba(249, 115, 22, 0.32), 0 2px 5px rgba(0,0,0,0.1);
+      padding: 6px 14px;
+      box-shadow: 0 6px 20px rgba(232, 149, 88, 0.28), 0 2px 6px rgba(0, 0, 0, 0.05);
       white-space: nowrap;
       cursor: pointer;
       font-weight: 700;
-      font-size: 12px;
-      color: #0f172a;
+      font-size: 12.5px;
+      color: #141414;
       width: max-content;
       min-width: max-content;
       position: relative;
       transform: translate(-50%, -100%);
       margin-top: -8px;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       pointer-events: auto !important;
@@ -153,25 +161,25 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
     }
 
     .custom-marker.attraction {
-      border-color: #0284c7;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.32), 0 2px 5px rgba(0,0,0,0.1);
+      border-color: #1856FF;
+      box-shadow: 0 6px 20px rgba(24, 86, 255, 0.24), 0 2px 6px rgba(0, 0, 0, 0.05);
     }
     .custom-marker.attraction::after {
-      border-top-color: #0284c7;
+      border-top-color: #1856FF;
     }
 
     .custom-marker:hover {
       transform: translate(-50%, -100%) scale(1.08);
+      background: #ffffff;
     }
 
     .custom-marker:active {
-      transform: translate(-50%, -100%) scale(0.95);
+      transform: translate(-50%, -100%) scale(0.96);
     }
 
     .custom-marker-title {
       font-weight: 700;
-      letter-spacing: -0.2px;
-      padding-right: 2px;
+      letter-spacing: -0.3px;
     }
 
     .custom-marker::after {
@@ -182,64 +190,66 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       transform: translateX(-50%);
       border-left: 6px solid transparent;
       border-right: 6px solid transparent;
-      border-top: 7px solid #f97316;
+      border-top: 7px solid #E89558;
     }
 
+    /* Active State (Selected with Glass Glow) */
     .custom-marker.active {
-      background: #f97316 !important;
+      background: linear-gradient(135deg, #F97316, #EA580C) !important;
       color: #ffffff !important;
-      border-color: #ea580c !important;
-      transform: translate(-50%, -100%) scale(1.2) !important;
+      border-color: #ffffff !important;
+      transform: translate(-50%, -100%) scale(1.18) !important;
       z-index: 9999 !important;
-      box-shadow: 0 8px 25px rgba(234, 88, 12, 0.55) !important;
+      box-shadow: 0 10px 30px rgba(234, 88, 12, 0.55), 0 0 0 3px rgba(249, 115, 22, 0.25) !important;
     }
     .custom-marker.active::after {
-      border-top-color: #ea580c !important;
+      border-top-color: #EA580C !important;
     }
 
     .custom-marker.attraction.active {
-      background: #0284c7 !important;
+      background: linear-gradient(135deg, #1856FF, #0F2B8E) !important;
       color: #ffffff !important;
-      border-color: #0369a1 !important;
-      box-shadow: 0 8px 25px rgba(2, 132, 199, 0.55) !important;
+      border-color: #ffffff !important;
+      box-shadow: 0 10px 30px rgba(24, 86, 255, 0.55), 0 0 0 3px rgba(24, 86, 255, 0.25) !important;
     }
     .custom-marker.attraction.active::after {
-      border-top-color: #0369a1 !important;
+      border-top-color: #0F2B8E !important;
     }
 
     .marker-star {
       color: #f59e0b;
       font-size: 11px;
       font-weight: 800;
+      margin-left: 1px;
     }
     .custom-marker.active .marker-star {
       color: #fef08a !important;
     }
 
-    /* GPS User Marker */
+    /* GPS User Marker with Luminous Glow */
     .user-location-marker {
       position: relative;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       transform: translate(-50%, -50%);
     }
     .user-location-dot {
-      width: 14px;
-      height: 14px;
-      background: #3b82f6;
-      border: 2.5px solid #ffffff;
+      width: 15px;
+      height: 15px;
+      background: #1856FF;
+      border: 3px solid #ffffff;
       border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.7);
+      box-shadow: 0 0 12px rgba(24, 86, 255, 0.85);
       z-index: 2;
     }
     .user-location-pulse {
-      width: 32px;
-      height: 32px;
-      background: rgba(59, 130, 246, 0.35);
+      width: 36px;
+      height: 36px;
+      background: rgba(24, 86, 255, 0.35);
       border-radius: 50%;
       position: absolute;
       top: 50%;
@@ -309,8 +319,8 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
         routePolyline = new naver.maps.Polyline({
           map: mapInstance,
           path: path,
-          strokeColor: '#f97316',
-          strokeWeight: 6,
+          strokeColor: '#1856FF',
+          strokeWeight: 6.5,
           strokeOpacity: 0.95,
           strokeLineCap: 'round',
           strokeLineJoin: 'round'
@@ -321,8 +331,8 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
         mapInstance.fitBounds(bounds, { top: 70, right: 40, bottom: 240, left: 40 });
       } else {
         routePolyline = L.polyline(coords, {
-          color: '#f97316',
-          weight: 6,
+          color: '#1856FF',
+          weight: 6.5,
           opacity: 0.95,
           lineCap: 'round',
           lineJoin: 'round'

@@ -32,6 +32,7 @@ export interface Place {
   tags: string[];
   distance: string;
   distanceMeters?: number;
+  userDistanceNum?: number;
   hotelDistanceInfo: string; // 해운대 씨클라우드 호텔 기준 거리 및 소요시간
   operatingHours: string; // 영업시간 및 휴무일 / 관람시간
   todayHours: string;
