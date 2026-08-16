@@ -2003,7 +2003,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.7,
     reviews: 1210,
     phone: "051-605-4522",
-    image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=900&q=85",
+    image: require("../../assets/hocheon_village.png"),
     tags: ["쌈마이웨이촬영지", "남일바", "산복도로야경", "주황빛가로등", "레트로감성"],
     distance: "약 19.5km",
     hotelDistanceInfo: "거리: 약 19.5km · 차량 약 35~45분",
