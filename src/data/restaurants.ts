@@ -944,7 +944,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 890,
     phone: "051-747-9404",
-    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=900&q=85",
+    image: require("../../assets/gaya_milmyeon.jpg"),
     tags: ["블루리본 3회", "물밀면", "비빔밀면", "온육수 별미"],
     distance: "약 1.8km",
     hotelDistanceInfo: "거리: 약 1.8km · 차량 약 6~8분",
