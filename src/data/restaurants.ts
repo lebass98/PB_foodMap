@@ -1257,7 +1257,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 2980,
     phone: "051-721-9183",
-    image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=900&q=85",
+    image: require("../../assets/ahopsan_forest.jpg"),
     tags: ["400년사유림", "맹종죽대나무숲", "금강소나무보호수", "영화더킹군도촬영지", "자연힐링숲길"],
     distance: "약 19.5km",
     hotelDistanceInfo: "거리: 약 19.5km · 차량 약 30~35분",
