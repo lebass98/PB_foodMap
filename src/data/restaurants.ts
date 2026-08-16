@@ -253,7 +253,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 428,
     phone: "051-751-2255",
-    image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=900&q=85",
+    image: require("../../assets/yongkangjie.jpg"),
     tags: ["미쉐린 빕구르망", "블루리본", "우육탕면", "탄탄면", "가지튀김"],
     distance: "약 6.0km",
     hotelDistanceInfo: "거리: 약 6.0km · 차량 약 15~18분 (광안대교 경유)",
