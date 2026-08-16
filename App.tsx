@@ -672,16 +672,22 @@ export default function App() {
                     onPress={() => handleOpenDetailModal(selectedPlace)}
                     activeOpacity={0.9}
                   >
-                    <View className="flex-row">
-                      <Image
-                        source={
-                          typeof selectedPlace.image === "string"
-                            ? { uri: selectedPlace.image }
-                            : selectedPlace.image
-                        }
-                        className="w-24 h-24 rounded-2xl bg-slate-100/80 border border-white/70 shadow-sm"
-                        resizeMode="cover"
-                      />
+                    <View className="flex-row items-center">
+                      <View 
+                        style={{ width: 96, height: 96, borderRadius: 16, overflow: 'hidden' }}
+                        className="w-24 h-24 rounded-2xl bg-slate-100/80 border border-white/70 shadow-sm overflow-hidden"
+                      >
+                        <Image
+                          source={
+                            typeof selectedPlace.image === "string"
+                              ? { uri: selectedPlace.image }
+                              : selectedPlace.image
+                          }
+                          style={{ width: 96, height: 96, borderRadius: 16 } as any}
+                          className="w-full h-full"
+                          resizeMode="cover"
+                        />
+                      </View>
                       <View className="flex-1 ml-3.5 justify-between">
                         <View>
                           <View className="flex-row items-center justify-between">
@@ -892,14 +898,18 @@ export default function App() {
                     activeOpacity={0.85}
                     className="bg-white/80 backdrop-blur-2xl rounded-3xl overflow-hidden mb-4 border border-white/70 shadow-modal"
                   >
-                    <View className="relative">
+                    <View 
+                      style={{ width: '100%', height: 176, overflow: 'hidden' }}
+                      className="relative w-full h-44 bg-slate-100 overflow-hidden"
+                    >
                       <Image
                         source={
                           typeof item.image === "string"
                             ? { uri: item.image }
                             : item.image
                         }
-                        className="w-full h-44 bg-slate-100"
+                        style={{ width: '100%', height: '100%' } as any}
+                        className="w-full h-full"
                         resizeMode="cover"
                       />
                       <TouchableOpacity

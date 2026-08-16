@@ -162,14 +162,18 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 110 }}
         >
-          {/* Hero Image with Frosted Gradient Overlays (Half-height) */}
-          <View className="relative w-full h-44 bg-slate-100">
+          {/* Hero Image with Frosted Gradient Overlays (Fixed Half-height) */}
+          <View 
+            style={{ width: "100%", height: 180, overflow: "hidden" }}
+            className="relative w-full h-[180px] bg-slate-100 overflow-hidden"
+          >
             <Image
               source={
                 typeof restaurant.image === "string"
                   ? { uri: restaurant.image }
                   : restaurant.image
               }
+              style={{ width: "100%", height: "100%" } as any}
               className="w-full h-full"
               resizeMode="cover"
             />
