@@ -98,6 +98,10 @@ npx expo export --platform web
 ## 📝 작업 이력 (Changelog)
 
 ### [2026-08-16]
+- **지도 하단 상세 요약 카드 초기 숨김 및 온디맨드 표출/닫기 UX 개선**:
+  - 앱 첫 실행 시 하단 상세 요약 카드를 숨김(`selectedPlace: null`) 처리하여 전체 지도가 한눈에 넓게 보이도록 최적화.
+  - 지도 마커 또는 리스트 아이템 클릭 시에만 해당 장소의 하단 요약 카드가 부드럽게 표출.
+  - 하단 카드 우측 상단에 닫기(`X`) 버튼을 추가하여 언제든 카드를 닫고 풀스크린 지도를 볼 수 있도록 개선.
 - **투명 글래스모피즘(Glassmorphism) 및 비비드 그라데이션 전면 적용**:
   - **상단 헤더 & 검색창**: 불투명 흰색을 제거하고 지도 위로 은은하게 비치는 반투명 Frosted Glass(`bg-white/70 backdrop-blur-2xl border-b border-white/50 shadow-glass`)로 개편하여 지도 뷰포트와의 일체감 강화.
   - **하단 요약 카드 & 경로 대시보드**: 반투명 글래스(`bg-white/75 backdrop-blur-2xl border border-white/70 shadow-modal`) 및 비비드 그라데이션 버튼(`linear-gradient(135deg, #1856FF 0%, #3B82F6 50%, #6366F1 100%)`) 적용.

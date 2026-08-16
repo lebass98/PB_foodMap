@@ -116,9 +116,7 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [favorites, setFavorites] = useState<string[]>(["f1", "f3", "a1"]);
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(
-    SAMPLE_PLACES[0]
-  );
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
 
@@ -667,25 +665,35 @@ export default function App() {
                                 : "🍽️ "}
                               {selectedPlace.name}
                             </Text>
-                            <TouchableOpacity
-                              onPress={() => toggleFavorite(selectedPlace.id)}
-                              activeOpacity={0.7}
-                              className="p-1"
-                            >
-                              <Bookmark
-                                size={18}
-                                color={
-                                  favorites.includes(selectedPlace.id)
-                                    ? "#1856FF"
-                                    : "#94a3b8"
-                                }
-                                fill={
-                                  favorites.includes(selectedPlace.id)
-                                    ? "#1856FF"
-                                    : "transparent"
-                                }
-                              />
-                            </TouchableOpacity>
+                            <View className="flex-row items-center gap-1">
+                              <TouchableOpacity
+                                onPress={() => toggleFavorite(selectedPlace.id)}
+                                activeOpacity={0.7}
+                                className="p-1"
+                              >
+                                <Bookmark
+                                  size={18}
+                                  color={
+                                    favorites.includes(selectedPlace.id)
+                                      ? "#1856FF"
+                                      : "#94a3b8"
+                                  }
+                                  fill={
+                                    favorites.includes(selectedPlace.id)
+                                      ? "#1856FF"
+                                      : "transparent"
+                                  }
+                                />
+                              </TouchableOpacity>
+
+                              <TouchableOpacity
+                                onPress={() => setSelectedPlace(null)}
+                                activeOpacity={0.7}
+                                className="p-1 w-6 h-6 rounded-full bg-slate-200/80 items-center justify-center ml-0.5 active:scale-95"
+                              >
+                                <X size={13} color="#64748b" />
+                              </TouchableOpacity>
+                            </View>
                           </View>
 
                           <View className="flex-row items-center mt-1">
