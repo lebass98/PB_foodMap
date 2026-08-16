@@ -329,22 +329,13 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
         {/* Fixed Sidebar Header (PC Mode) */}
         <View className="pt-3 px-5 pb-3.5 bg-white/95 border-b border-slate-100 shadow-xs">
           <View className="flex-row items-center justify-between mb-3">
-            <View className="flex-row items-center">
-              <View className="w-9 h-9 rounded-xl overflow-hidden border border-slate-200/90 bg-white items-center justify-center mr-2.5 shadow-sm">
-                <Image
-                  source={require("../../assets/glory_logo.png")}
-                  style={{ width: 32, height: 32 }}
-                  resizeMode="contain"
-                />
-              </View>
-              <View>
-                <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
-                  Glory Travel
-                </Text>
-                <Text className="text-[11px] font-medium text-slate-500 font-sans">
-                  부산 여행 종합 내비 지도
-                </Text>
-              </View>
+            <View>
+              <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
+                Glory Travel
+              </Text>
+              <Text className="text-[11px] font-medium text-slate-500 font-sans">
+                부산 여행 종합 내비 지도
+              </Text>
             </View>
           </View>
 
@@ -413,22 +404,13 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
           {/* Pure White Header (Compact Padding) */}
           <View className="pt-4 px-5 pb-4 bg-white border-b border-slate-100 shadow-xs">
             <View className="flex-row items-center justify-between mb-3.5">
-              <View className="flex-row items-center">
-                <View className="w-9 h-9 rounded-xl overflow-hidden border border-slate-200/90 bg-white items-center justify-center mr-2.5 shadow-sm">
-                  <Image
-                    source={require("../../assets/glory_logo.png")}
-                    style={{ width: 32, height: 32 }}
-                    resizeMode="contain"
-                  />
-                </View>
-                <View>
-                  <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
-                    Glory Travel
-                  </Text>
-                  <Text className="text-[11px] font-medium text-slate-500 font-sans">
-                    부산 여행 종합 내비 지도
-                  </Text>
-                </View>
+              <View>
+                <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
+                  Glory Travel
+                </Text>
+                <Text className="text-[11px] font-medium text-slate-500 font-sans">
+                  부산 여행 종합 내비 지도
+                </Text>
               </View>
 
               <TouchableOpacity

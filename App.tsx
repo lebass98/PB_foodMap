@@ -366,13 +366,7 @@ export default function App() {
   if (!fontsLoaded) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
-        <Image
-          source={require("./assets/glory_logo.png")}
-          style={{ width: 48, height: 48, borderRadius: 12 }}
-          className="mb-3"
-          resizeMode="contain"
-        />
-        <ActivityIndicator size="small" color="#1856FF" />
+        <ActivityIndicator size="large" color="#1856FF" />
         <Text className="mt-3 text-xs text-slate-600 font-bold font-sans">
           Glory Travel 로딩 중...
         </Text>
@@ -402,19 +396,12 @@ export default function App() {
             >
               {/* Row 1: Logo, Title, Quick Status Badge, View Mode Toggle, Hamburger Button */}
               <View className="flex-row items-center justify-between mb-2">
-            {/* Left: Brand Logo & Title */}
+            {/* Left: Brand Title */}
             <TouchableOpacity
               onPress={() => setIsHamburgerOpen(true)}
               activeOpacity={0.8}
-              className="flex-row items-center"
+              className="flex-row items-center py-1"
             >
-              <View className="w-8 h-8 rounded-xl overflow-hidden border border-white/80 shadow-xs items-center justify-center bg-white/90 mr-2">
-                <Image
-                  source={require("./assets/glory_logo.png")}
-                  style={{ width: 30, height: 30 }}
-                  resizeMode="contain"
-                />
-              </View>
               <Text className="text-base font-black text-[#141414] tracking-tight font-sans">
                 Glory Travel
               </Text>
