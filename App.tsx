@@ -34,24 +34,24 @@ import {
   X,
   ArrowUpDown,
   Car,
-  ExternalLink,
   Clock,
   PlayCircle,
-  ChevronRight,
   Info,
   Plus,
   Minus,
+  Palmtree,
+  Camera,
+  Trees,
+  Moon,
+  FerrisWheel,
+  Ticket,
 } from "lucide-react-native";
 import { NaverMapView, NaverMapViewRef } from "./src/components/NaverMapView";
 import { RestaurantDetailModal } from "./src/components/RestaurantDetailModal";
-import { SAMPLE_RESTAURANTS } from "./src/data/restaurants";
-import { Restaurant } from "./src/types/restaurant";
+import { SAMPLE_PLACES } from "./src/data/restaurants";
+import { Place, MainSectionType } from "./src/types/restaurant";
 import { calculateDistance } from "./src/utils/location";
 import { fetchDrivingRoute, DrivingRouteResult } from "./src/utils/routing";
-import {
-  openNaverMapNavigation,
-  openKakaoMapNavigation,
-} from "./src/utils/navigationApp";
 
 // 해운대 씨클라우드 호텔 기본 좌표
 const HOTEL_COORDINATES = {
@@ -59,13 +59,35 @@ const HOTEL_COORDINATES = {
   longitude: 129.1625,
 };
 
-const CATEGORIES = [
-  { id: "all", name: "전체 (12곳)", icon: Flame },
+const FOOD_CATEGORIES = [
+  { id: "all", name: "전체 맛집", icon: Flame },
   { id: "korean", name: "한식/국밥", icon: Utensils },
   { id: "japanese", name: "일식/라멘/장어", icon: Fish },
-  { id: "cafe", name: "베이커리/빵지순례", icon: Coffee },
   { id: "chinese", name: "중식/대만/만두", icon: Soup },
+  { id: "cafe", name: "베이커리/빵지순례", icon: Coffee },
   { id: "western", name: "피자/양식", icon: Pizza },
+];
+
+const ATTRACTION_CATEGORIES = [
+  { id: "all", name: "전체 명소", icon: FerrisWheel },
+  { id: "beach", name: "해변/해변열차", icon: Palmtree },
+  { id: "view", name: "전망대/랜드마크", icon: Camera },
+  { id: "nature", name: "자연/해안산책로", icon: Trees },
+  { id: "night", name: "야경/복합문화", icon: Moon },
+  { id: "culture", name: "사찰/문화마을", icon: Ticket },
+  { id: "theme", name: "테마파크/루지", icon: FerrisWheel },
+];
+
+const ALL_CATEGORIES = [
+  { id: "all", name: "전체 (20곳)", icon: Sparkles },
+  { id: "food_all", name: "맛집 전체", icon: Utensils },
+  { id: "attraction_all", name: "가볼만한곳 전체", icon: FerrisWheel },
+  { id: "beach", name: "해변/바다", icon: Palmtree },
+  { id: "korean", name: "한식", icon: Utensils },
+  { id: "japanese", name: "일식", icon: Fish },
+  { id: "cafe", name: "베이커리", icon: Coffee },
+  { id: "view", name: "전망대", icon: Camera },
+  { id: "night", name: "야경", icon: Moon },
 ];
 
 export default function App() {
@@ -77,11 +99,13 @@ export default function App() {
   });
 
   const [viewMode, setViewMode] = useState<"map" | "list">("map");
+  const [mainTab, setMainTab] = useState<MainSectionType>("all"); // 'all' | 'food' | 'attraction'
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [favorites, setFavorites] = useState<string[]>(["1", "3", "9"]);
-  const [selectedRestaurant, setSelectedRestaurant] =
-    useState<Restaurant | null>(SAMPLE_RESTAURANTS[0]);
+  const [favorites, setFavorites] = useState<string[]>(["f1", "f3", "a1"]);
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(
+    SAMPLE_PLACES[0]
+  );
   const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
 
   const mapViewRef = useRef<NaverMapViewRef>(null);
@@ -111,7 +135,7 @@ export default function App() {
         if (isManual) {
           Alert.alert(
             "위치 권한 필요",
-            "현재 위치를 기반으로 주변 맛집을 찾으려면 위치 권한을 허용해 주세요. (기본값: 해운대 씨클라우드 호텔)"
+            "현재 위치를 기반으로 주변 맛집/명소를 찾으려면 위치 권한을 허용해 주세요."
           );
         }
         setIsLoadingLocation(false);
@@ -159,9 +183,9 @@ export default function App() {
   }, []);
 
   // 차량 길찾기 시작
-  const handleStartDrivingRoute = async (target: Restaurant) => {
+  const handleStartDrivingRoute = async (target: Place) => {
     setViewMode("map");
-    setSelectedRestaurant(target);
+    setSelectedPlace(target);
 
     const startLat = userLocation
       ? userLocation.latitude
@@ -190,10 +214,10 @@ export default function App() {
     setDrivingRoute(null);
   };
 
-  // 맛집 데이터 (거리 계산 포함)
-  const processedRestaurants = useMemo(() => {
+  // 장소 데이터 (거리 계산 포함)
+  const processedPlaces = useMemo(() => {
     const baseCoords = userLocation || HOTEL_COORDINATES;
-    return SAMPLE_RESTAURANTS.map((item) => {
+    return SAMPLE_PLACES.map((item) => {
       const calc = calculateDistance(
         baseCoords.latitude,
         baseCoords.longitude,
@@ -208,11 +232,31 @@ export default function App() {
     });
   }, [userLocation]);
 
-  // 카테고리, 검색어, 정렬 필터링
-  const filteredRestaurants = useMemo(() => {
-    let result = processedRestaurants.filter((item) => {
-      const matchCategory =
-        activeCategory === "all" || item.category === activeCategory;
+  // 메인 탭에 따른 서브 카테고리 목록
+  const currentCategories = useMemo(() => {
+    if (mainTab === "food") return FOOD_CATEGORIES;
+    if (mainTab === "attraction") return ATTRACTION_CATEGORIES;
+    return ALL_CATEGORIES;
+  }, [mainTab]);
+
+  // 대분류, 카테고리, 검색어, 정렬 필터링
+  const filteredPlaces = useMemo(() => {
+    let result = processedPlaces.filter((item) => {
+      // 1. 대분류 필터 (전체 / 맛집 / 가볼만한곳)
+      if (mainTab === "food" && item.mainType !== "food") return false;
+      if (mainTab === "attraction" && item.mainType !== "attraction")
+        return false;
+
+      // 2. 서브 카테고리 필터
+      let matchCategory = true;
+      if (activeCategory !== "all") {
+        if (activeCategory === "food_all") matchCategory = item.mainType === "food";
+        else if (activeCategory === "attraction_all")
+          matchCategory = item.mainType === "attraction";
+        else matchCategory = item.category === activeCategory;
+      }
+
+      // 3. 검색어 필터
       const matchSearch =
         searchQuery.trim() === "" ||
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -223,6 +267,7 @@ export default function App() {
         item.reviewSummary.some((r) =>
           r.toLowerCase().includes(searchQuery.toLowerCase())
         );
+
       return matchCategory && matchSearch;
     });
 
@@ -233,7 +278,7 @@ export default function App() {
     }
 
     return result;
-  }, [processedRestaurants, activeCategory, searchQuery, sortByDistance]);
+  }, [processedPlaces, mainTab, activeCategory, searchQuery, sortByDistance]);
 
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
@@ -241,13 +286,13 @@ export default function App() {
     );
   };
 
-  const handleSelectRestaurant = (restaurant: Restaurant) => {
-    setSelectedRestaurant(restaurant);
+  const handleSelectPlace = (place: Place) => {
+    setSelectedPlace(place);
     setDrivingRoute(null);
   };
 
-  const handleOpenDetailModal = (restaurant: Restaurant) => {
-    setSelectedRestaurant(restaurant);
+  const handleOpenDetailModal = (place: Place) => {
+    setSelectedPlace(place);
     setIsDetailModalOpen(true);
   };
 
@@ -256,7 +301,7 @@ export default function App() {
       <View className="flex-1 items-center justify-center bg-white">
         <ActivityIndicator size="large" color="#f97316" />
         <Text className="mt-3 text-sm text-slate-500 font-medium font-sans">
-          부산 맛집 지도 로딩 중...
+          표범여행 로딩 중...
         </Text>
       </View>
     );
@@ -279,7 +324,7 @@ export default function App() {
           {/* Center App Title */}
           <View className="flex-row items-center justify-center">
             <Text className="text-xl font-black text-slate-900 tracking-tight font-sans">
-              표범맛집
+              표범여행
             </Text>
           </View>
 
@@ -319,12 +364,74 @@ export default function App() {
           </View>
         </View>
 
+        {/* Main Section Tab: [전체 (20)] / [🍽️ 맛집 (12)] / [🎡 가볼만한곳 (8)] */}
+        <View className="bg-white px-5 pt-2.5 pb-2">
+          <View className="flex-row bg-slate-100 p-1 rounded-2xl border border-slate-200/80">
+            <TouchableOpacity
+              onPress={() => {
+                setMainTab("all");
+                setActiveCategory("all");
+              }}
+              activeOpacity={0.8}
+              className={`flex-1 py-2 rounded-xl items-center justify-center ${
+                mainTab === "all" ? "bg-white shadow-sm" : ""
+              }`}
+            >
+              <Text
+                className={`text-xs font-black font-sans ${
+                  mainTab === "all" ? "text-slate-900" : "text-slate-500"
+                }`}
+              >
+                전체 (20)
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setMainTab("food");
+                setActiveCategory("all");
+              }}
+              activeOpacity={0.8}
+              className={`flex-1 py-2 rounded-xl items-center justify-center flex-row ${
+                mainTab === "food" ? "bg-orange-500 shadow-sm" : ""
+              }`}
+            >
+              <Text
+                className={`text-xs font-black font-sans ${
+                  mainTab === "food" ? "text-white" : "text-slate-600"
+                }`}
+              >
+                🍽️ 맛집 (12)
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setMainTab("attraction");
+                setActiveCategory("all");
+              }}
+              activeOpacity={0.8}
+              className={`flex-1 py-2 rounded-xl items-center justify-center flex-row ${
+                mainTab === "attraction" ? "bg-sky-600 shadow-sm" : ""
+              }`}
+            >
+              <Text
+                className={`text-xs font-black font-sans ${
+                  mainTab === "attraction" ? "text-white" : "text-slate-600"
+                }`}
+              >
+                🎡 가볼만한곳 (8)
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         {/* Search Bar */}
-        <View className="bg-white px-5 py-2.5">
+        <View className="bg-white px-5 pb-2">
           <View className="flex-row items-center bg-slate-100 rounded-2xl px-3.5 py-2.5 border border-slate-200/80">
             <Search size={18} color="#94a3b8" />
             <TextInput
-              placeholder="상호명, 메뉴(우육탕면, 불고기, 피자), 타임스탬프 검색..."
+              placeholder="맛집, 해변열차, 전망대, 메뉴, 꿀팁 검색..."
               placeholderTextColor="#94a3b8"
               value={searchQuery}
               onChangeText={setSearchQuery}
@@ -338,16 +445,18 @@ export default function App() {
           </View>
         </View>
 
-        {/* Category Horizontal Filter */}
+        {/* Dynamic Category Horizontal Filter */}
         <View className="bg-white pb-3 border-b border-slate-100">
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 20 }}
           >
-            {CATEGORIES.map((cat) => {
+            {currentCategories.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeCategory === cat.id;
+              const isAttractionTab = mainTab === "attraction";
+
               return (
                 <TouchableOpacity
                   key={cat.id}
@@ -358,7 +467,9 @@ export default function App() {
                   activeOpacity={0.7}
                   className={`flex-row items-center px-3.5 py-2 rounded-xl mr-2 ${
                     isActive
-                      ? "bg-orange-500 shadow-md shadow-orange-200"
+                      ? isAttractionTab
+                        ? "bg-sky-600 shadow-md shadow-sky-200"
+                        : "bg-orange-500 shadow-md shadow-orange-200"
                       : "bg-slate-50 border border-slate-200/80"
                   }`}
                 >
@@ -383,16 +494,16 @@ export default function App() {
             <View className="flex-1 relative">
               <NaverMapView
                 ref={mapViewRef}
-                restaurants={filteredRestaurants}
-                selectedRestaurantId={selectedRestaurant?.id}
+                restaurants={filteredPlaces}
+                selectedRestaurantId={selectedPlace?.id}
                 userLocation={userLocation}
                 routeCoordinates={drivingRoute ? drivingRoute.coordinates : null}
-                onSelectRestaurant={handleSelectRestaurant}
+                onSelectRestaurant={handleSelectPlace}
                 center={HOTEL_COORDINATES}
               />
 
               {/* Driving Route Top Dashboard */}
-              {drivingRoute && selectedRestaurant && (
+              {drivingRoute && selectedPlace && (
                 <View className="absolute top-3 left-4 right-4 bg-white/95 backdrop-blur-xl rounded-2xl p-3.5 border border-orange-200 shadow-xl shadow-orange-100 flex-row items-center justify-between">
                   <View className="flex-row items-center flex-1 mr-2">
                     <View className="w-10 h-10 rounded-xl bg-orange-500 items-center justify-center mr-3 shadow-md shadow-orange-200">
@@ -411,7 +522,7 @@ export default function App() {
                         className="text-xs text-slate-700 font-medium mt-0.5 font-sans"
                         numberOfLines={1}
                       >
-                        {selectedRestaurant.name} 방면 실시간 주행 경로
+                        {selectedPlace.name} 방면 실시간 주행 경로
                       </Text>
                     </View>
                   </View>
@@ -431,12 +542,10 @@ export default function App() {
                 <View className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-200 shadow-md shadow-slate-200 flex-row items-center">
                   <MapPin size={14} color="#f97316" />
                   <Text className="text-xs font-bold text-slate-800 ml-1.5 font-sans">
-                    {selectedRestaurant
-                      ? selectedRestaurant.location
-                      : "부산 맛집"}
+                    {selectedPlace ? selectedPlace.location : "부산 여행"}
                   </Text>
                   <Text className="text-[11px] text-orange-600 font-medium ml-2 font-sans">
-                    {filteredRestaurants.length}곳 탐색 중
+                    {filteredPlaces.length}곳 탐색 중
                   </Text>
                 </View>
               )}
@@ -478,16 +587,16 @@ export default function App() {
                 </View>
               )}
 
-              {/* Bottom Floating Restaurant Preview Card */}
-              {selectedRestaurant && (
+              {/* Bottom Floating Place Preview Card */}
+              {selectedPlace && (
                 <View className="absolute bottom-6 left-4 right-4 bg-white/95 backdrop-blur-xl rounded-3xl p-4 border border-slate-100 shadow-2xl shadow-slate-400/50">
                   <TouchableOpacity
-                    onPress={() => handleOpenDetailModal(selectedRestaurant)}
+                    onPress={() => handleOpenDetailModal(selectedPlace)}
                     activeOpacity={0.9}
                   >
                     <View className="flex-row">
                       <Image
-                        source={{ uri: selectedRestaurant.image }}
+                        source={{ uri: selectedPlace.image }}
                         className="w-24 h-24 rounded-2xl bg-slate-100"
                         resizeMode="cover"
                       />
@@ -498,24 +607,25 @@ export default function App() {
                               className="text-base font-black text-slate-900 flex-1 mr-2 font-sans"
                               numberOfLines={1}
                             >
-                              {selectedRestaurant.name}
+                              {selectedPlace.mainType === "attraction"
+                                ? "🎡 "
+                                : "🍽️ "}
+                              {selectedPlace.name}
                             </Text>
                             <TouchableOpacity
-                              onPress={() =>
-                                toggleFavorite(selectedRestaurant.id)
-                              }
+                              onPress={() => toggleFavorite(selectedPlace.id)}
                               activeOpacity={0.7}
                               className="p-1"
                             >
                               <Bookmark
                                 size={18}
                                 color={
-                                  favorites.includes(selectedRestaurant.id)
+                                  favorites.includes(selectedPlace.id)
                                     ? "#f97316"
                                     : "#94a3b8"
                                 }
                                 fill={
-                                  favorites.includes(selectedRestaurant.id)
+                                  favorites.includes(selectedPlace.id)
                                     ? "#f97316"
                                     : "transparent"
                                 }
@@ -526,16 +636,16 @@ export default function App() {
                           <View className="flex-row items-center mt-1">
                             <Star size={13} color="#f59e0b" fill="#f59e0b" />
                             <Text className="text-xs font-bold text-slate-800 ml-1 font-sans">
-                              {selectedRestaurant.rating}
+                              {selectedPlace.rating}
                             </Text>
                             <Text className="text-xs text-slate-400 ml-1 font-sans">
-                              ({selectedRestaurant.reviews})
+                              ({selectedPlace.reviews})
                             </Text>
                             <Text className="text-xs text-slate-300 mx-1.5">
                               ·
                             </Text>
                             <Text className="text-xs text-slate-600 font-medium font-sans">
-                              {selectedRestaurant.categoryLabel}
+                              {selectedPlace.categoryLabel}
                             </Text>
                           </View>
 
@@ -543,15 +653,34 @@ export default function App() {
                             className="text-[11px] text-slate-500 mt-1 font-sans"
                             numberOfLines={1}
                           >
-                            {selectedRestaurant.address}
+                            {selectedPlace.address}
                           </Text>
                         </View>
 
                         {/* Hotel Distance Badge */}
-                        <View className="bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-100 mt-1.5 flex-row items-center">
-                          <Car size={11} color="#ea580c" />
-                          <Text className="text-[10.5px] font-bold text-orange-700 ml-1 font-sans">
-                            {selectedRestaurant.hotelDistanceInfo}
+                        <View
+                          className={`${
+                            selectedPlace.mainType === "attraction"
+                              ? "bg-sky-50 border-sky-100"
+                              : "bg-orange-50 border-orange-100"
+                          } px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center`}
+                        >
+                          <Car
+                            size={11}
+                            color={
+                              selectedPlace.mainType === "attraction"
+                                ? "#0284c7"
+                                : "#ea580c"
+                            }
+                          />
+                          <Text
+                            className={`text-[10.5px] font-bold ${
+                              selectedPlace.mainType === "attraction"
+                                ? "text-sky-700"
+                                : "text-orange-700"
+                            } ml-1 font-sans`}
+                          >
+                            {selectedPlace.hotelDistanceInfo}
                           </Text>
                         </View>
                       </View>
@@ -561,22 +690,24 @@ export default function App() {
                   {/* Navigation Action Buttons */}
                   <View className="flex-row items-center gap-2.5 mt-3.5 pt-3 border-t border-slate-100">
                     <TouchableOpacity
-                      onPress={() => handleOpenDetailModal(selectedRestaurant)}
+                      onPress={() => handleOpenDetailModal(selectedPlace)}
                       activeOpacity={0.8}
                       className="flex-1 bg-slate-900 py-3.5 rounded-2xl flex-row items-center justify-center shadow-md shadow-slate-300"
                     >
                       <Info size={15} color="#ffffff" />
                       <Text className="text-xs font-black text-white ml-1.5 font-sans">
-                        가게 상세 정보 보기
+                        상세 정보 & 꿀팁 보기
                       </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      onPress={() =>
-                        handleStartDrivingRoute(selectedRestaurant)
-                      }
+                      onPress={() => handleStartDrivingRoute(selectedPlace)}
                       activeOpacity={0.8}
-                      className="w-12 h-12 bg-orange-500 rounded-2xl items-center justify-center shadow-md shadow-orange-200"
+                      className={`w-12 h-12 ${
+                        selectedPlace.mainType === "attraction"
+                          ? "bg-sky-600 shadow-sky-200"
+                          : "bg-orange-500 shadow-orange-200"
+                      } rounded-2xl items-center justify-center shadow-md`}
                     >
                       <Car size={20} color="#ffffff" />
                     </TouchableOpacity>
@@ -592,7 +723,7 @@ export default function App() {
               contentContainerStyle={{ paddingBottom: 40 }}
             >
               {/* Header Banner */}
-              <View className="bg-gradient-to-r from-orange-500 to-amber-500 bg-orange-500 rounded-3xl p-5 mb-4 shadow-lg shadow-orange-200">
+              <View className="bg-gradient-to-r from-orange-500 to-sky-600 bg-orange-500 rounded-3xl p-5 mb-4 shadow-lg shadow-orange-200">
                 <View className="flex-row items-center mb-1">
                   <Sparkles size={16} color="#fed7aa" />
                   <Text className="text-xs font-extrabold text-orange-100 ml-1 font-sans">
@@ -600,14 +731,14 @@ export default function App() {
                   </Text>
                 </View>
                 <Text className="text-lg font-black text-white leading-tight font-sans">
-                  부산 대표 핫플레이스{"\n"}줄 서는 맛집 BEST 12
+                  부산 대표 핫플레이스{"\n"}맛집 & 가볼만한곳 BEST 20
                 </Text>
               </View>
 
               {/* List Controls */}
               <View className="flex-row items-center justify-between mb-3">
                 <Text className="text-sm font-bold text-slate-800 font-sans">
-                  맛집 ({filteredRestaurants.length}곳)
+                  전체 ({filteredPlaces.length}곳)
                 </Text>
 
                 <TouchableOpacity
@@ -633,9 +764,11 @@ export default function App() {
                 </TouchableOpacity>
               </View>
 
-              {/* 12 Restaurant Cards */}
-              {filteredRestaurants.map((item) => {
+              {/* Places Cards List */}
+              {filteredPlaces.map((item) => {
                 const isFav = favorites.includes(item.id);
+                const isAttraction = item.mainType === "attraction";
+
                 return (
                   <TouchableOpacity
                     key={item.id}
@@ -664,6 +797,15 @@ export default function App() {
                         <Car size={11} color="#ffffff" />
                         <Text className="text-[11px] font-bold text-white ml-1 font-sans">
                           {item.hotelDistanceInfo}
+                        </Text>
+                      </View>
+                      <View
+                        className={`absolute top-3 left-3 ${
+                          isAttraction ? "bg-sky-600" : "bg-orange-500"
+                        } px-2.5 py-1 rounded-full`}
+                      >
+                        <Text className="text-[10px] font-black text-white font-sans">
+                          {isAttraction ? "🎡 가볼만한곳" : "🍽️ 맛집"}
                         </Text>
                       </View>
                     </View>
@@ -696,15 +838,30 @@ export default function App() {
                       </Text>
 
                       {/* Video Review Summary Box */}
-                      <View className="bg-amber-50/70 rounded-xl p-2.5 border border-amber-200/60 mb-3">
+                      <View
+                        className={`${
+                          isAttraction
+                            ? "bg-sky-50/70 border-sky-200/60"
+                            : "bg-amber-50/70 border-amber-200/60"
+                        } rounded-xl p-2.5 border mb-3`}
+                      >
                         <View className="flex-row items-center mb-1">
-                          <PlayCircle size={12} color="#dc2626" />
-                          <Text className="text-[10.5px] font-bold text-amber-900 ml-1 font-sans">
-                            영상 추천 평:
+                          <PlayCircle
+                            size={12}
+                            color={isAttraction ? "#0284c7" : "#dc2626"}
+                          />
+                          <Text
+                            className={`text-[10.5px] font-bold ${
+                              isAttraction ? "text-sky-900" : "text-amber-900"
+                            } ml-1 font-sans`}
+                          >
+                            {isAttraction ? "여행 추천 꿀팁:" : "영상 추천 평:"}
                           </Text>
                         </View>
                         <Text
-                          className="text-[11px] text-amber-950 font-normal leading-relaxed font-sans"
+                          className={`text-[11px] ${
+                            isAttraction ? "text-sky-950" : "text-amber-950"
+                          } font-normal leading-relaxed font-sans`}
                           numberOfLines={2}
                         >
                           {item.reviewSummary[0]}
@@ -727,9 +884,19 @@ export default function App() {
                           {item.tags.slice(0, 2).map((tag, idx) => (
                             <View
                               key={idx}
-                              className="bg-orange-50 px-2 py-0.5 rounded-md border border-orange-100"
+                              className={`${
+                                isAttraction
+                                  ? "bg-sky-50 border-sky-100"
+                                  : "bg-orange-50 border-orange-100"
+                              } px-2 py-0.5 rounded-md border`}
                             >
-                              <Text className="text-[10px] font-medium text-orange-600 font-sans">
+                              <Text
+                                className={`text-[10px] font-medium ${
+                                  isAttraction
+                                    ? "text-sky-700"
+                                    : "text-orange-600"
+                                } font-sans`}
+                              >
                                 #{tag}
                               </Text>
                             </View>
@@ -740,9 +907,16 @@ export default function App() {
                         <TouchableOpacity
                           onPress={() => handleStartDrivingRoute(item)}
                           activeOpacity={0.8}
-                          className="w-9 h-9 bg-orange-50 rounded-xl border border-orange-200 items-center justify-center mr-1.5"
+                          className={`w-9 h-9 ${
+                            isAttraction
+                              ? "bg-sky-50 border-sky-200"
+                              : "bg-orange-50 border-orange-200"
+                          } rounded-xl border items-center justify-center mr-1.5`}
                         >
-                          <Car size={16} color="#ea580c" />
+                          <Car
+                            size={16}
+                            color={isAttraction ? "#0284c7" : "#ea580c"}
+                          />
                         </TouchableOpacity>
 
                         <TouchableOpacity
@@ -763,14 +937,12 @@ export default function App() {
           )}
         </View>
 
-        {/* Fullscreen Restaurant Detail Modal */}
+        {/* Fullscreen Place Detail Modal */}
         <RestaurantDetailModal
           visible={isDetailModalOpen}
-          restaurant={selectedRestaurant}
+          restaurant={selectedPlace}
           isFavorite={
-            selectedRestaurant
-              ? favorites.includes(selectedRestaurant.id)
-              : false
+            selectedPlace ? favorites.includes(selectedPlace.id) : false
           }
           onToggleFavorite={toggleFavorite}
           onClose={() => setIsDetailModalOpen(false)}

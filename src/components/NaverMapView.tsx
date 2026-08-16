@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { View, Platform, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
-import { Restaurant } from "../types/restaurant";
+import { Place } from "../types/restaurant";
 
 export interface NaverMapViewRef {
   zoomIn: () => void;
@@ -16,11 +16,11 @@ export interface NaverMapViewRef {
 }
 
 interface NaverMapViewProps {
-  restaurants: Restaurant[];
+  restaurants: Place[];
   selectedRestaurantId?: string | null;
   userLocation?: { latitude: number; longitude: number } | null;
   routeCoordinates?: [number, number][] | null;
-  onSelectRestaurant?: (restaurant: Restaurant) => void;
+  onSelectRestaurant?: (restaurant: Place) => void;
   clientId?: string;
   center?: { latitude: number; longitude: number };
   zoom?: number;
@@ -124,7 +124,7 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       pointer-events: auto !important;
     }
 
-    /* 유동적으로 글자 길이에 맞춰 늘어나는 말풍선 마커 */
+    /* 맛집(오렌지) & 가볼만한곳(에메랄드/블루) 말풍선 마커 */
     .custom-marker {
       display: inline-flex;
       align-items: center;
@@ -150,6 +150,14 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       -webkit-tap-highlight-color: transparent;
       pointer-events: auto !important;
       z-index: 100;
+    }
+
+    .custom-marker.attraction {
+      border-color: #0284c7;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.32), 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .custom-marker.attraction::after {
+      border-top-color: #0284c7;
     }
 
     .custom-marker:hover {
@@ -187,6 +195,16 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
     }
     .custom-marker.active::after {
       border-top-color: #ea580c !important;
+    }
+
+    .custom-marker.attraction.active {
+      background: #0284c7 !important;
+      color: #ffffff !important;
+      border-color: #0369a1 !important;
+      box-shadow: 0 8px 25px rgba(2, 132, 199, 0.55) !important;
+    }
+    .custom-marker.attraction.active::after {
+      border-top-color: #0369a1 !important;
     }
 
     .marker-star {
@@ -244,7 +262,7 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
     let currentRoute = null;
     const centerLat = ${center.latitude};
     const centerLng = ${center.longitude};
-    let selectedId = "1";
+    let selectedId = "f1";
     let mapInstance = null;
     let restaurantMarkers = [];
     let userMarker = null;
@@ -330,13 +348,15 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
 
           restaurants.forEach(item => {
             const isActive = String(item.id) === String(selectedId);
+            const isAttraction = item.mainType === 'attraction';
+            const iconPrefix = isAttraction ? '🎡 ' : '';
             const marker = new naver.maps.Marker({
               position: new naver.maps.LatLng(item.latitude, item.longitude),
               map: mapInstance,
               icon: {
                 content: \`
-                  <div class="custom-marker \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
-                    <span class="custom-marker-title">\${item.name}</span>
+                  <div class="custom-marker \${isAttraction ? 'attraction' : ''} \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
+                    <span class="custom-marker-title">\${iconPrefix}\${item.name}</span>
                     <span class="marker-star">★ \${item.rating}</span>
                   </div>
                 \`,
@@ -367,11 +387,13 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
 
       restaurants.forEach(item => {
         const isActive = String(item.id) === String(selectedId);
+        const isAttraction = item.mainType === 'attraction';
+        const iconPrefix = isAttraction ? '🎡 ' : '';
         const customIcon = L.divIcon({
           className: 'custom-div-icon',
           html: \`
-            <div class="custom-marker \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
-              <span class="custom-marker-title">\${item.name}</span>
+            <div class="custom-marker \${isAttraction ? 'attraction' : ''} \${isActive ? 'active' : ''}" id="marker-\${item.id}" onclick="event.stopPropagation(); window.selectMarker('\${item.id}');">
+              <span class="custom-marker-title">\${iconPrefix}\${item.name}</span>
               <span class="marker-star">★ \${item.rating}</span>
             </div>
           \`,
@@ -474,7 +496,7 @@ export const NaverMapView = forwardRef<NaverMapViewRef, NaverMapViewProps>(
       `;
     }, [restaurants, clientId, zoom]);
 
-    // 마커 선택 변경 시 HTML을 리빌드하지 않고 postMessage로만 변경 -> 깜박임 완전 제거
+    // 마커 선택 변경 시 HTML을 리빌드하지 않고 postMessage로만 변경
     useEffect(() => {
       if (selectedRestaurantId && !routeCoordinates) {
         const selected = restaurants.find(
