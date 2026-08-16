@@ -332,7 +332,9 @@ export default function App() {
         if (searchQuery.trim() !== "") {
           const query = searchQuery.toLowerCase().trim();
           const matchName = item.name.toLowerCase().includes(query);
-          const matchAddress = item.address.toLowerCase().includes(query);
+          const matchAddress =
+            item.address.toLowerCase().includes(query) ||
+            (item.roadAddress && item.roadAddress.toLowerCase().includes(query));
           const matchTags = item.tags.some((tag) =>
             tag.toLowerCase().includes(query)
           );
@@ -752,11 +754,20 @@ export default function App() {
                           </View>
 
                           <Text
-                            className="text-[11px] text-slate-600 mt-1 font-sans font-medium"
+                            className="text-[11px] text-slate-700 mt-1 font-sans font-medium"
                             numberOfLines={1}
                           >
                             {selectedPlace.address}
                           </Text>
+                          {selectedPlace.roadAddress && (
+                            <Text
+                              className="text-[10px] text-slate-500 font-sans mt-0.5"
+                              numberOfLines={1}
+                            >
+                              <Text className="font-bold text-[#1856FF]">[도로명] </Text>
+                              {selectedPlace.roadAddress}
+                            </Text>
+                          )}
                         </View>
 
                         {/* Hotel Distance Badge (Transparent Tint Pill) */}
@@ -959,9 +970,17 @@ export default function App() {
                         </View>
                       </View>
 
-                      <Text className="text-xs text-slate-500 mb-1.5 font-sans">
-                        {item.address} · {item.categoryLabel}
-                      </Text>
+                      <View className="mb-2">
+                        <Text className="text-xs text-slate-700 font-medium font-sans">
+                          {item.address} · <Text className="text-slate-500">{item.categoryLabel}</Text>
+                        </Text>
+                        {item.roadAddress && (
+                          <Text className="text-[11px] text-slate-500 font-sans mt-0.5" numberOfLines={1}>
+                            <Text className="font-bold text-[#1856FF]">[도로명] </Text>
+                            {item.roadAddress}
+                          </Text>
+                        )}
+                      </View>
 
                       <Text
                         className="text-xs text-slate-700 font-medium mb-2.5 font-sans leading-relaxed"

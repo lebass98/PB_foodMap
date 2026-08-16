@@ -23,6 +23,7 @@ export interface Place {
   categoryLabel: string;
   location: string;
   address: string;
+  roadAddress?: string;
   latitude: number;
   longitude: number;
   rating: number;

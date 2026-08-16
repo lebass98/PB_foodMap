@@ -284,12 +284,31 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               <View className="flex-row items-start">
                 <MapPin size={16} color={isParking ? "#059669" : "#1856FF"} className="mt-0.5" />
                 <View className="flex-1 ml-2.5">
-                  <Text className="text-xs font-bold text-[#141414] font-sans">
+                  <Text className="text-xs font-bold text-[#141414] font-sans mb-1">
                     주소
                   </Text>
-                  <Text className="text-xs text-slate-600 mt-0.5 font-sans leading-relaxed">
-                    {restaurant.address}
-                  </Text>
+                  <View className="flex-row items-start mb-1">
+                    <View className="bg-slate-200/80 px-1.5 py-0.5 rounded mr-1.5 mt-0.5">
+                      <Text className="text-[10px] font-bold text-slate-700 font-sans">
+                        지번
+                      </Text>
+                    </View>
+                    <Text className="text-xs text-slate-800 font-medium font-sans leading-relaxed flex-1">
+                      {restaurant.address}
+                    </Text>
+                  </View>
+                  {restaurant.roadAddress && (
+                    <View className="flex-row items-start">
+                      <View className={`${isParking ? "bg-emerald-100/90 text-emerald-800" : "bg-blue-100/90 text-blue-800"} px-1.5 py-0.5 rounded mr-1.5 mt-0.5`}>
+                        <Text className={`text-[10px] font-black ${isParking ? "text-emerald-800" : "text-[#1856FF]"} font-sans`}>
+                          도로명
+                        </Text>
+                      </View>
+                      <Text className="text-xs text-slate-700 font-medium font-sans leading-relaxed flex-1">
+                        {restaurant.roadAddress}
+                      </Text>
+                    </View>
+                  )}
                 </View>
               </View>
 
