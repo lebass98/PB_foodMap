@@ -655,7 +655,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 380,
     phone: "070-8703-3603",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=900&q=85",
+    image: require("../../assets/seohui_bakery.jpg"),
     tags: ["광안리 빵지순례", "6시 내고향", "현장 줄서기", "팥빵 맛집"],
     distance: "약 8.2km",
     hotelDistanceInfo: "거리: 약 8.2km · 차량 약 20~23분",
