@@ -1073,29 +1073,15 @@ export default function App() {
                   activeOpacity={0.7}
                   className="flex-1 items-center justify-center py-1"
                 >
-                  <View
-                    style={
-                      mainTab === "all"
-                        ? ({
-                            background:
-                              "linear-gradient(135deg, rgba(24, 86, 255, 0.15), rgba(59, 130, 246, 0.15))",
-                          } as any)
-                        : undefined
-                    }
-                    className={`p-1.5 rounded-2xl items-center justify-center ${
-                      mainTab === "all" ? "border border-blue-300/70 shadow-xs" : ""
-                    }`}
-                  >
-                    <Sparkles
-                      size={18}
-                      color={mainTab === "all" ? "#1856FF" : "#64748b"}
-                    />
-                  </View>
+                  <Sparkles
+                    size={20}
+                    color={mainTab === "all" ? "#1856FF" : "#94a3b8"}
+                  />
                   <Text
-                    className={`text-[10px] mt-0.5 font-sans ${
+                    className={`text-[11px] mt-1 font-sans ${
                       mainTab === "all"
                         ? "font-black text-[#1856FF]"
-                        : "font-medium text-slate-600"
+                        : "font-medium text-slate-500"
                     }`}
                   >
                     전체보기
@@ -1112,29 +1098,15 @@ export default function App() {
                   activeOpacity={0.7}
                   className="flex-1 items-center justify-center py-1"
                 >
-                  <View
-                    style={
-                      mainTab === "food"
-                        ? ({
-                            background:
-                              "linear-gradient(135deg, rgba(255, 107, 74, 0.18), rgba(245, 158, 11, 0.18))",
-                          } as any)
-                        : undefined
-                    }
-                    className={`p-1.5 rounded-2xl items-center justify-center ${
-                      mainTab === "food" ? "border border-orange-300/70 shadow-xs" : ""
-                    }`}
-                  >
-                    <Utensils
-                      size={18}
-                      color={mainTab === "food" ? "#CE7636" : "#64748b"}
-                    />
-                  </View>
+                  <Utensils
+                    size={20}
+                    color={mainTab === "food" ? "#FF6B4A" : "#94a3b8"}
+                  />
                   <Text
-                    className={`text-[10px] mt-0.5 font-sans ${
+                    className={`text-[11px] mt-1 font-sans ${
                       mainTab === "food"
-                        ? "font-black text-[#CE7636]"
-                        : "font-medium text-slate-600"
+                        ? "font-black text-[#FF6B4A]"
+                        : "font-medium text-slate-500"
                     }`}
                   >
                     맛집
@@ -1151,29 +1123,15 @@ export default function App() {
                   activeOpacity={0.7}
                   className="flex-1 items-center justify-center py-1"
                 >
-                  <View
-                    style={
-                      mainTab === "attraction"
-                        ? ({
-                            background:
-                              "linear-gradient(135deg, rgba(24, 86, 255, 0.15), rgba(139, 92, 246, 0.15))",
-                          } as any)
-                        : undefined
-                    }
-                    className={`p-1.5 rounded-2xl items-center justify-center ${
-                      mainTab === "attraction" ? "border border-blue-300/70 shadow-xs" : ""
-                    }`}
-                  >
-                    <FerrisWheel
-                      size={18}
-                      color={mainTab === "attraction" ? "#1856FF" : "#64748b"}
-                    />
-                  </View>
+                  <FerrisWheel
+                    size={20}
+                    color={mainTab === "attraction" ? "#1856FF" : "#94a3b8"}
+                  />
                   <Text
-                    className={`text-[10px] mt-0.5 font-sans ${
+                    className={`text-[11px] mt-1 font-sans ${
                       mainTab === "attraction"
                         ? "font-black text-[#1856FF]"
-                        : "font-medium text-slate-600"
+                        : "font-medium text-slate-500"
                     }`}
                   >
                     명소
@@ -1190,29 +1148,15 @@ export default function App() {
                   activeOpacity={0.7}
                   className="flex-1 items-center justify-center py-1"
                 >
-                  <View
-                    style={
-                      mainTab === "parking"
-                        ? ({
-                            background:
-                              "linear-gradient(135deg, rgba(5, 150, 105, 0.18), rgba(16, 185, 129, 0.18))",
-                          } as any)
-                        : undefined
-                    }
-                    className={`p-1.5 rounded-2xl items-center justify-center ${
-                      mainTab === "parking" ? "border border-emerald-300/70 shadow-xs" : ""
-                    }`}
-                  >
-                    <CircleParking
-                      size={18}
-                      color={mainTab === "parking" ? "#059669" : "#64748b"}
-                    />
-                  </View>
+                  <CircleParking
+                    size={20}
+                    color={mainTab === "parking" ? "#059669" : "#94a3b8"}
+                  />
                   <Text
-                    className={`text-[10px] mt-0.5 font-sans ${
+                    className={`text-[11px] mt-1 font-sans ${
                       mainTab === "parking"
-                        ? "font-black text-emerald-700"
-                        : "font-medium text-slate-600"
+                        ? "font-black text-[#059669]"
+                        : "font-medium text-slate-500"
                     }`}
                   >
                     주차장
@@ -1221,11 +1165,9 @@ export default function App() {
 
                 {/* 5. 날씨 (준비중) */}
                 <View className="flex-1 items-center justify-center py-1 opacity-45">
-                  <View className="p-1.5 rounded-2xl items-center justify-center">
-                    <CloudSun size={18} color="#64748b" />
-                  </View>
-                  <View className="flex-row items-center mt-0.5">
-                    <Text className="text-[10px] font-medium text-slate-500 font-sans">
+                  <CloudSun size={20} color="#94a3b8" />
+                  <View className="flex-row items-center mt-1">
+                    <Text className="text-[11px] font-medium text-slate-400 font-sans">
                       날씨
                     </Text>
                     <View className="ml-0.5 px-1 py-0.2 bg-slate-200/90 rounded-full">
