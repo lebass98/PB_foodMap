@@ -326,22 +326,11 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
         style={{ width: 380 }}
         className="bg-white h-full shadow-2xl flex-col border-l border-slate-200/90 z-30"
       >
-        {/* Fixed Sidebar Header (PC Mode) */}
-        <View className="pt-3 px-5 pb-3.5 bg-white/95 border-b border-slate-100 shadow-xs">
-          <View className="flex-row items-center justify-between mb-3">
-            <View>
-              <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
-                Glory Travel
-              </Text>
-              <Text className="text-[11px] font-medium text-slate-500 font-sans">
-                부산 여행 종합 내비 지도
-              </Text>
-            </View>
-          </View>
-
+        {/* Fixed Sidebar Header (PC Mode) - 앱명 제거, 위치 정보 컴팩트 표시 */}
+        <View className="pt-4 px-5 pb-3.5 bg-white border-b border-slate-100 shadow-xs">
           {/* Current Base Location Info */}
-          <View className="flex-row items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80">
-            <MapPin size={13} color="#1856FF" />
+          <View className="flex-row items-center bg-slate-50 px-3.5 py-2.5 rounded-2xl border border-slate-200/80">
+            <MapPin size={14} color="#1856FF" />
             <Text className="text-xs font-bold text-slate-700 ml-1.5 font-sans flex-1" numberOfLines={1}>
               출발 기준: {locationName}
             </Text>
@@ -363,10 +352,11 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
             style={{
               background: "linear-gradient(135deg, #1856FF 0%, #3B82F6 50%, #6366F1 100%)",
             } as any}
-            className="py-3.5 rounded-2xl items-center justify-center shadow-xl shadow-blue-500/30 border border-white/30"
+            className="py-3 rounded-2xl items-center justify-center shadow-md border border-white/30"
           >
-            <Text className="text-sm font-black text-white font-sans">Glory Travel</Text>
-            <Text className="text-[10px] text-white/80 font-sans mt-0.5">부산 여행 종합 내비</Text>
+            <Text className="text-xs font-black text-white font-sans">
+              부산 여행 종합 지도
+            </Text>
           </View>
         </View>
       </View>
@@ -401,15 +391,14 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
           }}
           className="bg-white h-full shadow-2xl flex-col border-l border-slate-100 z-50"
         >
-          {/* Pure White Header (Compact Padding) */}
-          <View className="pt-4 px-5 pb-4 bg-white border-b border-slate-100 shadow-xs">
-            <View className="flex-row items-center justify-between mb-3.5">
-              <View>
-                <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
-                  Glory Travel
-                </Text>
-                <Text className="text-[11px] font-medium text-slate-500 font-sans">
-                  부산 여행 종합 내비 지도
+          {/* Pure White Header (Compact & Clean without app title) */}
+          <View className="pt-4 px-5 pb-3.5 bg-white border-b border-slate-100 shadow-xs">
+            <View className="flex-row items-center justify-between gap-2">
+              {/* Current Base Location Info */}
+              <View className="flex-1 flex-row items-center bg-slate-50 px-3.5 py-2 rounded-2xl border border-slate-200/80">
+                <MapPin size={14} color="#1856FF" />
+                <Text className="text-xs font-bold text-slate-700 ml-1.5 font-sans flex-1" numberOfLines={1}>
+                  출발 기준: {locationName}
                 </Text>
               </View>
 
@@ -420,14 +409,6 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
               >
                 <X size={17} color="#141414" />
               </TouchableOpacity>
-            </View>
-
-            {/* Current Base Location Info (Clean White Card) */}
-            <View className="flex-row items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80">
-              <MapPin size={13} color="#1856FF" />
-              <Text className="text-xs font-bold text-slate-700 ml-1.5 font-sans flex-1" numberOfLines={1}>
-                출발 기준: {locationName}
-              </Text>
             </View>
           </View>
 

@@ -65,7 +65,7 @@ const HOTEL_COORDINATES = {
 };
 
 const FOOD_CATEGORIES = [
-  { id: "all", name: "전체 맛집 (15)", icon: Flame },
+  { id: "all", name: "전체", icon: Flame },
   { id: "korean", name: "한식/국밥/경유 (6)", icon: Utensils },
   { id: "cafe", name: "베이커리/디저트 (3)", icon: Coffee },
   { id: "japanese", name: "일식/라멘/장어 (2)", icon: Fish },
@@ -74,7 +74,7 @@ const FOOD_CATEGORIES = [
 ];
 
 const ATTRACTION_CATEGORIES = [
-  { id: "all", name: "전체 명소 (32)", icon: FerrisWheel },
+  { id: "all", name: "전체", icon: FerrisWheel },
   { id: "beach", name: "해변/요트/해변열차 (6)", icon: Palmtree },
   { id: "view", name: "전망대/케이블카/야경 (6)", icon: Camera },
   { id: "nature", name: "자연/해안산책로/숲 (6)", icon: Trees },
@@ -84,7 +84,7 @@ const ATTRACTION_CATEGORIES = [
 ];
 
 const PARKING_CATEGORIES = [
-  { id: "all", name: "전체 공영주차장 (22)", icon: CircleParking },
+  { id: "all", name: "전체", icon: CircleParking },
   { id: "haeundae", name: "해운대/송정/미포 (5)", icon: MapPin },
   { id: "gwangalli", name: "광안리/민락/남구 (5)", icon: MapPin },
   { id: "yeongdo", name: "영도/태종대/흰여울 (4)", icon: MapPin },
@@ -93,7 +93,7 @@ const PARKING_CATEGORIES = [
 ];
 
 const ALL_CATEGORIES = [
-  { id: "all", name: "전체 (47곳)", icon: Sparkles },
+  { id: "all", name: "전체", icon: Sparkles },
   { id: "food_all", name: "맛집 (15곳)", icon: Utensils },
   { id: "attraction_all", name: "가볼만한곳 (32곳)", icon: FerrisWheel },
   { id: "beach", name: "해변/요트/해변열차", icon: Palmtree },
