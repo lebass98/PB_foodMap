@@ -581,7 +581,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.7,
     reviews: 512,
     phone: "051-555-7763",
-    image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=900&q=85",
+    image: require("../../assets/jobang_nakji.png"),
     tags: ["백종원 3대천왕", "규현 추천", "낙곱새", "마늘양념", "밥도둑"],
     distance: "약 12.0km",
     hotelDistanceInfo: "거리: 약 12.0km · 차량 약 25~30분",
