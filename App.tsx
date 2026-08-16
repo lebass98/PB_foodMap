@@ -316,7 +316,8 @@ export default function App() {
       <View className="flex-1 items-center justify-center bg-white">
         <Image
           source={require("./assets/glory_logo.png")}
-          className="w-12 h-12 rounded-xl mb-3"
+          style={{ width: 48, height: 48, borderRadius: 12 }}
+          className="mb-3"
           resizeMode="contain"
         />
         <ActivityIndicator size="small" color="#1856FF" />
@@ -336,11 +337,13 @@ export default function App() {
         <View className="bg-white/90 backdrop-blur-xl px-5 pt-3 pb-3 flex-row items-center justify-between border-b border-slate-100 relative shadow-sm">
           {/* Left Brand Logo Badge */}
           <View className="w-20 flex-row items-center">
-            <Image
-              source={require("./assets/glory_logo.png")}
-              className="w-7 h-7 rounded-lg"
-              resizeMode="contain"
-            />
+            <View className="w-8 h-8 rounded-lg overflow-hidden border border-blue-200/80 shadow-xs items-center justify-center bg-white">
+              <Image
+                source={require("./assets/glory_logo.png")}
+                style={{ width: 30, height: 30 }}
+                resizeMode="contain"
+              />
+            </View>
           </View>
 
           {/* Center App Title */}
