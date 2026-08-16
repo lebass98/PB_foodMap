@@ -345,7 +345,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 582,
     phone: "051-753-1632",
-    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=85",
+    image: require("../../assets/jinmi_bulgogi.jpg"),
     tags: ["44년 전통", "성시경 먹을텐데", "언양불고기", "김치찌개 별미"],
     distance: "약 8.0km",
     hotelDistanceInfo: "거리: 약 8.0km · 차량 약 18~22분 (광안대교 경유)",
