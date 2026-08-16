@@ -1784,7 +1784,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 2150,
     phone: "051-607-6361",
-    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&q=85",
+    image: require("../../assets/igidae_park.jpg"),
     tags: ["해안절벽트레킹", "어울마당휴게소", "바다라면맥주", "치마바위", "영화해운대촬영지"],
     distance: "약 14.5km",
     hotelDistanceInfo: "거리: 약 14.5km · 차량 약 25~30분",
