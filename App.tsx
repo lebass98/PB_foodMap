@@ -46,9 +46,11 @@ import {
   FerrisWheel,
   Ticket,
   CircleParking,
+  Menu,
 } from "lucide-react-native";
 import { NaverMapView, NaverMapViewRef } from "./src/components/NaverMapView";
 import { RestaurantDetailModal } from "./src/components/RestaurantDetailModal";
+import { HamburgerMenuModal } from "./src/components/HamburgerMenuModal";
 import { SAMPLE_PLACES } from "./src/data/restaurants";
 import { Place, MainSectionType } from "./src/types/restaurant";
 import { calculateDistance } from "./src/utils/location";
@@ -118,6 +120,23 @@ export default function App() {
     SAMPLE_PLACES[0]
   );
   const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
+
+  const totalCounts = useMemo(() => {
+    const foodCount = SAMPLE_PLACES.filter((p) => p.mainType === "food").length;
+    const attractionCount = SAMPLE_PLACES.filter(
+      (p) => p.mainType === "attraction"
+    ).length;
+    const parkingCount = SAMPLE_PLACES.filter(
+      (p) => p.mainType === "parking"
+    ).length;
+    return {
+      all: foodCount + attractionCount,
+      food: foodCount,
+      attraction: attractionCount,
+      parking: parkingCount,
+    };
+  }, []);
 
   const mapViewRef = useRef<NaverMapViewRef>(null);
 
@@ -362,202 +381,125 @@ export default function App() {
       <SafeAreaView className="flex-1 bg-white font-sans" edges={["top"]}>
         <StatusBar style="dark" />
 
-        {/* Top Header with Glassmorphism & Glory Travel Logo */}
-        <View className="bg-white/90 backdrop-blur-xl px-5 pt-3 pb-3 flex-row items-center justify-between border-b border-slate-100 relative shadow-sm">
-          {/* Left Brand Logo Badge */}
-          <View className="w-20 flex-row items-center">
-            <View className="w-8 h-8 rounded-lg overflow-hidden border border-blue-200/80 shadow-xs items-center justify-center bg-white">
-              <Image
-                source={require("./assets/glory_logo.png")}
-                style={{ width: 30, height: 30 }}
-                resizeMode="contain"
-              />
+        {/* Top Header with Glassmorphism, Glory Travel Logo, View Toggle & Hamburger Menu */}
+        <View className="bg-white/95 backdrop-blur-xl px-4 pt-2.5 pb-2.5 border-b border-slate-100/90 shadow-sm z-30">
+          {/* Row 1: Logo, Title, Quick Status Badge, View Mode Toggle, Hamburger Button */}
+          <View className="flex-row items-center justify-between mb-2">
+            {/* Left: Brand Logo & Title */}
+            <TouchableOpacity
+              onPress={() => setIsHamburgerOpen(true)}
+              activeOpacity={0.8}
+              className="flex-row items-center"
+            >
+              <View className="w-8 h-8 rounded-xl overflow-hidden border border-blue-200/80 shadow-xs items-center justify-center bg-white mr-2">
+                <Image
+                  source={require("./assets/glory_logo.png")}
+                  style={{ width: 30, height: 30 }}
+                  resizeMode="contain"
+                />
+              </View>
+              <Text className="text-base font-black text-[#141414] tracking-tight font-sans">
+                Glory Travel
+              </Text>
+            </TouchableOpacity>
+
+            {/* Right: Quick Tab Indicator & Controls */}
+            <View className="flex-row items-center gap-1.5">
+              {/* Quick Tab Badge (Click opens Hamburger menu) */}
+              <TouchableOpacity
+                onPress={() => setIsHamburgerOpen(true)}
+                activeOpacity={0.8}
+                className={`px-2.5 py-1.5 rounded-xl border flex-row items-center ${
+                  mainTab === "food"
+                    ? "bg-orange-50 border-orange-200"
+                    : mainTab === "attraction"
+                    ? "bg-blue-50 border-blue-200"
+                    : mainTab === "parking"
+                    ? "bg-emerald-50 border-emerald-200"
+                    : "bg-slate-100 border-slate-200"
+                }`}
+              >
+                <Text
+                  className={`text-[11px] font-black font-sans ${
+                    mainTab === "food"
+                      ? "text-[#CE7636]"
+                      : mainTab === "attraction"
+                      ? "text-[#1856FF]"
+                      : mainTab === "parking"
+                      ? "text-emerald-700"
+                      : "text-slate-700"
+                  }`}
+                >
+                  {mainTab === "food"
+                    ? `맛집 (${totalCounts.food})`
+                    : mainTab === "attraction"
+                    ? `명소 (${totalCounts.attraction})`
+                    : mainTab === "parking"
+                    ? `주차장 (${totalCounts.parking})`
+                    : `전체 (${totalCounts.all})`}
+                </Text>
+              </TouchableOpacity>
+
+              {/* View Mode Toggle (Map <-> List) */}
+              <View className="flex-row bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 items-center shadow-xs">
+                <TouchableOpacity
+                  onPress={() => setViewMode("map")}
+                  activeOpacity={0.8}
+                  className={`w-7 h-7 items-center justify-center rounded-lg ${
+                    viewMode === "map"
+                      ? "bg-[#1856FF] shadow-xs"
+                      : ""
+                  }`}
+                >
+                  <MapIcon
+                    size={14}
+                    color={viewMode === "map" ? "#ffffff" : "#64748b"}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => setViewMode("list")}
+                  activeOpacity={0.8}
+                  className={`w-7 h-7 items-center justify-center rounded-lg ${
+                    viewMode === "list"
+                      ? "bg-[#1856FF] shadow-xs"
+                      : ""
+                  }`}
+                >
+                  <ListIcon
+                    size={14}
+                    color={viewMode === "list" ? "#ffffff" : "#64748b"}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              {/* Hamburger Menu Trigger Button */}
+              <TouchableOpacity
+                onPress={() => setIsHamburgerOpen(true)}
+                activeOpacity={0.8}
+                className="w-8 h-8 rounded-xl bg-slate-900 items-center justify-center shadow-sm active:scale-95 ml-0.5"
+              >
+                <Menu size={17} color="#ffffff" />
+              </TouchableOpacity>
             </View>
           </View>
 
-          {/* Center App Title */}
-          <View className="flex-row items-center justify-center">
-            <Text className="text-lg font-black text-[#141414] tracking-tight font-sans">
-              Glory Travel
-            </Text>
-          </View>
-
-          {/* Right View Mode Toggle (Map <-> List: Icon only) */}
-          <View className="w-20 flex-row justify-end">
-            <View className="flex-row bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 items-center shadow-xs">
-              <TouchableOpacity
-                onPress={() => setViewMode("map")}
-                activeOpacity={0.8}
-                className={`w-8 h-8 items-center justify-center rounded-xl transition-all ${
-                  viewMode === "map"
-                    ? "bg-[#1856FF] shadow-sm shadow-blue-500/30"
-                    : ""
-                }`}
-              >
-                <MapIcon
-                  size={16}
-                  color={viewMode === "map" ? "#ffffff" : "#64748b"}
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => setViewMode("list")}
-                activeOpacity={0.8}
-                className={`w-8 h-8 items-center justify-center rounded-xl transition-all ${
-                  viewMode === "list"
-                    ? "bg-[#1856FF] shadow-sm shadow-blue-500/30"
-                    : ""
-                }`}
-              >
-                <ListIcon
-                  size={16}
-                  color={viewMode === "list" ? "#ffffff" : "#64748b"}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        {/* Main Section Tab: [전체 (47)] / [맛집 (15)] / [가볼만한곳 (32)] / [주차장 (22)] */}
-        <View className="bg-white/95 px-4 pt-2.5 pb-2">
-          <View className="flex-row bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 shadow-xs">
-            <TouchableOpacity
-              onPress={() => {
-                setMainTab("all");
-                setActiveCategory("all");
-              }}
-              activeOpacity={0.8}
-              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
-                mainTab === "all" ? "bg-white shadow-sm" : ""
-              }`}
-            >
-              <Text
-                className={`text-xs font-black font-sans ${
-                  mainTab === "all" ? "text-[#141414]" : "text-slate-500"
-                }`}
-              >
-                전체 (47)
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                setMainTab("food");
-                setActiveCategory("all");
-              }}
-              activeOpacity={0.8}
-              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
-                mainTab === "food" ? "bg-[#E89558] shadow-sm shadow-orange-500/30" : ""
-              }`}
-            >
-              <Text
-                className={`text-xs font-black font-sans ${
-                  mainTab === "food" ? "text-white" : "text-slate-600"
-                }`}
-              >
-                맛집 (15)
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                setMainTab("attraction");
-                setActiveCategory("all");
-              }}
-              activeOpacity={0.8}
-              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
-                mainTab === "attraction" ? "bg-[#1856FF] shadow-sm shadow-blue-500/30" : ""
-              }`}
-            >
-              <Text
-                className={`text-xs font-black font-sans ${
-                  mainTab === "attraction" ? "text-white" : "text-slate-600"
-                }`}
-              >
-                명소 (32)
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                setMainTab("parking");
-                setActiveCategory("all");
-              }}
-              activeOpacity={0.8}
-              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
-                mainTab === "parking" ? "bg-emerald-600 shadow-sm shadow-emerald-600/30" : ""
-              }`}
-            >
-              <Text
-                className={`text-xs font-black font-sans ${
-                  mainTab === "parking" ? "text-white" : "text-slate-600"
-                }`}
-              >
-                주차장 (22)
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Search Bar with Glass Input */}
-        <View className="bg-white/95 px-5 pb-2">
-          <View className="flex-row items-center bg-slate-100/90 rounded-2xl px-3.5 py-2.5 border border-slate-200/80 shadow-xs">
-            <Search size={18} color="#94a3b8" />
+          {/* Row 2: Slim Search Bar */}
+          <View className="flex-row items-center bg-slate-100/90 rounded-xl px-3 py-2 border border-slate-200/80 shadow-xs">
+            <Search size={15} color="#94a3b8" />
             <TextInput
-              placeholder="맛집, 해변열차, 전망대, 메뉴, 꿀팁 검색..."
+              placeholder="맛집, 해변열차, 전망대, 메뉴, 주차장 검색..."
               placeholderTextColor="#94a3b8"
               value={searchQuery}
               onChangeText={setSearchQuery}
-              className="flex-1 ml-2 text-sm text-[#141414] font-sans"
+              className="flex-1 ml-2 text-xs text-[#141414] font-sans"
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => setSearchQuery("")}>
-                <X size={16} color="#94a3b8" />
+                <X size={15} color="#94a3b8" />
               </TouchableOpacity>
             )}
           </View>
-        </View>
-
-        {/* Dynamic Category Horizontal Filter (Glass Pills) */}
-        <View className="bg-white pb-3 border-b border-slate-100">
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 20 }}
-          >
-            {currentCategories.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = activeCategory === cat.id;
-              const isFoodActive = mainTab === "food";
-
-              return (
-                <TouchableOpacity
-                  key={cat.id}
-                  onPress={() => {
-                    setActiveCategory(cat.id);
-                    setDrivingRoute(null);
-                  }}
-                  activeOpacity={0.7}
-                  className={`flex-row items-center px-3.5 py-2 rounded-xl mr-2 ${
-                    isActive
-                      ? isFoodActive
-                        ? "bg-[#E89558] shadow-sm shadow-orange-500/20"
-                        : "bg-[#1856FF] shadow-sm shadow-blue-500/20"
-                      : "bg-slate-50 border border-slate-200/80"
-                  }`}
-                >
-                  <Icon size={14} color={isActive ? "#ffffff" : "#64748b"} />
-                  <Text
-                    className={`ml-1.5 text-xs font-semibold font-sans ${
-                      isActive ? "text-white" : "text-slate-700"
-                    }`}
-                  >
-                    {cat.name}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
         </View>
 
         {/* Main Content Area */}
@@ -1024,6 +966,29 @@ export default function App() {
           onToggleFavorite={toggleFavorite}
           onClose={() => setIsDetailModalOpen(false)}
           onStartRoute={handleStartDrivingRoute}
+        />
+
+        {/* Slide-over Hamburger Menu Drawer Modal */}
+        <HamburgerMenuModal
+          visible={isHamburgerOpen}
+          onClose={() => setIsHamburgerOpen(false)}
+          mainTab={mainTab}
+          onSelectMainTab={(tab) => {
+            setMainTab(tab);
+            setDrivingRoute(null);
+          }}
+          activeCategory={activeCategory}
+          onSelectCategory={(catId) => {
+            setActiveCategory(catId);
+            setDrivingRoute(null);
+          }}
+          categories={currentCategories}
+          viewMode={viewMode}
+          onSelectViewMode={setViewMode}
+          sortByDistance={sortByDistance}
+          onToggleSortByDistance={() => setSortByDistance(!sortByDistance)}
+          totalCounts={totalCounts}
+          locationName={locationName}
         />
       </SafeAreaView>
     </SafeAreaProvider>
