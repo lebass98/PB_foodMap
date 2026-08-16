@@ -98,49 +98,64 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
   return (
     <Modal
       visible={visible}
+      transparent
       animationType="slide"
-      presentationStyle="pageSheet"
       onRequestClose={onClose}
     >
-      <View className="flex-1 bg-slate-100/90 font-sans">
-        {/* Floating Frosted Glass Top Navigation Bar */}
-        <View className="absolute top-0 left-0 right-0 z-50 flex-row items-center justify-between px-5 pt-3 pb-3 bg-white/70 backdrop-blur-2xl border-b border-white/50 shadow-glass">
-          <TouchableOpacity
-            onPress={onClose}
-            activeOpacity={0.8}
-            className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
-          >
-            <ArrowLeft size={20} color="#141414" />
-          </TouchableOpacity>
+      <View className="flex-1 bg-black/35 backdrop-blur-md flex-col justify-end items-center">
+        {/* Backdrop Touchable to Close */}
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={onClose}
+          className="absolute inset-0 w-full h-full"
+        />
 
-          <View className="flex-row items-center gap-2">
-            <TouchableOpacity
-              onPress={handleShare}
-              activeOpacity={0.8}
-              className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
-            >
-              <Share2 size={18} color="#141414" />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => onToggleFavorite(restaurant.id)}
-              activeOpacity={0.8}
-              className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
-            >
-              <Bookmark
-                size={18}
-                color={isFavorite ? "#1856FF" : "#141414"}
-                fill={isFavorite ? "#1856FF" : "transparent"}
-              />
-            </TouchableOpacity>
+        {/* Floating Glassmorphism Modal Sheet (Shows map behind) */}
+        <View className="w-full max-w-2xl h-[90%] bg-white/80 backdrop-blur-3xl rounded-t-[36px] overflow-hidden border-t border-x border-white/80 shadow-2xl flex-col relative z-20">
+          {/* Top Handle / Grab Bar */}
+          <View className="w-full items-center pt-2.5 pb-1">
+            <View className="w-12 h-1.5 rounded-full bg-slate-300/80" />
           </View>
-        </View>
 
-        {/* Scrollable Content */}
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 110 }}
-        >
+          {/* Floating Frosted Glass Top Navigation Bar */}
+          <View className="flex-row items-center justify-between px-5 pt-2 pb-3 bg-white/60 backdrop-blur-xl border-b border-white/50 shadow-xs z-30">
+            <TouchableOpacity
+              onPress={onClose}
+              activeOpacity={0.8}
+              className="w-10 h-10 rounded-full bg-white/85 backdrop-blur-xl border border-white/90 items-center justify-center shadow-sm active:scale-95"
+            >
+              <ArrowLeft size={20} color="#141414" />
+            </TouchableOpacity>
+
+            <View className="flex-row items-center gap-2">
+              <TouchableOpacity
+                onPress={handleShare}
+                activeOpacity={0.8}
+                className="w-10 h-10 rounded-full bg-white/85 backdrop-blur-xl border border-white/90 items-center justify-center shadow-sm active:scale-95"
+              >
+                <Share2 size={18} color="#141414" />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => onToggleFavorite(restaurant.id)}
+                activeOpacity={0.8}
+                className="w-10 h-10 rounded-full bg-white/85 backdrop-blur-xl border border-white/90 items-center justify-center shadow-sm active:scale-95"
+              >
+                <Bookmark
+                  size={18}
+                  color={isFavorite ? "#1856FF" : "#141414"}
+                  fill={isFavorite ? "#1856FF" : "transparent"}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Scrollable Content */}
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 120 }}
+            className="flex-1"
+          >
           {/* Hero Image with Frosted Gradient Overlays */}
           <View className="relative w-full h-80 bg-slate-100">
             <Image
@@ -424,6 +439,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           </TouchableOpacity>
         </View>
       </View>
-    </Modal>
-  );
+    </View>
+  </Modal>
+);
 };
