@@ -22,6 +22,8 @@ import {
   PlayCircle,
   Route,
   Navigation,
+  Maximize2,
+  X,
 } from "lucide-react-native";
 import { Place } from "../types/restaurant";
 
@@ -42,6 +44,8 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
   onClose,
   onStartRoute,
 }) => {
+  const [isImageViewerOpen, setIsImageViewerOpen] = React.useState(false);
+
   if (!restaurant) return null;
 
   const handlePhoneCall = () => {
@@ -162,8 +166,10 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 110 }}
         >
-          {/* Hero Image with Frosted Gradient Overlays (Fixed Half-height) */}
-          <View 
+          {/* Hero Image with Frosted Gradient Overlays (Fixed Half-height, Clickable for Zoom) */}
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setIsImageViewerOpen(true)}
             style={{ width: "100%", height: 180, overflow: "hidden" }}
             className="relative w-full h-[180px] bg-slate-100 overflow-hidden"
           >
@@ -177,6 +183,15 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               className="w-full h-full"
               resizeMode="cover"
             />
+
+            {/* Tap to Zoom Badge */}
+            <View className="absolute top-4 right-4 bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full flex-row items-center border border-white/25 shadow-md">
+              <Maximize2 size={11} color="#FFFFFF" />
+              <Text className="text-[10px] font-bold text-white ml-1 font-sans">
+                크게보기
+              </Text>
+            </View>
+
             {/* Luminous Distance Badge */}
             <View className="absolute bottom-3 left-4 bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full flex-row items-center border border-white/20 shadow-md">
               <Car size={12} color="#FFFFFF" />
@@ -194,7 +209,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                 {typeConfig.label}
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
 
           {/* Place Header Info Card (Frosted Glass Card) */}
           <View className="px-5 pt-5 pb-6 bg-white/80 backdrop-blur-2xl border-b border-white/70 shadow-sm">
@@ -452,6 +467,89 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             </Text>
           </TouchableOpacity>
         </View>
+
+        {/* 📸 Centered Image Zoom Modal (좌우 여백 준 정중앙 큰 사진 뷰어) */}
+        <Modal
+          visible={isImageViewerOpen}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={() => setIsImageViewerOpen(false)}
+        >
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => setIsImageViewerOpen(false)}
+            style={{
+              background: "rgba(0, 0, 0, 0.86)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+            } as any}
+            className="flex-1 items-center justify-center px-5 py-6"
+          >
+            {/* Top Close Button */}
+            <TouchableOpacity
+              onPress={() => setIsImageViewerOpen(false)}
+              activeOpacity={0.8}
+              style={{
+                background: "rgba(255, 255, 255, 0.22)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                borderWidth: 1,
+                borderColor: "rgba(255, 255, 255, 0.4)",
+              } as any}
+              className="absolute top-6 right-6 w-11 h-11 rounded-full items-center justify-center z-50 shadow-2xl active:scale-95"
+            >
+              <X size={22} color="#FFFFFF" />
+            </TouchableOpacity>
+
+            {/* Centered Modal Card Container (화면 안쪽 정중앙에 위치) */}
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={(e) => e.stopPropagation()}
+              className="w-full max-w-lg items-center"
+            >
+              <View
+                style={{
+                  width: "100%",
+                  maxHeight: "72vh",
+                  borderRadius: 24,
+                  overflow: "hidden",
+                  borderWidth: 1,
+                  borderColor: "rgba(255, 255, 255, 0.25)",
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
+                } as any}
+                className="w-full bg-slate-950/80 rounded-3xl overflow-hidden shadow-2xl items-center justify-center p-2"
+              >
+                <Image
+                  source={
+                    typeof restaurant.image === "string"
+                      ? { uri: restaurant.image }
+                      : restaurant.image
+                  }
+                  style={{
+                    width: "100%",
+                    height: 380,
+                    maxHeight: "65vh",
+                  } as any}
+                  className="w-full h-96 rounded-2xl"
+                  resizeMode="contain"
+                />
+              </View>
+
+              {/* Place Name and Description Caption */}
+              <View className="mt-4 px-3 items-center">
+                <Text className="text-lg font-black text-white text-center font-sans tracking-tight drop-shadow-md">
+                  {restaurant.name}
+                </Text>
+                <Text className="text-xs text-white/80 text-center font-sans mt-1">
+                  {restaurant.categoryLabel} · {restaurant.location}
+                </Text>
+                <Text className="text-[11px] text-white/60 text-center font-sans mt-2">
+                  바깥 영역 또는 우측 상단 ✕ 버튼을 누르면 닫힙니다
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Modal>
       </View>
     </Modal>
   );
