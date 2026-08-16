@@ -94,7 +94,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 2150,
     phone: "054-772-5130",
-    image: "https://images.unsplash.com/photo-1590301157890-4810ed352733?w=900&q=85",
+    image: require("../../assets/gyori_kimbap.jpg"),
     tags: ["경주IC6분", "전국3대김밥", "계란지단김밥", "교리국수", "차안간식포장"],
     distance: "시흥 332km / 부산 73km",
     hotelDistanceInfo: "시흥 출발 약 332km (3시간 38분) · 해운대까지 약 73km (약 55분)",
