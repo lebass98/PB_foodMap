@@ -418,7 +418,7 @@ export default function App() {
           </View>
         </View>
 
-        {/* Main Section Tab: [전체 (47)] / [🍽️ 맛집 (15)] / [🎡 가볼만한곳 (32)] / [🅿️ 주차장 (22)] */}
+        {/* Main Section Tab: [전체 (47)] / [맛집 (15)] / [가볼만한곳 (32)] / [주차장 (22)] */}
         <View className="bg-white/95 px-4 pt-2.5 pb-2">
           <View className="flex-row bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 shadow-xs">
             <TouchableOpacity
@@ -427,16 +427,16 @@ export default function App() {
                 setActiveCategory("all");
               }}
               activeOpacity={0.8}
-              className={`flex-1 py-2 rounded-xl items-center justify-center ${
+              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
                 mainTab === "all" ? "bg-white shadow-sm" : ""
               }`}
             >
               <Text
-                className={`text-[11px] font-black font-sans ${
+                className={`text-xs font-black font-sans ${
                   mainTab === "all" ? "text-[#141414]" : "text-slate-500"
                 }`}
               >
-                전체(47)
+                전체 (47)
               </Text>
             </TouchableOpacity>
 
@@ -446,16 +446,16 @@ export default function App() {
                 setActiveCategory("all");
               }}
               activeOpacity={0.8}
-              className={`flex-1 py-2 rounded-xl items-center justify-center flex-row ${
+              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
                 mainTab === "food" ? "bg-[#E89558] shadow-sm shadow-orange-500/30" : ""
               }`}
             >
               <Text
-                className={`text-[11px] font-black font-sans ${
+                className={`text-xs font-black font-sans ${
                   mainTab === "food" ? "text-white" : "text-slate-600"
                 }`}
               >
-                🍽️맛집(15)
+                맛집 (15)
               </Text>
             </TouchableOpacity>
 
@@ -465,16 +465,16 @@ export default function App() {
                 setActiveCategory("all");
               }}
               activeOpacity={0.8}
-              className={`flex-1 py-2 rounded-xl items-center justify-center flex-row ${
+              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
                 mainTab === "attraction" ? "bg-[#1856FF] shadow-sm shadow-blue-500/30" : ""
               }`}
             >
               <Text
-                className={`text-[11px] font-black font-sans ${
+                className={`text-xs font-black font-sans ${
                   mainTab === "attraction" ? "text-white" : "text-slate-600"
                 }`}
               >
-                🎡명소(32)
+                명소 (32)
               </Text>
             </TouchableOpacity>
 
@@ -484,16 +484,16 @@ export default function App() {
                 setActiveCategory("all");
               }}
               activeOpacity={0.8}
-              className={`flex-1 py-2 rounded-xl items-center justify-center flex-row ${
+              className={`flex-1 py-2.5 rounded-xl items-center justify-center ${
                 mainTab === "parking" ? "bg-emerald-600 shadow-sm shadow-emerald-600/30" : ""
               }`}
             >
               <Text
-                className={`text-[11px] font-black font-sans ${
+                className={`text-xs font-black font-sans ${
                   mainTab === "parking" ? "text-white" : "text-slate-600"
                 }`}
               >
-                🅿️주차장(22)
+                주차장 (22)
               </Text>
             </TouchableOpacity>
           </View>
