@@ -1559,7 +1559,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 3120,
     phone: "051-808-7111",
-    image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=900&q=85",
+    image: require("../../assets/samgwangsa.jpg"),
     tags: ["CNN선정아름다운곳", "수만개연등축제", "빛의바다", "도심속힐링사찰", "24시간개방"],
     distance: "약 18.0km",
     hotelDistanceInfo: "거리: 약 18.0km · 차량 약 35~45분 (번영로/백양터널 경유)",
