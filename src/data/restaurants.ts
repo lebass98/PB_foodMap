@@ -2075,7 +2075,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 3890,
     phone: "051-722-7744",
-    image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=900&q=85",
+    image: require("../../assets/haedong_yonggungsa.jpg"),
     tags: ["바다위사찰", "소원성취", "108계단", "동전던지기", "소원들어션뷰카페"],
     distance: "약 9.5km",
     hotelDistanceInfo: "거리: 약 9.5km · 차량 약 20~25분",
