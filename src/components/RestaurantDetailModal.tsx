@@ -70,15 +70,15 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
 
   const typeConfig = isParking
     ? {
-        gradient: "linear-gradient(135deg, #059669 0%, #10B981 100%)",
-        label: "🅿️ 공영주차장",
-        tagBg: "rgba(5, 150, 105, 0.12)",
-        tagBorder: "border-emerald-200/80",
-        tagText: "text-emerald-700",
-        btnGradient: "linear-gradient(135deg, #059669 0%, #10B981 100%)",
-      }
+      gradient: "linear-gradient(135deg, #059669 0%, #10B981 100%)",
+      label: "🅿️ 공영주차장",
+      tagBg: "rgba(5, 150, 105, 0.12)",
+      tagBorder: "border-emerald-200/80",
+      tagText: "text-emerald-700",
+      btnGradient: "linear-gradient(135deg, #059669 0%, #10B981 100%)",
+    }
     : isAttraction
-    ? {
+      ? {
         gradient: "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)",
         label: "🎡 가볼만한곳",
         tagBg: "rgba(24, 86, 255, 0.12)",
@@ -86,7 +86,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
         tagText: "text-[#1856FF]",
         btnGradient: "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
       }
-    : {
+      : {
         gradient: "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
         label: "🍽️ 맛집",
         tagBg: "rgba(255, 107, 74, 0.12)",
@@ -103,12 +103,19 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
       onRequestClose={onClose}
     >
       <View className="flex-1 bg-slate-100/90 font-sans">
-        {/* Floating Frosted Glass Top Navigation Bar */}
-        <View className="absolute top-0 left-0 right-0 z-50 flex-row items-center justify-between px-5 pt-3 pb-3 bg-white/70 backdrop-blur-2xl border-b border-white/50 shadow-glass">
+        {/* Floating Ultra-Transparent Frosted Glass Top Navigation Bar */}
+        <View className="absolute top-0 left-0 right-0 z-50 flex-row items-center justify-between px-5 pt-4 pb-3">
           <TouchableOpacity
             onPress={onClose}
             activeOpacity={0.8}
-            className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
+            style={{
+              background: "rgba(255, 255, 255, 0.42)",
+              backdropFilter: "blur(24px) saturate(200%)",
+              WebkitBackdropFilter: "blur(24px) saturate(200%)",
+              borderWidth: 1,
+              borderColor: "rgba(255, 255, 255, 0.75)",
+            } as any}
+            className="w-10 h-10 rounded-full items-center justify-center shadow-md active:scale-95"
           >
             <ArrowLeft size={20} color="#141414" />
           </TouchableOpacity>
@@ -117,7 +124,14 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             <TouchableOpacity
               onPress={handleShare}
               activeOpacity={0.8}
-              className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
+              style={{
+                background: "rgba(255, 255, 255, 0.42)",
+                backdropFilter: "blur(24px) saturate(200%)",
+                WebkitBackdropFilter: "blur(24px) saturate(200%)",
+                borderWidth: 1,
+                borderColor: "rgba(255, 255, 255, 0.75)",
+              } as any}
+              className="w-10 h-10 rounded-full items-center justify-center shadow-md active:scale-95"
             >
               <Share2 size={18} color="#141414" />
             </TouchableOpacity>
@@ -125,7 +139,14 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             <TouchableOpacity
               onPress={() => onToggleFavorite(restaurant.id)}
               activeOpacity={0.8}
-              className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
+              style={{
+                background: "rgba(255, 255, 255, 0.42)",
+                backdropFilter: "blur(24px) saturate(200%)",
+                WebkitBackdropFilter: "blur(24px) saturate(200%)",
+                borderWidth: 1,
+                borderColor: "rgba(255, 255, 255, 0.75)",
+              } as any}
+              className="w-10 h-10 rounded-full items-center justify-center shadow-md active:scale-95"
             >
               <Bookmark
                 size={18}
@@ -262,7 +283,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                   </Text>
                   {restaurant.breakTime && (
                     <Text className="text-[11px] font-semibold text-amber-600 mt-1 font-sans">
-                       브레이크타임: {restaurant.breakTime}
+                      브레이크타임: {restaurant.breakTime}
                     </Text>
                   )}
                   {restaurant.lastOrder && (
@@ -288,8 +309,8 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                   <View
                     key={index}
                     className={`pb-3.5 ${index !== restaurant.menuItems.length - 1
-                        ? "border-b border-slate-100"
-                        : ""
+                      ? "border-b border-slate-100"
+                      : ""
                       }`}
                   >
                     <View className="flex-row justify-between items-center">

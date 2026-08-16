@@ -376,11 +376,19 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView className="flex-1 bg-white font-sans" edges={["top"]}>
+      <SafeAreaView className="flex-1 bg-transparent font-sans" edges={["top"]}>
         <StatusBar style="dark" />
 
-        {/* Top Header with Glassmorphism, Glory Travel Logo, View Toggle & Hamburger Menu */}
-        <View className="bg-white/70 backdrop-blur-2xl px-4 pt-2.5 pb-2.5 border-b border-white/50 shadow-glass z-30">
+        {/* Top Header with Ultra-Transparent Glassmorphism */}
+        <View
+          style={{
+            background: "rgba(255, 255, 255, 0.45)",
+            backdropFilter: "blur(32px) saturate(220%)",
+            WebkitBackdropFilter: "blur(32px) saturate(220%)",
+            borderBottomWidth: 1,
+            borderBottomColor: "rgba(255, 255, 255, 0.6)",
+          } as any}
+          className="px-4 pt-2.5 pb-2.5 z-30 shadow-lg">
           {/* Row 1: Logo, Title, Quick Status Badge, View Mode Toggle, Hamburger Button */}
           <View className="flex-row items-center justify-between mb-2">
             {/* Left: Brand Logo & Title */}
@@ -638,9 +646,16 @@ export default function App() {
                 </View>
               )}
 
-              {/* Bottom Floating Place Preview Card (Frosted Glass Card) */}
+              {/* Bottom Floating Place Preview Card (Ultra-Transparent Frosted Glass) */}
               {selectedPlace && (
-                <View className="absolute bottom-6 left-4 right-4 bg-white/75 backdrop-blur-2xl rounded-3xl p-4 border border-white/70 shadow-modal">
+                <View
+                  style={{
+                    background: "rgba(255, 255, 255, 0.48)",
+                    backdropFilter: "blur(32px) saturate(210%)",
+                    WebkitBackdropFilter: "blur(32px) saturate(210%)",
+                  } as any}
+                  className="absolute bottom-6 left-4 right-4 rounded-3xl p-4 border border-white/80 shadow-2xl z-40"
+                >
                   <TouchableOpacity
                     onPress={() => handleOpenDetailModal(selectedPlace)}
                     activeOpacity={0.9}
@@ -648,7 +663,7 @@ export default function App() {
                     <View className="flex-row">
                       <Image
                         source={{ uri: selectedPlace.image }}
-                        className="w-24 h-24 rounded-2xl bg-slate-100 border border-white/60"
+                        className="w-24 h-24 rounded-2xl bg-slate-100/80 border border-white/70 shadow-sm"
                         resizeMode="cover"
                       />
                       <View className="flex-1 ml-3.5 justify-between">
@@ -676,7 +691,7 @@ export default function App() {
                                   color={
                                     favorites.includes(selectedPlace.id)
                                       ? "#1856FF"
-                                      : "#94a3b8"
+                                      : "#64748b"
                                   }
                                   fill={
                                     favorites.includes(selectedPlace.id)
@@ -689,53 +704,57 @@ export default function App() {
                               <TouchableOpacity
                                 onPress={() => setSelectedPlace(null)}
                                 activeOpacity={0.7}
-                                className="p-1 w-6 h-6 rounded-full bg-slate-200/80 items-center justify-center ml-0.5 active:scale-95"
+                                className="p-1 w-6 h-6 rounded-full bg-slate-300/60 backdrop-blur-sm items-center justify-center ml-0.5 active:scale-95 border border-white/50"
                               >
-                                <X size={13} color="#64748b" />
+                                <X size={13} color="#334155" />
                               </TouchableOpacity>
                             </View>
                           </View>
 
                           <View className="flex-row items-center mt-1">
-                            <Star size={13} color="#f59e0b" fill="#f59e0b" />
-                            <Text className="text-xs font-bold text-[#141414] ml-1 font-sans">
-                              {selectedPlace.rating}
-                            </Text>
-                            <Text className="text-xs text-slate-400 ml-1 font-sans">
-                              ({selectedPlace.reviews})
-                            </Text>
-                            <Text className="text-xs text-slate-300 mx-1.5">
+                            <View className="flex-row items-center bg-amber-50/90 backdrop-blur-xs px-2 py-0.5 rounded-full border border-amber-200/80">
+                              <Star size={12} color="#f59e0b" fill="#f59e0b" />
+                              <Text className="text-xs font-bold text-[#141414] ml-1 font-sans">
+                                {selectedPlace.rating}
+                              </Text>
+                              <Text className="text-xs text-slate-400 ml-1 font-sans">
+                                ({selectedPlace.reviews})
+                              </Text>
+                            </View>
+                            <Text className="text-xs text-slate-400 mx-1.5 font-bold">
                               ·
                             </Text>
-                            <Text className="text-xs text-slate-600 font-medium font-sans">
+                            <Text className="text-xs text-slate-700 font-bold font-sans">
                               {selectedPlace.categoryLabel}
                             </Text>
                           </View>
 
                           <Text
-                            className="text-[11px] text-slate-500 mt-1 font-sans"
+                            className="text-[11px] text-slate-600 mt-1 font-sans font-medium"
                             numberOfLines={1}
                           >
                             {selectedPlace.address}
                           </Text>
                         </View>
 
-                        {/* Hotel Distance Badge */}
+                        {/* Hotel Distance Badge (Transparent Tint Pill) */}
                         <View
                           style={{
                             background:
                               selectedPlace.mainType === "parking"
-                                ? "rgba(5, 150, 105, 0.12)"
+                                ? "rgba(5, 150, 105, 0.15)"
                                 : selectedPlace.mainType === "attraction"
-                                ? "rgba(24, 86, 255, 0.12)"
-                                : "rgba(255, 107, 74, 0.12)",
+                                ? "rgba(24, 86, 255, 0.15)"
+                                : "rgba(255, 107, 74, 0.15)",
+                            backdropFilter: "blur(12px)",
+                            WebkitBackdropFilter: "blur(12px)",
                           } as any}
-                          className={`px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center backdrop-blur-sm ${
+                          className={`px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center ${
                             selectedPlace.mainType === "parking"
-                              ? "border-emerald-200/80"
+                              ? "border-emerald-300/80"
                               : selectedPlace.mainType === "attraction"
-                              ? "border-blue-200/80"
-                              : "border-orange-200/80"
+                              ? "border-blue-300/80"
+                              : "border-orange-300/80"
                           }`}
                         >
                           <Car
@@ -751,7 +770,7 @@ export default function App() {
                           <Text
                             className={`text-[10.5px] font-bold ${
                               selectedPlace.mainType === "parking"
-                                ? "text-emerald-700"
+                                ? "text-emerald-800"
                                 : selectedPlace.mainType === "attraction"
                                 ? "text-[#1856FF]"
                                 : "text-[#CE7636]"
@@ -765,7 +784,7 @@ export default function App() {
                   </TouchableOpacity>
 
                   {/* Navigation Action Buttons with Vivid Glassmorphism Gradients */}
-                  <View className="flex-row items-center gap-2.5 mt-3.5 pt-3 border-t border-white/60">
+                  <View className="flex-row items-center gap-2.5 mt-3.5 pt-3 border-t border-white/70">
                     <TouchableOpacity
                       onPress={() => handleOpenDetailModal(selectedPlace)}
                       activeOpacity={0.8}

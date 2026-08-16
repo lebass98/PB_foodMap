@@ -183,8 +183,8 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
           }}
           className="bg-white h-full shadow-2xl flex-col border-l border-slate-100 z-50"
         >
-          {/* Pure White Header (Dark Background Removed) */}
-          <View className="pt-12 px-5 pb-4 bg-white border-b border-slate-100 shadow-xs">
+          {/* Pure White Header (Compact Padding) */}
+          <View className="pt-4 px-5 pb-4 bg-white border-b border-slate-100 shadow-xs">
             <View className="flex-row items-center justify-between mb-3.5">
               <View className="flex-row items-center">
                 <View className="w-9 h-9 rounded-xl overflow-hidden border border-slate-200/90 bg-white items-center justify-center mr-2.5 shadow-sm">
