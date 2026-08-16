@@ -580,10 +580,150 @@ export const SAMPLE_PLACES: Place[] = [
   },
 
   // =========================================================================
-  // 🎡 [가볼만한곳 BEST 29] - 중복 0건 전수 검증 및 신규 4대 명소 추가
+  // 🎡 [가볼만한곳 BEST 32] - 엑스더스카이, 아홉산숲, 기장오션뷰카페 추가 & 중복 0건
   // =========================================================================
   {
     id: "a1",
+    name: "부산 엑스더스카이 (BUSAN X the SKY)",
+    mainType: "attraction",
+    category: "view",
+    categoryLabel: "전망대/랜드마크100층",
+    location: "부산 해운대구 중동 엘시티",
+    address: "부산 해운대구 달맞이길 30 (엘시티 랜드마크타워 98~100층)",
+    latitude: 35.1598,
+    longitude: 129.1698,
+    rating: 4.9,
+    reviews: 3820,
+    phone: "051-733-2600",
+    image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&q=80",
+    tags: ["한국관광100선", "100층전망대", "쇼킹브릿지370m", "세계최고층스타벅스", "호텔도보10분"],
+    distance: "약 1.0km",
+    hotelDistanceInfo: "거리: 약 1.0km · 차량 약 3~4분 (도보 약 10~12분)",
+    operatingHours: "10:00 ~ 21:00 (발권/입장 마감 20:30) · 연중무휴",
+    todayHours: "10:00 - 21:00",
+    lastOrder: "20:30 (입장 마감)",
+    holiday: "연중무휴",
+    highlight: "한국관광 100선! 100층 370m 높이 투명 유리바닥 '쇼킹 브릿지'와 세계 최고층 99층 스타벅스",
+    reviewSummary: [
+      "한국관광 100선 선정, 부산 최고층 100층 전망대 [03:31]",
+      "해운대 백사장, 광안대교, 기장까지 한눈에 조망하며 날씨가 안 좋을 때는 야경 관람 추천 [03:43, 03:57]",
+      "지상 370m 투명 유리바닥 '쇼킹 브릿지', 98층 블랙업커피, 99층 세계 최고층 스타벅스 및 스카이99 레스토랑 입점 [04:35, 04:58, 05:21]",
+    ],
+    menuItems: [
+      {
+        name: "엑스더스카이 전망대 대인 입장권",
+        price: "27,000원",
+        isSignature: true,
+        description: "100층 초고속 엘리베이터 및 쇼킹브릿지 관람",
+      },
+    ],
+    reviewsList: [
+      {
+        id: "ar1",
+        author: "스카이라운지",
+        date: "어제",
+        rating: 5,
+        content: "99층 스타벅스에서 커피 마시며 보는 해운대 바다 뷰가 환상적입니다. 쇼킹 브릿지도 아찔해요!",
+      },
+    ],
+  },
+  {
+    id: "a2",
+    name: "아홉산숲",
+    mainType: "attraction",
+    category: "nature",
+    categoryLabel: "자연/400년대나무숲",
+    location: "부산 기장군 철마면",
+    address: "부산 기장군 철마면 미동길 37-1",
+    latitude: 35.2936,
+    longitude: 129.1764,
+    rating: 4.9,
+    reviews: 2980,
+    phone: "051-721-9183",
+    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80",
+    tags: ["400년사유림", "맹종죽대나무숲", "금강소나무보호수", "영화더킹군도촬영지", "자연힐링숲길"],
+    distance: "약 19.5km",
+    hotelDistanceInfo: "거리: 약 19.5km · 차량 약 30~35분",
+    operatingHours: "09:00 ~ 18:00 (입장마감 17:00) · 매주 월요일 정기휴무",
+    todayHours: "09:00 - 18:00",
+    lastOrder: "17:00 (입장 마감)",
+    holiday: "매주 월요일 정기휴무 (월요일이 공휴일인 경우 정상 운영)",
+    highlight: "남평 문씨 가문이 400여 년간 가꿔온 15만 평 사유림! 굵은 맹종죽 대나무숲과 금강소나무 영화 촬영 명소",
+    reviewSummary: [
+      "남평 문씨 가문이 400여 년간 가꿔온 15만 평 규모의 사유림 힐링 명소 [18:37, 18:47]",
+      "굵은 맹종죽 대나무숲, 구갑죽, 수령 400년 금강소나무 군락 등 1,100여 그루의 보호수 보존 [18:59, 19:11, 19:25]",
+      "유명 영화(군도, 협녀) 및 드라마(더 킹) 촬영지로 부산 현지인들이 아끼는 자연 숲길 [18:37, 19:11]",
+    ],
+    menuItems: [
+      {
+        name: "아홉산숲 입장료 (일반)",
+        price: "5,000원",
+        isSignature: true,
+        description: "400년 맹종죽 대나무숲 및 금강소나무 숲길 힐링 트레킹",
+      },
+    ],
+    reviewsList: [
+      {
+        id: "ar2",
+        author: "숲속힐링러",
+        date: "2일 전",
+        rating: 5,
+        content: "대나무숲에 바람 불 때 사각거리는 소리가 마음을 정말 편안하게 해줍니다. 부산 최고의 힐링 명소!",
+      },
+    ],
+  },
+  {
+    id: "a3",
+    name: "기장 대형 오션뷰 카페 BEST (칠암사계 & 웨이브온)",
+    mainType: "attraction",
+    category: "cafe",
+    categoryLabel: "카페/기장오션뷰명소",
+    location: "부산 기장군 일광/장안",
+    address: "부산 기장군 일광읍 칠암1길 7-10 (칠암사계) / 기장군 장안읍 해맞이로 286 (웨이브온)",
+    latitude: 35.2678,
+    longitude: 129.2562,
+    rating: 4.9,
+    reviews: 4120,
+    phone: "051-727-1200",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
+    tags: ["이흥용명장소금빵", "웨이브온오션뷰원조", "코랄라니계단식테라스", "보몽드유럽정원", "기장필수코스"],
+    distance: "약 20.0km",
+    hotelDistanceInfo: "거리: 약 7.5~23.0km · 차량 약 20~35분",
+    operatingHours: "칠암사계 10:00~21:00 / 웨이브온 10:00~24:00 · 연중무휴",
+    todayHours: "10:00 - 21:00 (칠암사계)",
+    holiday: "연중무휴",
+    highlight: "대한민국 제과명장 이흥용의 칠암사계 소금빵 & 기장 오션뷰 원조 웨이브온, 코랄라니 초대형 테라스",
+    reviewSummary: [
+      "웨이브온: 기장 오션뷰 카페의 원조이자 선두주자 [19:31]",
+      "칠암사계: 대한민국 명장 이흥용 제과장의 소금빵 베이커리 대형 카페 [20:05]",
+      "코랄라니: 세계적 건축가가 설계한 계단식 초대형 테라스 오션뷰 카페 [19:31]",
+      "보몽드: 유럽 대저택 정원 감성과 분수대가 매력적인 복합 문화 카페 [19:45]",
+    ],
+    menuItems: [
+      {
+        name: "칠암사계 소금빵 (2개입 / 시그니처)",
+        price: "4,000원",
+        isSignature: true,
+        description: "버터 풍미와 바삭 쫄깃한 식감의 대한민국 대표 소금빵",
+      },
+      {
+        name: "웨이브온 월내라떼",
+        price: "7,500원",
+        description: "푸른 기장 바다를 바라보며 즐기는 시그니처 크림 라떼",
+      },
+    ],
+    reviewsList: [
+      {
+        id: "ar3",
+        author: "빵지순례자",
+        date: "어제",
+        rating: 5,
+        content: "칠암사계 소금빵 갓 나왔을 때 먹었는데 인생 소금빵입니다. 뷰도 환상적이에요!",
+      },
+    ],
+  },
+  {
+    id: "a4",
     name: "감천문화마을",
     mainType: "attraction",
     category: "culture",
@@ -596,16 +736,17 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 4520,
     phone: "051-204-1444",
     image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80",
-    tags: ["어린왕자포토존", "한국의마추픽추", "계단식파스텔마을", "골목길스탬프투어", "세계적예술공간"],
+    tags: ["한국관광100선5회", "어린왕자포토존", "한국의마추픽추", "계단식파스텔마을", "골목길투어"],
     distance: "약 22.0km",
     hotelDistanceInfo: "거리: 약 22.0km · 차량 약 40~50분 (광안·부산항·남항대교 경유)",
     operatingHours: "3월~10월 09:00~18:00 / 11월~2월 09:00~17:00 (주민 거주구역 주간 관람)",
     todayHours: "09:00 - 18:00",
     holiday: "연중무휴 (무료 입장)",
-    highlight: "산자락을 따라 계단식으로 늘어선 알록달록 파스텔톤 집들! 어린 왕자와 사막여우 조형물 대표 포토존",
+    highlight: "한국관광 100선 5회 연속 선정! 피란민촌의 산자락 계단식 집터가 세계적 예술마을로 탈바꿈한 '부산의 마추픽추'",
     reviewSummary: [
-      "산자락을 따라 계단식으로 늘어선 알록달록한 집들이 있는 피란민촌이 세계적 예술공간으로 재탄생 [01:19, 01:37]",
-      "미로 같은 골목길 탐방과 마을·바다를 내려다보는 어린 왕자와 사막여우 조형물 포토존이 상징적 명소 [01:49, 02:06]",
+      "한국전쟁 피란민들의 산자락 계단식 집터가 예술마을로 탈바꿈한 '부산의 마추픽추' [08:15]",
+      "한국관광 100선 5회 연속 선정 명소 [08:27]",
+      "마을 안내센터에서 시작해 메인 관람로를 따라 어린 왕자 & 사막여우 포토존, 작은 박물관 관람 추천 [08:37, 08:50, 09:04]",
     ],
     menuItems: [
       {
@@ -617,7 +758,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar1",
+        id: "ar4",
         author: "어린왕자팬",
         date: "어제",
         rating: 5,
@@ -626,7 +767,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a2",
+    id: "a5",
     name: "부산항대교 (2층 시티투어버스)",
     mainType: "attraction",
     category: "view",
@@ -660,7 +801,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar2",
+        id: "ar5",
         author: "스릴만점",
         date: "2일 전",
         rating: 5,
@@ -669,7 +810,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a3",
+    id: "a6",
     name: "삼광사",
     mainType: "attraction",
     category: "culture",
@@ -704,7 +845,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar3",
+        id: "ar6",
         author: "연등매니아",
         date: "3일 전",
         rating: 5,
@@ -713,37 +854,34 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a4",
+    id: "a7",
     name: "송도 해상케이블카 & 송도용궁구름다리",
     mainType: "attraction",
     category: "view",
     categoryLabel: "체험/해상케이블카",
     location: "부산 서구 송도/암남동",
-    address: "부산 서구 송도해변로 171 (케이블카) / 부산 서구 암남공원로 127 (용궁구름다리)",
+    address: "부산 서구 송도해변로 171 (송도베이스테이션) / 암남공원로 127 (용궁구름다리)",
     latitude: 35.0760,
     longitude: 129.0232,
     rating: 4.9,
     reviews: 3890,
     phone: "051-247-9900",
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-    tags: ["바다위86m", "크리스탈캐빈", "동섬용궁구름다리", "암남공원연결", "짜릿한파도뷰"],
-    distance: "약 22.0km",
-    hotelDistanceInfo: "거리: 약 22.0km · 차량 약 35~45분 (남항대교 경유)",
-    operatingHours: "케이블카 09:00~21:00 (발권마감 20:30) / 구름다리 09:00~18:00",
+    tags: ["한국관광100선", "바다위86m", "크리스탈캐빈", "127m용궁구름다리", "암남공원비경"],
+    distance: "약 21.0km",
+    hotelDistanceInfo: "거리: 약 21.0~22.0km · 차량 약 35~45분 (남항대교 경유)",
+    operatingHours: "케이블카 09:00~21:00 / 용궁구름다리 09:00~18:00 (입장마감 17:30)",
     todayHours: "09:00 - 21:00 (케이블카)",
     lastOrder: "20:30 (발권 마감)",
     holiday: "구름다리 매월 1·3번째 월요일 휴무",
-    highlight: "바다 위 86m 상공을 가로지르는 짜릿한 케이블카 & 무인도(동섬)를 연결하는 출렁이는 용궁구름다리",
+    highlight: "한국관광 100선! 최고 86m 상공에서 1.6km 바다를 가로지르는 크리스탈 케이블카 & 127m 해상 현수보행교",
     reviewSummary: [
-      "바다 위 86m 상공을 가로지르며 발밑 파도를 내려다보는 짜릿한 케이블카 [14:08, 14:14, 14:33]",
-      "암남공원에 내려 작은 무인도(동섬)를 연결하는 출렁이는 용궁구름다리 위에서 기암절벽과 바다를 온몸으로 체험 [14:33, 14:48]",
+      "국내 제1호 공설 해수욕장 바다 위 최고 86m 높이에서 1.6km를 가로지르는 케이블카 [10:00, 10:51]",
+      "바닥이 투명한 크리스탈 크루즈 탑승 시 발아래 맑은 바다와 해안 잔도길 관람 [10:51]",
+      "18년 만에 복원되어 한국관광 100선에 선정된 길이 127m의 해상 현수보행교 송도 용궁구름다리 [12:09]",
+      "그물망(메쉬) 바닥으로 설계되어 바다 위를 걷는 아찔함과 암남공원 기암절벽의 웅장한 비경 감상 [12:22]",
     ],
     menuItems: [
-      {
-        name: "에어크루즈 왕복 (일반 캐빈 / 대인)",
-        price: "17,000원",
-        description: "송도베이스테이션~스카이파크 왕복 탑승권",
-      },
       {
         name: "크리스탈크루즈 왕복 (바닥 투명 유리 / 대인)",
         price: "22,000원",
@@ -758,7 +896,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar4",
+        id: "ar7",
         author: "케이블카러버",
         date: "어제",
         rating: 5,
@@ -767,7 +905,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a5",
+    id: "a8",
     name: "동생말 전망대",
     mainType: "attraction",
     category: "view",
@@ -801,7 +939,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar5",
+        id: "ar8",
         author: "부산풍경러",
         date: "2일 전",
         rating: 5,
@@ -810,7 +948,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a6",
+    id: "a9",
     name: "이기대 수변공원 (어울마당)",
     mainType: "attraction",
     category: "nature",
@@ -844,7 +982,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar6",
+        id: "ar9",
         author: "트레커",
         date: "3일 전",
         rating: 5,
@@ -853,8 +991,8 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a7",
-    name: "오륙도 해맞이공원 & 스카이워크",
+    id: "a10",
+    name: "오륙도 스카이워크 & 해맞이공원",
     mainType: "attraction",
     category: "view",
     categoryLabel: "전망대/유채꽃명소",
@@ -866,17 +1004,18 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 2890,
     phone: "051-607-6395",
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-    tags: ["수선화유채꽃", "유리바닥스카이워크", "동해남해분기점", "SNS인생샷", "해파랑길"],
+    tags: ["35m해안절벽", "유리바닥스카이워크", "동해남해분기점", "수선화유채꽃", "해파랑카페"],
     distance: "약 18.5km",
-    hotelDistanceInfo: "거리: 약 18.5km · 차량 약 30~35분 (광안대교·부산항대교 경유)",
-    operatingHours: "공원 상시 개방 / 스카이워크 09:00 ~ 18:00 (입장마감 17:50 / 기상악화 시 통제)",
+    hotelDistanceInfo: "거리: 약 18.5km · 차량 약 30~35분 (광안·부산항대교 경유)",
+    operatingHours: "공원 상시 개방 / 스카이워크 09:00 ~ 18:00 (입장마감 17:50 / 눈·비·강풍 시 통제)",
     todayHours: "09:00 - 18:00 (스카이워크)",
     lastOrder: "17:50 (입장 마감)",
     holiday: "연중무휴",
-    highlight: "봄철 노란 유채꽃과 수선화 언덕의 절경! 투명 유리 스카이워크 위에서 감상하는 오륙도의 짜릿함",
+    highlight: "35m 해안 절벽 위에 세워진 유리 바닥 스카이워크 (동해와 남해의 분기점) & 오륙도 생태 홍보관과 해녀촌 해산물",
     reviewSummary: [
-      "봄철 만개하는 노란 유채꽃과 수선화가 푸른 바다와 어우러져 SNS 인생샷 명소",
-      "투명 유리 바닥의 스카이워크 위에서 오륙도를 감상하는 짜릿한 경험",
+      "35m 해안 절벽 위에 유리 바닥으로 세워진 아찔한 해상 전망대 (동해와 남해의 분기점) [14:19, 14:42, 14:54]",
+      "오륙도 생태 홍보관과 오션뷰 해파랑 카페, 선착장 해녀촌 신선 해산물 체험 가능 [15:07, 15:20]",
+      "봄철 만개하는 노란 유채꽃과 수선화가 어우러진 SNS 인생샷 명소",
     ],
     menuItems: [
       {
@@ -888,7 +1027,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar7",
+        id: "ar10",
         author: "꽃놀이러",
         date: "어제",
         rating: 5,
@@ -897,7 +1036,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a8",
+    id: "a11",
     name: "황령산 봉수대",
     mainType: "attraction",
     category: "view",
@@ -932,7 +1071,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar8",
+        id: "ar11",
         author: "야경사냥꾼",
         date: "2일 전",
         rating: 5,
@@ -941,7 +1080,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a9",
+    id: "a12",
     name: "범천동 호천마을",
     mainType: "attraction",
     category: "culture",
@@ -975,7 +1114,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar9",
+        id: "ar12",
         author: "드라마덕후",
         date: "3일 전",
         rating: 5,
@@ -984,7 +1123,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a10",
+    id: "a13",
     name: "해동 용궁사",
     mainType: "attraction",
     category: "culture",
@@ -997,18 +1136,18 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 3890,
     phone: "051-722-7744",
     image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80",
-    tags: ["바다위사찰", "소원성취", "기암절벽", "108계단", "동양적신비로움"],
+    tags: ["바다위사찰", "소원성취", "108계단", "동전던지기", "소원들어션뷰카페"],
     distance: "약 9.5km",
     hotelDistanceInfo: "거리: 약 9.5km · 차량 약 20~25분",
     operatingHours: "04:30 ~ 20:30 (입장마감 19:50) · 연중무휴",
     todayHours: "04:30 - 20:30",
     lastOrder: "19:50 (입장 마감)",
     holiday: "연중무휴 (무료 입장)",
-    highlight: "깊은 산속이 아닌 해안 기암절벽 위에 세워진 수상 사찰! 진심으로 기도하면 한 가지 소원은 꼭 이루어지는 명소",
+    highlight: "기암괴석과 바다가 맞닿은 해안가에 세워진 한국에서 가장 아름다운 수상 사찰! 일출 명소 & 다리 위 동전 던지기 소원 빌기",
     reviewSummary: [
-      "깊은 산속이 아닌 해안 기암절벽 위에 세워진 한국에서 가장 아름다운 수상 사찰 [11:06, 11:20]",
-      "'진심으로 기도하면 한 가지 소원은 꼭 이루어진다'는 전설 [11:20]",
-      "일주문, 108계단을 지나 바다와 금빛 불상이 빚어내는 동양적 신비로움 [11:39]",
+      "기암괴석과 바다가 맞닿은 해안가에 세워진 한국에서 가장 아름다운 수상 사찰 [17:20]",
+      "새벽부터 개방되어 일출 감상에 좋으며, 12지신상과 교통안전탑을 지나 108계단을 내려가는 이색 코스 [17:32, 17:57]",
+      "다리 위 동전 던지기 소원 빌기와 사찰 내 '소원들' 오션뷰 카페 운영 [18:09, 18:16]",
     ],
     menuItems: [
       {
@@ -1020,7 +1159,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar10",
+        id: "ar13",
         author: "힐링여행자",
         date: "2일 전",
         rating: 5,
@@ -1029,8 +1168,8 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a11",
-    name: "흰여울 문화마을 & 절영해안산책로",
+    id: "a14",
+    name: "흰여울 문화마을 & 흰여울해안터널",
     mainType: "attraction",
     category: "culture",
     categoryLabel: "문화마을/해안터널",
@@ -1042,17 +1181,17 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 2680,
     phone: "051-419-4067",
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-    tags: ["부산의산토리니", "변호인촬영지", "해안터널실루엣", "오션뷰카페", "절영산책로"],
+    tags: ["부산의산토리니", "변호인촬영지", "해안터널실루엣역광", "절벽라면", "오션뷰소품샵"],
     distance: "약 21.0km",
     hotelDistanceInfo: "거리: 약 21.0km · 차량 약 35~45분 (부산항대교 경유)",
     operatingHours: "마을 골목 상시 개방 (해안터널 09:00~18:00 / 상점가 10:00~19:00) · 연중무휴",
     todayHours: "골목길 24시간 개방",
     holiday: "연중무휴",
-    highlight: "해안 절벽을 따라 이어진 피란민 옛 골목길! 오션뷰 카페, 아기자기한 공방과 흰여울해안터널 실루엣 사진 필수",
+    highlight: "바다 절벽을 따라 흰색과 파란색으로 채색된 '부산의 산토리니'! 절벽 라면과 흰여울해안터널 실루엣 역광 사진 필수",
     reviewSummary: [
-      "해안 절벽을 따라 이어진 피란민들의 옛 골목길 [12:50, 12:55, 13:10]",
-      "담장 너머 푸른 바다를 바라보는 오션뷰 카페와 아기자기한 공방 [13:10, 13:24]",
-      "영화 '변호인' 촬영지이자 골목 끝 흰여울해안터널 실루엣 사진 필수 [13:37, 13:52]",
+      "바다 절벽을 따라 흰색과 파란색으로 채색된 '부산의 산토리니' [12:54, 13:04]",
+      "골목길 소품샵·카페 탐방 및 바다를 보며 먹는 절벽 라면이 명물 [13:17, 13:30]",
+      "마을 끝 계단을 내려가 만나는 흰여울해안터널 내부 실루엣 역광 사진 필수 [13:45, 13:55]",
     ],
     menuItems: [
       {
@@ -1064,7 +1203,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar11",
+        id: "ar14",
         author: "감성여행가",
         date: "3일 전",
         rating: 5,
@@ -1073,7 +1212,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a12",
+    id: "a15",
     name: "태종대 유원지 (다누비열차·태종사)",
     mainType: "attraction",
     category: "nature",
@@ -1107,7 +1246,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar12",
+        id: "ar15",
         author: "영도탐험가",
         date: "2일 전",
         rating: 5,
@@ -1116,7 +1255,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a13",
+    id: "a16",
     name: "해운대 달맞이길 (전망대)",
     mainType: "attraction",
     category: "view",
@@ -1150,7 +1289,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar13",
+        id: "ar16",
         author: "드라이브러버",
         date: "3일 전",
         rating: 5,
@@ -1159,7 +1298,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a14",
+    id: "a17",
     name: "동백섬 (누리마루 산책로)",
     mainType: "attraction",
     category: "nature",
@@ -1193,7 +1332,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar14",
+        id: "ar17",
         author: "아침산책러",
         date: "어제",
         rating: 5,
@@ -1202,7 +1341,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a15",
+    id: "a18",
     name: "더베이 101 (The Bay 101)",
     mainType: "attraction",
     category: "night",
@@ -1215,17 +1354,17 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 2650,
     phone: "051-726-8888",
     image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=800&q=80",
-    tags: ["마린시티야경", "물웅덩이반영샷", "피시앤칩스", "노상맥주", "호텔도보15분"],
+    tags: ["동백섬초입", "마린시티야경", "핑거스앤챗", "피시앤칩스맥주", "호텔도보12분"],
     distance: "약 1.1km",
-    hotelDistanceInfo: "거리: 약 1.1km · 차량 약 4~5분 (호텔에서 도보 약 12~15분)",
+    hotelDistanceInfo: "거리: 약 1.1km · 차량 약 4~5분 (도보 약 12~15분)",
     operatingHours: "08:00 ~ 24:00 (식음 매장 10:00 ~ 23:30) · 연중무휴",
     todayHours: "08:00 - 24:00",
     holiday: "연중무휴",
-    highlight: "바다 건너 마린시티 초고층 빌딩 숲이 물 위에 반영되는 홍콩/뉴욕급 로맨틱 야경 & 물웅덩이 반영샷 포토존",
+    highlight: "동백섬 초입 최신 마리나 복합 문화 공간! 마린시티 초고층 빌딩 야경을 보며 '핑거스앤챗' 피시앤칩스와 맥주 즐기기",
     reviewSummary: [
-      "바다 건너 마린시티 초고층 빌딩 숲이 물 위에 반영되는 홍콩/뉴욕급 로맨틱 야경 명소 [10:05, 10:18, 10:30, 10:46]",
-      "외국인 사이에서 유명한 '물웅덩이 반영샷' 필수 포토존 [10:30]",
-      "야외 테라스에서 시원한 맥주와 피시앤칩스 즐기기 좋음 [10:46]",
+      "동백섬 초입에 위치한 최신 마리나 및 복합 문화 외식 공간 [06:49]",
+      "마린시티 초고층 빌딩 야경을 바라보며 '핑거스앤챗' 피시앤칩스와 맥주 즐기기 [07:05]",
+      "야간 불꽃놀이를 즐기는 요트투어 및 동백공영주차장 뒤편 바다 포토존 명소 [07:31, 07:35]",
     ],
     menuItems: [
       {
@@ -1237,7 +1376,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar15",
+        id: "ar18",
         author: "부산맥주러",
         date: "어제",
         rating: 5,
@@ -1246,7 +1385,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a16",
+    id: "a19",
     name: "해운대 블루라인파크 (미포정거장)",
     mainType: "attraction",
     category: "beach",
@@ -1259,17 +1398,17 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 3560,
     phone: "051-701-5548",
     image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80",
-    tags: ["스카이캡슐", "해변열차", "그린웨이산책로", "청사포역", "추천조합코스"],
+    tags: ["연간200만방문", "스카이캡슐", "해변열차", "청사포철길포토존", "사전예매필수"],
     distance: "약 1.2km",
     hotelDistanceInfo: "거리: 약 1.2km · 차량 약 4~5분 (도보 약 15분)",
-    operatingHours: "09:30 ~ 18:00~20:30 (시즌별 탄력 운영 / 사전 예약 권장) · 연중무휴",
+    operatingHours: "09:30 ~ 18:00~20:30 (계절·월별 탄력 운영) · 연중무휴",
     todayHours: "09:30 - 19:30",
     holiday: "연중무휴",
-    highlight: "동해남부선 폐선 부지를 활용한 세계적 해안 감성열차! 공중 레일 스카이캡슐과 레트로 해변열차 & 그린웨이 산책로",
+    highlight: "연간 200만 명이 찾는 부산 대표 랜드마크! 프라이빗 스카이캡슐과 계단식 좌석의 오션뷰 해변열차 (사전 예매 필수)",
     reviewSummary: [
-      "동해남부선 폐선 부지를 활용한 세계적인 해안 감성열차 [07:24, 07:41]",
-      "공중 레일 위를 달리는 프라이빗한 스카이캡슐과 탁 트인 바다를 조망하는 레트로한 해변열차 [07:53, 08:07]",
-      "철길 옆 데크 산책로(그린웨이)를 따라 걷기에도 최적 [08:41]",
+      "연간 약 200만 명이 방문하는 부산의 랜드마크 [01:39]",
+      "일행끼리 프라이빗하게 바다를 조망하는 스카이캡슐과 탁 트인 바다를 바라보는 계단식 좌석의 해변열차로 구성 [01:51, 02:30]",
+      "주말/공휴일은 당일 발권이 어려우므로 사전 예매 필수, 청사포 정거장 앞 철길 포토존 추천 [02:04, 02:57]",
     ],
     menuItems: [
       {
@@ -1286,7 +1425,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar16",
+        id: "ar19",
         author: "블루라인매니아",
         date: "2일 전",
         rating: 5,
@@ -1295,7 +1434,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a17",
+    id: "a20",
     name: "청사포 다릿돌전망대",
     mainType: "attraction",
     category: "view",
@@ -1329,7 +1468,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar17",
+        id: "ar20",
         author: "슬램덩크팬",
         date: "어제",
         rating: 5,
@@ -1338,7 +1477,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a18",
+    id: "a21",
     name: "수영만 요트경기장 (요트 투어)",
     mainType: "attraction",
     category: "beach",
@@ -1372,7 +1511,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar18",
+        id: "ar21",
         author: "요트러버",
         date: "3일 전",
         rating: 5,
@@ -1381,7 +1520,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a19",
+    id: "a22",
     name: "오시리아 해안산책로 (오랑대공원)",
     mainType: "attraction",
     category: "nature",
@@ -1415,7 +1554,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar19",
+        id: "ar22",
         author: "기장러버",
         date: "2일 전",
         rating: 5,
@@ -1424,7 +1563,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a20",
+    id: "a23",
     name: "해운대 해수욕장",
     mainType: "attraction",
     category: "beach",
@@ -1437,17 +1576,17 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 5120,
     phone: "051-749-5700",
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-    tags: ["씨클라우드호텔앞", "도보1분", "1.5km백사장", "마천루야경", "해운대전통시장인접"],
+    tags: ["씨클라우드호텔앞", "도보1분", "1.5km백사장", "구남로맛집골목인접", "데크로드조성"],
     distance: "약 100m",
     hotelDistanceInfo: "거리: 약 100m · 호텔 바로 앞 (도보 1~2분)",
     operatingHours: "24시간 상시 개방 · 연중무휴",
     todayHours: "24시간 상시 개방",
     holiday: "연중무휴",
-    highlight: "1.5km 백사장과 초고층 마천루가 어우러진 글로벌 해양 휴양지! 낮 산책과 밤 마천루 야경의 반전 매력",
+    highlight: "1.5km 넓은 백사장과 완만한 수심의 대한민국 대표 해변! 호텔과 고층 빌딩이 어우러진 현대적 뷰 & 구남로 맛집 골목 인접",
     reviewSummary: [
-      "1.5km 백사장과 초고층 마천루가 어우러진 글로벌 해양 휴양지 [09:06, 09:20, 09:31]",
-      "낮 산책과 밤 마천루 야경의 반전 매력 [09:31]",
-      "주변 특급호텔, 트렌디한 식당, 해운대전통시장 인접 [09:46]",
+      "길이 1.5km의 넓은 백사장과 수심이 완만해 남녀노소 즐기기 좋은 대한민국 대표 해변 [05:54]",
+      "호텔과 고층 빌딩이 어우러진 현대적인 뷰와 보행 약자를 위한 데크로드 조성 [06:06]",
+      "해변 주변 구남로 맛집 골목과 인접해 저녁 식사 및 숙박 연계에 최적 [06:30]",
     ],
     menuItems: [
       {
@@ -1459,7 +1598,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar20",
+        id: "ar23",
         author: "투숙객",
         date: "어제",
         rating: 5,
@@ -1468,11 +1607,11 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a21",
+    id: "a24",
     name: "광안리 해수욕장 & 광안대교",
     mainType: "attraction",
     category: "beach",
-    categoryLabel: "해변/외국인방문1위",
+    categoryLabel: "해변/야경핫플",
     location: "부산 수영구 광안동",
     address: "부산 수영구 광안해변로 219 (광안동)",
     latitude: 35.1532,
@@ -1481,17 +1620,17 @@ export const SAMPLE_PLACES: Place[] = [
     reviews: 3420,
     phone: "051-610-4841",
     image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-    tags: ["외국인방문1위", "광안대교미디어파사드", "토요일드론쇼", "부산불꽃축제개최지", "오션뷰펍카페"],
+    tags: ["7.4km광안대교", "토요일상설드론쇼", "요트폭죽쇼", "오션뷰펍카페", "버스킹공연"],
     distance: "약 6.5km",
     hotelDistanceInfo: "거리: 약 6.5km · 차량 약 15~20분",
     operatingHours: "24시간 상시 개방 (매주 토요일 드론라이트쇼 진행) · 연중무휴",
-    todayHours: "24시간 상시 개방 (토요일 드론쇼 20:00, 22:00)",
+    todayHours: "24시간 상시 개방 (토요일 드론쇼: 동절기 19시/21시, 하절기 20시/22시)",
     holiday: "연중무휴",
-    highlight: "외국인 관광객 방문 1위! 바다를 가로지르는 웅장한 광안대교 LED 미디어파사드와 매주 토요일 드론쇼",
+    highlight: "7.4km 광안대교 웅장한 전경과 화려한 야경 경관조명! 밤바다 요트 폭죽쇼, 버스킹 공연과 토요일 상설 드론쇼",
     reviewSummary: [
-      "외국인 관광객 방문 1위 명소 [05:20]",
-      "바다를 가로지르는 웅장한 광안대교를 바라보며 해변 카페와 펍에서 즐기는 여유 [05:28, 05:41]",
-      "밤마다 펼쳐지는 LED 미디어파사드와 매년 11월 100만 명이 몰리는 부산불꽃축제 개최지 [05:57, 06:04]",
+      "7.4km 광안대교 웅장한 전경과 화려한 야경 경관조명이 빛나는 핫플레이스 [15:44, 15:56]",
+      "밤바다 요트 폭죽쇼, 버스킹 공연, 토요일 상설 드론 라이트 쇼 진행 [16:07, 16:20]",
+      "해변 도로변에 개성 넘치는 오션뷰 식당, 펍, 플리마켓 밀집 [16:36, 16:49]",
     ],
     menuItems: [
       {
@@ -1503,7 +1642,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar21",
+        id: "ar24",
         author: "광안리팬",
         date: "어제",
         rating: 5,
@@ -1512,7 +1651,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a22",
+    id: "a25",
     name: "송정 해수욕장",
     mainType: "attraction",
     category: "beach",
@@ -1546,7 +1685,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar22",
+        id: "ar25",
         author: "서퍼",
         date: "2일 전",
         rating: 5,
@@ -1555,7 +1694,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a23",
+    id: "a26",
     name: "초량 이바구길 168계단",
     mainType: "attraction",
     category: "culture",
@@ -1590,7 +1729,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar23",
+        id: "ar26",
         author: "원도심러",
         date: "3일 전",
         rating: 5,
@@ -1599,7 +1738,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a24",
+    id: "a27",
     name: "영도 하늘전망대",
     mainType: "attraction",
     category: "view",
@@ -1634,7 +1773,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar24",
+        id: "ar27",
         author: "바다여행러",
         date: "2일 전",
         rating: 5,
@@ -1643,7 +1782,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a25",
+    id: "a28",
     name: "국립해양박물관",
     mainType: "attraction",
     category: "culture",
@@ -1679,7 +1818,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar25",
+        id: "ar28",
         author: "가족여행러",
         date: "어제",
         rating: 5,
@@ -1688,7 +1827,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a26",
+    id: "a29",
     name: "용두산 공원 (부산타워 / 다이아몬드타워)",
     mainType: "attraction",
     category: "view",
@@ -1724,7 +1863,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar26",
+        id: "ar29",
         author: "부산타워팬",
         date: "3일 전",
         rating: 5,
@@ -1733,7 +1872,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a27",
+    id: "a30",
     name: "국제시장 & 부평 깡통야시장",
     mainType: "attraction",
     category: "culture",
@@ -1768,7 +1907,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar27",
+        id: "ar30",
         author: "야식마니아",
         date: "어제",
         rating: 5,
@@ -1777,7 +1916,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a28",
+    id: "a31",
     name: "보수동 책방골목",
     mainType: "attraction",
     category: "culture",
@@ -1811,7 +1950,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar28",
+        id: "ar31",
         author: "책러버",
         date: "3일 전",
         rating: 5,
@@ -1820,7 +1959,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "a29",
+    id: "a32",
     name: "국립부산과학관",
     mainType: "attraction",
     category: "theme",
@@ -1856,7 +1995,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
     reviewsList: [
       {
-        id: "ar29",
+        id: "ar32",
         author: "과학가족",
         date: "3일 전",
         rating: 5,
