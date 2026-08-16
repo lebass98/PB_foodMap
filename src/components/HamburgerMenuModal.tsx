@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Modal,
   View,
@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Animated,
+  Dimensions,
 } from "react-native";
 import {
   X,
@@ -47,6 +49,8 @@ interface HamburgerMenuModalProps {
   locationName: string;
 }
 
+const DRAWER_WIDTH = Math.min(Dimensions.get("window").width * 0.82, 360);
+
 export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
   visible,
   onClose,
@@ -62,6 +66,48 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
   totalCounts,
   locationName,
 }) => {
+  const slideAnim = useRef(new Animated.Value(DRAWER_WIDTH)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (visible) {
+      Animated.parallel([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 220,
+          useNativeDriver: true,
+        }),
+        Animated.spring(slideAnim, {
+          toValue: 0,
+          damping: 22,
+          stiffness: 200,
+          mass: 0.9,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      slideAnim.setValue(DRAWER_WIDTH);
+      fadeAnim.setValue(0);
+    }
+  }, [visible]);
+
+  const handleClose = () => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 180,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: DRAWER_WIDTH,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onClose();
+    });
+  };
+
   const mainTabs = [
     {
       id: "all" as MainSectionType,
@@ -69,7 +115,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
       count: totalCounts.all,
       icon: Sparkles,
       color: "#1856FF",
-      activeBg: "bg-blue-50 border-blue-500",
+      activeBg: "bg-blue-50/90 border-blue-400",
       activeText: "text-[#1856FF]",
       badgeBg: "bg-blue-100 text-blue-700",
       desc: "부산 핫플 맛집 15곳 + 대표 명소 32곳",
@@ -80,7 +126,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
       count: totalCounts.food,
       icon: Utensils,
       color: "#E89558",
-      activeBg: "bg-orange-50 border-[#E89558]",
+      activeBg: "bg-orange-50/90 border-orange-400",
       activeText: "text-[#CE7636]",
       badgeBg: "bg-orange-100 text-orange-700",
       desc: "경유 맛집 3곳 + 줄 서는 부산 12대 핫플",
@@ -91,7 +137,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
       count: totalCounts.attraction,
       icon: FerrisWheel,
       color: "#1856FF",
-      activeBg: "bg-blue-50 border-[#1856FF]",
+      activeBg: "bg-blue-50/90 border-[#1856FF]",
       activeText: "text-[#1856FF]",
       badgeBg: "bg-blue-100 text-blue-700",
       desc: "전망대·해변열차·야경·힐링숲 32선",
@@ -102,7 +148,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
       count: totalCounts.parking,
       icon: CircleParking,
       color: "#059669",
-      activeBg: "bg-emerald-50 border-emerald-600",
+      activeBg: "bg-emerald-50/90 border-emerald-500",
       activeText: "text-emerald-700",
       badgeBg: "bg-emerald-100 text-emerald-700",
       desc: "명소/맛집 반경 1km 22곳 요금&할인",
@@ -113,29 +159,35 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
     <Modal
       visible={visible}
       transparent
-      animationType="fade"
-      onRequestClose={onClose}
+      animationType="none"
+      onRequestClose={handleClose}
     >
-      <View className="flex-1 bg-black/50 flex-row justify-end">
-        {/* Backdrop Touchable */}
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={onClose}
-          className="flex-1"
-        />
+      <View className="flex-1 flex-row justify-end relative">
+        {/* Animated Dim Backdrop */}
+        <Animated.View
+          style={{ opacity: fadeAnim }}
+          className="absolute inset-0 bg-black/40"
+        >
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleClose}
+            className="flex-1 w-full h-full"
+          />
+        </Animated.View>
 
-        {/* Sidebar Drawer Container (Frosted Glass) */}
-        <View className="w-4/5 max-w-sm bg-white/85 backdrop-blur-3xl h-full shadow-2xl flex-col border-l border-white/60">
-          {/* Drawer Header */}
-          <View
-            style={{
-              background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
-            } as any}
-            className="pt-12 px-5 pb-5 border-b border-white/10"
-          >
-            <View className="flex-row items-center justify-between mb-4">
+        {/* Sidebar Drawer Container (Slide-in from Right to Left, Pure White Glass) */}
+        <Animated.View
+          style={{
+            width: DRAWER_WIDTH,
+            transform: [{ translateX: slideAnim }],
+          }}
+          className="bg-white h-full shadow-2xl flex-col border-l border-slate-100 z-50"
+        >
+          {/* Pure White Header (Dark Background Removed) */}
+          <View className="pt-12 px-5 pb-4 bg-white border-b border-slate-100 shadow-xs">
+            <View className="flex-row items-center justify-between mb-3.5">
               <View className="flex-row items-center">
-                <View className="w-9 h-9 rounded-xl overflow-hidden border border-blue-400/50 bg-white items-center justify-center mr-2.5 shadow-md">
+                <View className="w-9 h-9 rounded-xl overflow-hidden border border-slate-200/90 bg-white items-center justify-center mr-2.5 shadow-sm">
                   <Image
                     source={require("../../assets/glory_logo.png")}
                     style={{ width: 32, height: 32 }}
@@ -143,29 +195,29 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                   />
                 </View>
                 <View>
-                  <Text className="text-base font-black text-white font-sans tracking-tight">
+                  <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
                     Glory Travel
                   </Text>
-                  <Text className="text-[11px] font-medium text-slate-300 font-sans">
+                  <Text className="text-[11px] font-medium text-slate-500 font-sans">
                     부산 여행 종합 내비 지도
                   </Text>
                 </View>
               </View>
 
               <TouchableOpacity
-                onPress={onClose}
+                onPress={handleClose}
                 activeOpacity={0.8}
-                className="w-8 h-8 rounded-full bg-white/10 border border-white/20 items-center justify-center active:scale-95"
+                className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200/80 items-center justify-center active:scale-95"
               >
-                <X size={18} color="#ffffff" />
+                <X size={17} color="#141414" />
               </TouchableOpacity>
             </View>
 
-            {/* Current Base Location Info */}
-            <View className="flex-row items-center bg-white/10 backdrop-blur-md px-3 py-2 rounded-xl border border-white/15">
-              <MapPin size={13} color="#60A5FA" />
-              <Text className="text-xs font-bold text-slate-200 ml-1.5 font-sans flex-1" numberOfLines={1}>
-                기준: {locationName}
+            {/* Current Base Location Info (Clean White Card) */}
+            <View className="flex-row items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80">
+              <MapPin size={13} color="#1856FF" />
+              <Text className="text-xs font-bold text-slate-700 ml-1.5 font-sans flex-1" numberOfLines={1}>
+                출발 기준: {locationName}
               </Text>
             </View>
           </View>
@@ -173,8 +225,8 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
           {/* Drawer Scrollable Content */}
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 16, paddingBottom: 40 }}
-            className="flex-1"
+            contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 16, paddingBottom: 30 }}
+            className="flex-1 bg-white"
           >
             {/* Section 1: Main Tabs */}
             <View className="mb-6">
@@ -186,15 +238,6 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                 {mainTabs.map((tab) => {
                   const Icon = tab.icon;
                   const isSelected = mainTab === tab.id;
-
-                  const gradientBg =
-                    tab.id === "food"
-                      ? "linear-gradient(135deg, rgba(255, 107, 74, 0.12), rgba(245, 158, 11, 0.12))"
-                      : tab.id === "attraction"
-                      ? "linear-gradient(135deg, rgba(24, 86, 255, 0.12), rgba(139, 92, 246, 0.12))"
-                      : tab.id === "parking"
-                      ? "linear-gradient(135deg, rgba(5, 150, 105, 0.12), rgba(16, 185, 129, 0.12))"
-                      : "linear-gradient(135deg, rgba(24, 86, 255, 0.12), rgba(99, 102, 241, 0.12))";
 
                   const iconGradient =
                     tab.id === "food"
@@ -213,21 +256,10 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                         onSelectCategory("all");
                       }}
                       activeOpacity={0.8}
-                      style={
+                      className={`p-3 rounded-2xl border transition-all ${
                         isSelected
-                          ? ({
-                              background: gradientBg,
-                            } as any)
-                          : undefined
-                      }
-                      className={`p-3 rounded-2xl border backdrop-blur-md transition-all ${
-                        isSelected
-                          ? tab.id === "food"
-                            ? "border-orange-400 shadow-sm"
-                            : tab.id === "parking"
-                            ? "border-emerald-400 shadow-sm"
-                            : "border-blue-400 shadow-sm"
-                          : "bg-white/60 border-white/80"
+                          ? tab.activeBg + " shadow-sm"
+                          : "bg-slate-50/70 border-slate-200/70"
                       }`}
                     >
                       <View className="flex-row items-center justify-between">
@@ -242,8 +274,8 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                             }
                             className={`w-8 h-8 rounded-xl items-center justify-center mr-2.5 ${
                               isSelected
-                                ? "shadow-sm border border-white/30"
-                                : "bg-white/80 border border-slate-200/60"
+                                ? "shadow-sm border border-white/40"
+                                : "bg-white border border-slate-200/70"
                             }`}
                           >
                             <Icon size={16} color={isSelected ? "#ffffff" : tab.color} />
@@ -269,7 +301,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                           className={`px-2.5 py-1 rounded-full ${
                             isSelected
                               ? tab.badgeBg
-                              : "bg-slate-200 text-slate-700"
+                              : "bg-slate-200/80 text-slate-700"
                           }`}
                         >
                           <Text className="text-xs font-black font-sans">
@@ -315,10 +347,10 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                             } as any)
                           : undefined
                       }
-                      className={`flex-row items-center px-3 py-2 rounded-xl border backdrop-blur-sm ${
+                      className={`flex-row items-center px-3 py-2 rounded-xl border ${
                         isCatActive
                           ? "shadow-md border-white/30"
-                          : "bg-white/70 border-white/80"
+                          : "bg-slate-50 border-slate-200/80"
                       }`}
                     >
                       <Icon
@@ -345,7 +377,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
               </Text>
 
               {/* View Mode Toggle Button */}
-              <View className="flex-row bg-white/60 backdrop-blur-md p-1 rounded-2xl border border-white/80 mb-2.5 shadow-xs">
+              <View className="flex-row bg-slate-100 p-1 rounded-2xl border border-slate-200/80 mb-2.5 shadow-xs">
                 <TouchableOpacity
                   onPress={() => onSelectViewMode("map")}
                   activeOpacity={0.8}
@@ -411,10 +443,10 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
               <TouchableOpacity
                 onPress={onToggleSortByDistance}
                 activeOpacity={0.8}
-                className={`p-3 rounded-2xl border flex-row items-center justify-between backdrop-blur-md ${
+                className={`p-3 rounded-2xl border flex-row items-center justify-between ${
                   sortByDistance
-                    ? "bg-blue-50/90 border-blue-300 shadow-xs"
-                    : "bg-white/60 border-white/80"
+                    ? "bg-blue-50 border-blue-300 shadow-xs"
+                    : "bg-slate-50 border-slate-200/80"
                 }`}
               >
                 <View className="flex-row items-center">
@@ -454,10 +486,10 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
             </View>
           </ScrollView>
 
-          {/* Drawer Footer */}
-          <View className="p-4 bg-white/70 backdrop-blur-xl border-t border-white/60">
+          {/* Pure White Drawer Footer */}
+          <View className="p-4 bg-white border-t border-slate-100">
             <TouchableOpacity
-              onPress={onClose}
+              onPress={handleClose}
               activeOpacity={0.85}
               style={{
                 background:
@@ -470,7 +502,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
