@@ -48,6 +48,7 @@ import {
   Ticket,
   CircleParking,
   Menu,
+  CloudSun,
 } from "lucide-react-native";
 import { NaverMapView, NaverMapViewRef } from "./src/components/NaverMapView";
 import { RestaurantDetailModal } from "./src/components/RestaurantDetailModal";
@@ -384,18 +385,23 @@ export default function App() {
       <SafeAreaView className="flex-1 bg-transparent font-sans" edges={["top"]}>
         <StatusBar style="dark" />
 
-        {/* Top Header with Ultra-Transparent Glassmorphism */}
-        <View
-          style={{
-            background: "rgba(255, 255, 255, 0.45)",
-            backdropFilter: "blur(32px) saturate(220%)",
-            WebkitBackdropFilter: "blur(32px) saturate(220%)",
-            borderBottomWidth: 1,
-            borderBottomColor: "rgba(255, 255, 255, 0.6)",
-          } as any}
-          className="px-4 pt-2.5 pb-2.5 z-30">
-          {/* Row 1: Logo, Title, Quick Status Badge, View Mode Toggle, Hamburger Button */}
-          <View className="flex-row items-center justify-between mb-2">
+        {/* Outer Layout: PC 모드(>=1280px)일 때는 좌우 분할, 모바일일 때는 단일 세로 분할 */}
+        <View className="flex-1 flex-row w-full h-full relative overflow-hidden">
+          {/* Left Column: Header + Main Map/List View + Mobile Dock */}
+          <View className="flex-1 flex-col h-full relative bg-slate-100">
+            {/* Top Header with Ultra-Transparent Glassmorphism */}
+            <View
+              style={{
+                background: "rgba(255, 255, 255, 0.45)",
+                backdropFilter: "blur(32px) saturate(220%)",
+                WebkitBackdropFilter: "blur(32px) saturate(220%)",
+                borderBottomWidth: 1,
+                borderBottomColor: "rgba(255, 255, 255, 0.6)",
+              } as any}
+              className="px-4 pt-2.5 pb-2.5 z-30 shadow-sm"
+            >
+              {/* Row 1: Logo, Title, Quick Status Badge, View Mode Toggle, Hamburger Button */}
+              <View className="flex-row items-center justify-between mb-2">
             {/* Left: Brand Logo & Title */}
             <TouchableOpacity
               onPress={() => setIsHamburgerOpen(true)}
@@ -506,46 +512,47 @@ export default function App() {
                 </TouchableOpacity>
               </View>
 
-              {/* Hamburger Menu Trigger Button with Vivid Gradient - 1280px 이상에서 숨김 */}
-              {!isWideScreen && (
-                <TouchableOpacity
-                  onPress={() => setIsHamburgerOpen(true)}
-                  activeOpacity={0.8}
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
-                  } as any}
-                  className="w-8 h-8 rounded-xl items-center justify-center shadow-md border border-white/20 active:scale-95 ml-0.5"
-                >
-                  <Menu size={17} color="#ffffff" />
+                {/* Hamburger Menu Trigger Button - 배경 없는 3줄 바 아이콘 (1280px 미만에서만 표시) */}
+                {!isWideScreen && (
+                  <TouchableOpacity
+                    onPress={() => setIsHamburgerOpen(true)}
+                    activeOpacity={0.6}
+                    className="p-1.5 items-center justify-center ml-1"
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  >
+                    <View className="w-5 h-4 justify-between items-start">
+                      <View className="w-5 h-[2.5px] bg-[#141414] rounded-full" />
+                      <View className="w-3.5 h-[2.5px] bg-[#141414] rounded-full" />
+                      <View className="w-5 h-[2.5px] bg-[#141414] rounded-full" />
+                    </View>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+
+            {/* Row 2: Slim Glassmorphism Search Bar */}
+            <View className="flex-row items-center bg-white/60 backdrop-blur-md rounded-xl px-3 py-2 border border-white/80 shadow-xs">
+              <Search size={15} color="#94a3b8" />
+              <TextInput
+                placeholder="맛집, 해변열차, 전망대, 메뉴, 주차장 검색..."
+                placeholderTextColor="#94a3b8"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                className="flex-1 ml-2 text-xs text-[#141414] font-sans"
+              />
+              {searchQuery.length > 0 && (
+                <TouchableOpacity onPress={() => setSearchQuery("")}>
+                  <X size={15} color="#94a3b8" />
                 </TouchableOpacity>
               )}
             </View>
           </View>
 
-          {/* Row 2: Slim Glassmorphism Search Bar */}
-          <View className="flex-row items-center bg-white/60 backdrop-blur-md rounded-xl px-3 py-2 border border-white/80 shadow-xs">
-            <Search size={15} color="#94a3b8" />
-            <TextInput
-              placeholder="맛집, 해변열차, 전망대, 메뉴, 주차장 검색..."
-              placeholderTextColor="#94a3b8"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              className="flex-1 ml-2 text-xs text-[#141414] font-sans"
-            />
-            {searchQuery.length > 0 && (
-              <TouchableOpacity onPress={() => setSearchQuery("")}>
-                <X size={15} color="#94a3b8" />
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-
-        {/* Main Content Area - 1280px 이상에서 flex-row로 사이드바 고정 */}
-        <View className="flex-1 flex-row bg-slate-100">
-          {viewMode === "map" ? (
-            /* MAP VIEW */
-            <View className="flex-1 relative">
+          {/* Main Map / List View Container */}
+          <View className="flex-1 relative">
+            {viewMode === "map" ? (
+              /* MAP VIEW */
+              <View className="flex-1 relative">
               <NaverMapView
                 ref={mapViewRef}
                 restaurants={filteredPlaces}
@@ -611,53 +618,69 @@ export default function App() {
                 </View>
               )}
 
-              {/* Floating Map Controller Buttons (Frosted Glass with Luminous Glow) */}
-              {!drivingRoute && (
-                <View className="absolute right-4 top-4 gap-3 items-center z-40">
-                  {/* Current Location GPS Button */}
-                  <TouchableOpacity
-                    onPress={() => fetchCurrentLocation(true)}
-                    activeOpacity={0.8}
-                    className="w-11 h-11 bg-white/80 backdrop-blur-xl rounded-2xl border border-white/80 items-center justify-center shadow-glass active:scale-95"
-                  >
-                    {isLoadingLocation ? (
-                      <ActivityIndicator size="small" color="#1856FF" />
-                    ) : (
-                      <Crosshair size={20} color="#1856FF" />
-                    )}
-                  </TouchableOpacity>
-
-                  {/* Vertical Zoom Controls (+ / -) */}
-                  <View className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/80 shadow-glass overflow-hidden">
+                {/* Floating Map Controller Buttons with Ultra-Transparent Glassmorphism & Blur */}
+                {!drivingRoute && (
+                  <View className="absolute right-4 top-4 gap-3 items-center z-40">
+                    {/* Current Location GPS Button */}
                     <TouchableOpacity
-                      onPress={() => mapViewRef.current?.zoomIn()}
+                      onPress={() => fetchCurrentLocation(true)}
                       activeOpacity={0.8}
-                      className="w-11 h-11 items-center justify-center border-b border-white/50 active:bg-blue-50"
+                      style={{
+                        background: "rgba(255, 255, 255, 0.42)",
+                        backdropFilter: "blur(24px) saturate(200%)",
+                        WebkitBackdropFilter: "blur(24px) saturate(200%)",
+                        borderWidth: 1,
+                        borderColor: "rgba(255, 255, 255, 0.75)",
+                      } as any}
+                      className="w-11 h-11 rounded-2xl items-center justify-center shadow-lg active:scale-95"
                     >
-                      <Plus size={20} color="#141414" />
+                      {isLoadingLocation ? (
+                        <ActivityIndicator size="small" color="#1856FF" />
+                      ) : (
+                        <Crosshair size={20} color="#1856FF" />
+                      )}
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                      onPress={() => mapViewRef.current?.zoomOut()}
-                      activeOpacity={0.8}
-                      className="w-11 h-11 items-center justify-center active:bg-blue-50"
+                    {/* Vertical Zoom Controls (+ / -) */}
+                    <View
+                      style={{
+                        background: "rgba(255, 255, 255, 0.42)",
+                        backdropFilter: "blur(24px) saturate(200%)",
+                        WebkitBackdropFilter: "blur(24px) saturate(200%)",
+                        borderWidth: 1,
+                        borderColor: "rgba(255, 255, 255, 0.75)",
+                      } as any}
+                      className="rounded-2xl shadow-lg overflow-hidden"
                     >
-                      <Minus size={20} color="#141414" />
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => mapViewRef.current?.zoomIn()}
+                        activeOpacity={0.8}
+                        className="w-11 h-11 items-center justify-center border-b border-white/60 active:bg-white/40"
+                      >
+                        <Plus size={20} color="#141414" />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => mapViewRef.current?.zoomOut()}
+                        activeOpacity={0.8}
+                        className="w-11 h-11 items-center justify-center active:bg-white/40"
+                      >
+                        <Minus size={20} color="#141414" />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              )}
+                )}
 
-              {/* Bottom Floating Place Preview Card (Ultra-Transparent Frosted Glass) */}
-              {selectedPlace && (
-                <View
-                  style={{
-                    background: "rgba(255, 255, 255, 0.48)",
-                    backdropFilter: "blur(32px) saturate(210%)",
-                    WebkitBackdropFilter: "blur(32px) saturate(210%)",
-                  } as any}
-                  className="absolute bottom-6 left-4 right-4 rounded-3xl p-4 border border-white/80 shadow-2xl z-40"
-                >
+                {/* Bottom Floating Place Preview Card (Ultra-Transparent Frosted Glass) */}
+                {selectedPlace && (
+                  <View
+                    style={{
+                      background: "rgba(255, 255, 255, 0.48)",
+                      backdropFilter: "blur(32px) saturate(210%)",
+                      WebkitBackdropFilter: "blur(32px) saturate(210%)",
+                    } as any}
+                    className={`absolute ${!isWideScreen ? "bottom-20" : "bottom-6"} left-4 right-4 rounded-3xl p-4 border border-white/80 shadow-2xl z-40`}
+                  >
                   <TouchableOpacity
                     onPress={() => handleOpenDetailModal(selectedPlace)}
                     activeOpacity={0.9}
@@ -824,7 +847,7 @@ export default function App() {
             <ScrollView
               className="flex-1 px-5 pt-3 bg-slate-50"
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 40 }}
+              contentContainerStyle={{ paddingBottom: !isWideScreen ? 110 : 40 }}
             >
               {/* List Controls */}
               <View className="flex-row items-center justify-between mb-3">
@@ -1038,33 +1061,224 @@ export default function App() {
               })}
             </ScrollView>
           )}
+        </View>
 
-          {/* Fixed Sidebar - 1280px 이상에서만 표시 */}
-          {isWideScreen && (
-            <HamburgerMenuModal
-              visible={true}
-              isFixed={true}
-              onClose={() => {}}
-              mainTab={mainTab}
-              onSelectMainTab={(tab) => {
-                setMainTab(tab);
-                setDrivingRoute(null);
-              }}
-              activeCategory={activeCategory}
-              onSelectCategory={(catId) => {
-                setActiveCategory(catId);
-                setDrivingRoute(null);
-              }}
-              categories={currentCategories}
-              viewMode={viewMode}
-              onSelectViewMode={setViewMode}
-              sortByDistance={sortByDistance}
-              onToggleSortByDistance={() => setSortByDistance(!sortByDistance)}
-              totalCounts={totalCounts}
-              locationName={locationName}
-            />
+        {/* Mobile Bottom Floating Dock Bar (Glassmorphism) - PC 버전 아닐 때만 표시 */}
+          {!isWideScreen && (
+            <View className="absolute bottom-3 left-4 right-4 z-40">
+              <View
+                style={{
+                  background: "rgba(255, 255, 255, 0.68)",
+                  backdropFilter: "blur(30px) saturate(220%)",
+                  WebkitBackdropFilter: "blur(30px) saturate(220%)",
+                  borderWidth: 1,
+                  borderColor: "rgba(255, 255, 255, 0.85)",
+                } as any}
+                className="flex-row items-center justify-around py-1.5 px-1 rounded-3xl shadow-xl"
+              >
+                {/* 1. 전체보기 */}
+                <TouchableOpacity
+                  onPress={() => {
+                    setMainTab("all");
+                    setActiveCategory("all");
+                    setDrivingRoute(null);
+                  }}
+                  activeOpacity={0.7}
+                  className="flex-1 items-center justify-center py-1"
+                >
+                  <View
+                    style={
+                      mainTab === "all"
+                        ? ({
+                            background:
+                              "linear-gradient(135deg, rgba(24, 86, 255, 0.15), rgba(59, 130, 246, 0.15))",
+                          } as any)
+                        : undefined
+                    }
+                    className={`p-1.5 rounded-2xl items-center justify-center ${
+                      mainTab === "all" ? "border border-blue-300/70 shadow-xs" : ""
+                    }`}
+                  >
+                    <Sparkles
+                      size={18}
+                      color={mainTab === "all" ? "#1856FF" : "#64748b"}
+                    />
+                  </View>
+                  <Text
+                    className={`text-[10px] mt-0.5 font-sans ${
+                      mainTab === "all"
+                        ? "font-black text-[#1856FF]"
+                        : "font-medium text-slate-600"
+                    }`}
+                  >
+                    전체보기
+                  </Text>
+                </TouchableOpacity>
+
+                {/* 2. 맛집 */}
+                <TouchableOpacity
+                  onPress={() => {
+                    setMainTab("food");
+                    setActiveCategory("all");
+                    setDrivingRoute(null);
+                  }}
+                  activeOpacity={0.7}
+                  className="flex-1 items-center justify-center py-1"
+                >
+                  <View
+                    style={
+                      mainTab === "food"
+                        ? ({
+                            background:
+                              "linear-gradient(135deg, rgba(255, 107, 74, 0.18), rgba(245, 158, 11, 0.18))",
+                          } as any)
+                        : undefined
+                    }
+                    className={`p-1.5 rounded-2xl items-center justify-center ${
+                      mainTab === "food" ? "border border-orange-300/70 shadow-xs" : ""
+                    }`}
+                  >
+                    <Utensils
+                      size={18}
+                      color={mainTab === "food" ? "#CE7636" : "#64748b"}
+                    />
+                  </View>
+                  <Text
+                    className={`text-[10px] mt-0.5 font-sans ${
+                      mainTab === "food"
+                        ? "font-black text-[#CE7636]"
+                        : "font-medium text-slate-600"
+                    }`}
+                  >
+                    맛집
+                  </Text>
+                </TouchableOpacity>
+
+                {/* 3. 명소 */}
+                <TouchableOpacity
+                  onPress={() => {
+                    setMainTab("attraction");
+                    setActiveCategory("all");
+                    setDrivingRoute(null);
+                  }}
+                  activeOpacity={0.7}
+                  className="flex-1 items-center justify-center py-1"
+                >
+                  <View
+                    style={
+                      mainTab === "attraction"
+                        ? ({
+                            background:
+                              "linear-gradient(135deg, rgba(24, 86, 255, 0.15), rgba(139, 92, 246, 0.15))",
+                          } as any)
+                        : undefined
+                    }
+                    className={`p-1.5 rounded-2xl items-center justify-center ${
+                      mainTab === "attraction" ? "border border-blue-300/70 shadow-xs" : ""
+                    }`}
+                  >
+                    <FerrisWheel
+                      size={18}
+                      color={mainTab === "attraction" ? "#1856FF" : "#64748b"}
+                    />
+                  </View>
+                  <Text
+                    className={`text-[10px] mt-0.5 font-sans ${
+                      mainTab === "attraction"
+                        ? "font-black text-[#1856FF]"
+                        : "font-medium text-slate-600"
+                    }`}
+                  >
+                    명소
+                  </Text>
+                </TouchableOpacity>
+
+                {/* 4. 주차장 */}
+                <TouchableOpacity
+                  onPress={() => {
+                    setMainTab("parking");
+                    setActiveCategory("all");
+                    setDrivingRoute(null);
+                  }}
+                  activeOpacity={0.7}
+                  className="flex-1 items-center justify-center py-1"
+                >
+                  <View
+                    style={
+                      mainTab === "parking"
+                        ? ({
+                            background:
+                              "linear-gradient(135deg, rgba(5, 150, 105, 0.18), rgba(16, 185, 129, 0.18))",
+                          } as any)
+                        : undefined
+                    }
+                    className={`p-1.5 rounded-2xl items-center justify-center ${
+                      mainTab === "parking" ? "border border-emerald-300/70 shadow-xs" : ""
+                    }`}
+                  >
+                    <CircleParking
+                      size={18}
+                      color={mainTab === "parking" ? "#059669" : "#64748b"}
+                    />
+                  </View>
+                  <Text
+                    className={`text-[10px] mt-0.5 font-sans ${
+                      mainTab === "parking"
+                        ? "font-black text-emerald-700"
+                        : "font-medium text-slate-600"
+                    }`}
+                  >
+                    주차장
+                  </Text>
+                </TouchableOpacity>
+
+                {/* 5. 날씨 (준비중) */}
+                <View className="flex-1 items-center justify-center py-1 opacity-45">
+                  <View className="p-1.5 rounded-2xl items-center justify-center">
+                    <CloudSun size={18} color="#64748b" />
+                  </View>
+                  <View className="flex-row items-center mt-0.5">
+                    <Text className="text-[10px] font-medium text-slate-500 font-sans">
+                      날씨
+                    </Text>
+                    <View className="ml-0.5 px-1 py-0.2 bg-slate-200/90 rounded-full">
+                      <Text className="text-[8px] font-bold text-slate-500 font-sans">
+                        준비중
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
           )}
         </View>
+
+        {/* Right Column: Fixed Sidebar for PC Mode (1280px 이상) - 상단부터 하단까지 풀 높이 차지 */}
+        {isWideScreen && (
+          <HamburgerMenuModal
+            visible={true}
+            isFixed={true}
+            onClose={() => {}}
+            mainTab={mainTab}
+            onSelectMainTab={(tab) => {
+              setMainTab(tab);
+              setDrivingRoute(null);
+            }}
+            activeCategory={activeCategory}
+            onSelectCategory={(catId) => {
+              setActiveCategory(catId);
+              setDrivingRoute(null);
+            }}
+            categories={currentCategories}
+            viewMode={viewMode}
+            onSelectViewMode={setViewMode}
+            sortByDistance={sortByDistance}
+            onToggleSortByDistance={() => setSortByDistance(!sortByDistance)}
+            totalCounts={totalCounts}
+            locationName={locationName}
+          />
+        )}
+      </View>
 
         {/* Fullscreen Place Detail Modal */}
         <RestaurantDetailModal

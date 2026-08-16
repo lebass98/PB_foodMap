@@ -319,16 +319,16 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
 
 
 
-  // 고정 사이드바 모드 (1280px 이상): Modal 없이 인라인 View로 렌더링
+  // 고정 사이드바 모드 (1280px 이상 PC 모드): Modal 없이 인라인 View로 렌더링 (헤더 높이부터 하단까지 우측 전체 차지)
   if (isFixed) {
     return (
       <View
-        style={{ width: DRAWER_WIDTH }}
-        className="bg-white h-full shadow-2xl flex-col border-l border-slate-100 z-50"
+        style={{ width: 380 }}
+        className="bg-white h-full shadow-2xl flex-col border-l border-slate-200/90 z-30"
       >
-        {/* Fixed Sidebar Header */}
-        <View className="pt-4 px-5 pb-4 bg-white border-b border-slate-100 shadow-xs">
-          <View className="flex-row items-center justify-between mb-3.5">
+        {/* Fixed Sidebar Header (PC Mode) */}
+        <View className="pt-3 px-5 pb-3.5 bg-white/95 border-b border-slate-100 shadow-xs">
+          <View className="flex-row items-center justify-between mb-3">
             <View className="flex-row items-center">
               <View className="w-9 h-9 rounded-xl overflow-hidden border border-slate-200/90 bg-white items-center justify-center mr-2.5 shadow-sm">
                 <Image
