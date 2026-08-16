@@ -162,8 +162,8 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 110 }}
         >
-          {/* Hero Image with Frosted Gradient Overlays */}
-          <View className="relative w-full h-80 bg-slate-100">
+          {/* Hero Image with Frosted Gradient Overlays (Half-height) */}
+          <View className="relative w-full h-44 bg-slate-100">
             <Image
               source={
                 typeof restaurant.image === "string"
@@ -174,9 +174,9 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               resizeMode="cover"
             />
             {/* Luminous Distance Badge */}
-            <View className="absolute bottom-4 left-5 bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full flex-row items-center border border-white/20 shadow-lg">
-              <Car size={13} color="#FFFFFF" />
-              <Text className="text-xs font-bold text-white ml-1.5 font-sans">
+            <View className="absolute bottom-3 left-4 bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full flex-row items-center border border-white/20 shadow-md">
+              <Car size={12} color="#FFFFFF" />
+              <Text className="text-[11px] font-bold text-white ml-1 font-sans">
                 {restaurant.hotelDistanceInfo}
               </Text>
             </View>
@@ -184,9 +184,9 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             {/* Category Tag Badge with Vivid Gradient */}
             <View
               style={{ background: typeConfig.gradient } as any}
-              className="absolute top-16 left-5 px-3 py-1 rounded-full shadow-lg border border-white/30"
+              className="absolute bottom-3 right-4 px-2.5 py-1 rounded-full shadow-md border border-white/30"
             >
-              <Text className="text-xs font-black text-white font-sans">
+              <Text className="text-[11px] font-black text-white font-sans">
                 {typeConfig.label}
               </Text>
             </View>
