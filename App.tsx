@@ -9,6 +9,7 @@ import {
   Image,
   ActivityIndicator,
   Alert,
+  useWindowDimensions,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -119,6 +120,10 @@ export default function App() {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
+
+  // 반응형: 1280px 이상에서 사이드바 고정 모드
+  const { width: windowWidth } = useWindowDimensions();
+  const isWideScreen = windowWidth >= 1280;
 
   const totalCounts = useMemo(() => {
     const foodCount = SAMPLE_PLACES.filter((p) => p.mainType === "food").length;
@@ -388,7 +393,7 @@ export default function App() {
             borderBottomWidth: 1,
             borderBottomColor: "rgba(255, 255, 255, 0.6)",
           } as any}
-          className="px-4 pt-2.5 pb-2.5 z-30 shadow-lg">
+          className="px-4 pt-2.5 pb-2.5 z-30">
           {/* Row 1: Logo, Title, Quick Status Badge, View Mode Toggle, Hamburger Button */}
           <View className="flex-row items-center justify-between mb-2">
             {/* Left: Brand Logo & Title */}
@@ -420,39 +425,37 @@ export default function App() {
                     mainTab === "food"
                       ? "linear-gradient(135deg, rgba(255, 107, 74, 0.15), rgba(245, 158, 11, 0.15))"
                       : mainTab === "attraction"
-                      ? "linear-gradient(135deg, rgba(24, 86, 255, 0.15), rgba(99, 102, 241, 0.15))"
-                      : mainTab === "parking"
-                      ? "linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(16, 185, 129, 0.15))"
-                      : "rgba(255, 255, 255, 0.7)",
+                        ? "linear-gradient(135deg, rgba(24, 86, 255, 0.15), rgba(99, 102, 241, 0.15))"
+                        : mainTab === "parking"
+                          ? "linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(16, 185, 129, 0.15))"
+                          : "rgba(255, 255, 255, 0.7)",
                 } as any}
-                className={`px-3 py-1.5 rounded-xl border backdrop-blur-md flex-row items-center shadow-xs ${
-                  mainTab === "food"
+                className={`px-3 py-1.5 rounded-xl border backdrop-blur-md flex-row items-center shadow-xs ${mainTab === "food"
                     ? "border-orange-300/80"
                     : mainTab === "attraction"
-                    ? "border-blue-300/80"
-                    : mainTab === "parking"
-                    ? "border-emerald-300/80"
-                    : "border-white/80"
-                }`}
+                      ? "border-blue-300/80"
+                      : mainTab === "parking"
+                        ? "border-emerald-300/80"
+                        : "border-white/80"
+                  }`}
               >
                 <Text
-                  className={`text-[11px] font-black font-sans ${
-                    mainTab === "food"
+                  className={`text-[11px] font-black font-sans ${mainTab === "food"
                       ? "text-[#CE7636]"
                       : mainTab === "attraction"
-                      ? "text-[#1856FF]"
-                      : mainTab === "parking"
-                      ? "text-emerald-700"
-                      : "text-slate-700"
-                  }`}
+                        ? "text-[#1856FF]"
+                        : mainTab === "parking"
+                          ? "text-emerald-700"
+                          : "text-slate-700"
+                    }`}
                 >
                   {mainTab === "food"
                     ? `맛집 (${totalCounts.food})`
                     : mainTab === "attraction"
-                    ? `명소 (${totalCounts.attraction})`
-                    : mainTab === "parking"
-                    ? `주차장 (${totalCounts.parking})`
-                    : `전체 (${totalCounts.all})`}
+                      ? `명소 (${totalCounts.attraction})`
+                      : mainTab === "parking"
+                        ? `주차장 (${totalCounts.parking})`
+                        : `전체 (${totalCounts.all})`}
                 </Text>
               </TouchableOpacity>
 
@@ -464,16 +467,15 @@ export default function App() {
                   style={
                     viewMode === "map"
                       ? ({
-                          background:
-                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
-                        } as any)
+                        background:
+                          "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                      } as any)
                       : undefined
                   }
-                  className={`w-7 h-7 items-center justify-center rounded-lg ${
-                    viewMode === "map"
+                  className={`w-7 h-7 items-center justify-center rounded-lg ${viewMode === "map"
                       ? "shadow-sm shadow-blue-500/30 border border-white/25"
                       : ""
-                  }`}
+                    }`}
                 >
                   <MapIcon
                     size={14}
@@ -487,16 +489,15 @@ export default function App() {
                   style={
                     viewMode === "list"
                       ? ({
-                          background:
-                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
-                        } as any)
+                        background:
+                          "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                      } as any)
                       : undefined
                   }
-                  className={`w-7 h-7 items-center justify-center rounded-lg ${
-                    viewMode === "list"
+                  className={`w-7 h-7 items-center justify-center rounded-lg ${viewMode === "list"
                       ? "shadow-sm shadow-blue-500/30 border border-white/25"
                       : ""
-                  }`}
+                    }`}
                 >
                   <ListIcon
                     size={14}
@@ -505,18 +506,20 @@ export default function App() {
                 </TouchableOpacity>
               </View>
 
-              {/* Hamburger Menu Trigger Button with Vivid Gradient */}
-              <TouchableOpacity
-                onPress={() => setIsHamburgerOpen(true)}
-                activeOpacity={0.8}
-                style={{
-                  background:
-                    "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
-                } as any}
-                className="w-8 h-8 rounded-xl items-center justify-center shadow-md border border-white/20 active:scale-95 ml-0.5"
-              >
-                <Menu size={17} color="#ffffff" />
-              </TouchableOpacity>
+              {/* Hamburger Menu Trigger Button with Vivid Gradient - 1280px 이상에서 숨김 */}
+              {!isWideScreen && (
+                <TouchableOpacity
+                  onPress={() => setIsHamburgerOpen(true)}
+                  activeOpacity={0.8}
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
+                  } as any}
+                  className="w-8 h-8 rounded-xl items-center justify-center shadow-md border border-white/20 active:scale-95 ml-0.5"
+                >
+                  <Menu size={17} color="#ffffff" />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
 
@@ -538,8 +541,8 @@ export default function App() {
           </View>
         </View>
 
-        {/* Main Content Area */}
-        <View className="flex-1 bg-slate-100 relative">
+        {/* Main Content Area - 1280px 이상에서 flex-row로 사이드바 고정 */}
+        <View className="flex-1 flex-row bg-slate-100">
           {viewMode === "map" ? (
             /* MAP VIEW */
             <View className="flex-1 relative">
@@ -563,8 +566,8 @@ export default function App() {
                           selectedPlace.mainType === "parking"
                             ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
                             : selectedPlace.mainType === "attraction"
-                            ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
-                            : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
+                              ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                              : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
                       } as any}
                       className="w-12 h-12 rounded-2xl items-center justify-center mr-3 shadow-md border border-white/30"
                     >
@@ -573,13 +576,12 @@ export default function App() {
                     <View className="flex-1">
                       <View className="flex-row items-center">
                         <Text
-                          className={`text-base font-black ${
-                            selectedPlace.mainType === "parking"
+                          className={`text-base font-black ${selectedPlace.mainType === "parking"
                               ? "text-emerald-700"
                               : selectedPlace.mainType === "attraction"
-                              ? "text-[#1856FF]"
-                              : "text-[#CE7636]"
-                          } font-sans`}
+                                ? "text-[#1856FF]"
+                                : "text-[#CE7636]"
+                            } font-sans`}
                         >
                           차량 약 {drivingRoute.durationText} 소요
                         </Text>
@@ -676,8 +678,8 @@ export default function App() {
                               {selectedPlace.mainType === "parking"
                                 ? "🅿️ "
                                 : selectedPlace.mainType === "attraction"
-                                ? "🎡 "
-                                : "🍽️ "}
+                                  ? "🎡 "
+                                  : "🍽️ "}
                               {selectedPlace.name}
                             </Text>
                             <View className="flex-row items-center gap-1">
@@ -744,18 +746,17 @@ export default function App() {
                               selectedPlace.mainType === "parking"
                                 ? "rgba(5, 150, 105, 0.15)"
                                 : selectedPlace.mainType === "attraction"
-                                ? "rgba(24, 86, 255, 0.15)"
-                                : "rgba(255, 107, 74, 0.15)",
+                                  ? "rgba(24, 86, 255, 0.15)"
+                                  : "rgba(255, 107, 74, 0.15)",
                             backdropFilter: "blur(12px)",
                             WebkitBackdropFilter: "blur(12px)",
                           } as any}
-                          className={`px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center ${
-                            selectedPlace.mainType === "parking"
+                          className={`px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center ${selectedPlace.mainType === "parking"
                               ? "border-emerald-300/80"
                               : selectedPlace.mainType === "attraction"
-                              ? "border-blue-300/80"
-                              : "border-orange-300/80"
-                          }`}
+                                ? "border-blue-300/80"
+                                : "border-orange-300/80"
+                            }`}
                         >
                           <Car
                             size={11}
@@ -763,18 +764,17 @@ export default function App() {
                               selectedPlace.mainType === "parking"
                                 ? "#059669"
                                 : selectedPlace.mainType === "attraction"
-                                ? "#1856FF"
-                                : "#CE7636"
+                                  ? "#1856FF"
+                                  : "#CE7636"
                             }
                           />
                           <Text
-                            className={`text-[10.5px] font-bold ${
-                              selectedPlace.mainType === "parking"
+                            className={`text-[10.5px] font-bold ${selectedPlace.mainType === "parking"
                                 ? "text-emerald-800"
                                 : selectedPlace.mainType === "attraction"
-                                ? "text-[#1856FF]"
-                                : "text-[#CE7636]"
-                            } ml-1 font-sans`}
+                                  ? "text-[#1856FF]"
+                                  : "text-[#CE7636]"
+                              } ml-1 font-sans`}
                           >
                             {selectedPlace.hotelDistanceInfo}
                           </Text>
@@ -808,8 +808,8 @@ export default function App() {
                           selectedPlace.mainType === "parking"
                             ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
                             : selectedPlace.mainType === "attraction"
-                            ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
-                            : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
+                              ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                              : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
                       } as any}
                       className="w-12 h-12 rounded-2xl items-center justify-center shadow-lg border border-white/30 active:scale-95"
                     >
@@ -832,29 +832,27 @@ export default function App() {
                   {mainTab === "parking"
                     ? `공영주차장 (${filteredPlaces.length}곳)`
                     : mainTab === "food"
-                    ? `맛집 (${filteredPlaces.length}곳)`
-                    : mainTab === "attraction"
-                    ? `명소 (${filteredPlaces.length}곳)`
-                    : `전체 (${filteredPlaces.length}곳)`}
+                      ? `맛집 (${filteredPlaces.length}곳)`
+                      : mainTab === "attraction"
+                        ? `명소 (${filteredPlaces.length}곳)`
+                        : `전체 (${filteredPlaces.length}곳)`}
                 </Text>
 
                 <TouchableOpacity
                   onPress={() => setSortByDistance((prev) => !prev)}
                   activeOpacity={0.7}
-                  className={`flex-row items-center px-2.5 py-1.5 rounded-lg border ${
-                    sortByDistance
+                  className={`flex-row items-center px-2.5 py-1.5 rounded-lg border ${sortByDistance
                       ? "bg-blue-50 border-blue-200"
                       : "bg-white border-slate-200"
-                  }`}
+                    }`}
                 >
                   <ArrowUpDown
                     size={12}
                     color={sortByDistance ? "#1856FF" : "#64748b"}
                   />
                   <Text
-                    className={`text-xs ml-1 font-semibold font-sans ${
-                      sortByDistance ? "text-[#1856FF]" : "text-slate-600"
-                    }`}
+                    className={`text-xs ml-1 font-semibold font-sans ${sortByDistance ? "text-[#1856FF]" : "text-slate-600"
+                      }`}
                   >
                     {sortByDistance ? "거리순 정렬됨" : "기본 순서"}
                   </Text>
@@ -870,8 +868,8 @@ export default function App() {
                 const typeGradient = isParking
                   ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
                   : isAttraction
-                  ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
-                  : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)";
+                    ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                    : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)";
 
                 return (
                   <TouchableOpacity
@@ -911,8 +909,8 @@ export default function App() {
                           {isParking
                             ? "🅿️ 공영주차장"
                             : isAttraction
-                            ? "🎡 가볼만한곳"
-                            : "🍽️ 맛집"}
+                              ? "🎡 가볼만한곳"
+                              : "🍽️ 맛집"}
                         </Text>
                       </View>
                     </View>
@@ -987,25 +985,23 @@ export default function App() {
                                 background: isParking
                                   ? "rgba(5, 150, 105, 0.1)"
                                   : isAttraction
-                                  ? "rgba(24, 86, 255, 0.1)"
-                                  : "rgba(255, 107, 74, 0.1)",
+                                    ? "rgba(24, 86, 255, 0.1)"
+                                    : "rgba(255, 107, 74, 0.1)",
                               } as any}
-                              className={`px-2 py-0.5 rounded-md border ${
-                                isParking
+                              className={`px-2 py-0.5 rounded-md border ${isParking
                                   ? "border-emerald-200/80"
                                   : isAttraction
-                                  ? "border-blue-200/80"
-                                  : "border-orange-200/80"
-                              }`}
+                                    ? "border-blue-200/80"
+                                    : "border-orange-200/80"
+                                }`}
                             >
                               <Text
-                                className={`text-[10px] font-bold ${
-                                  isParking
+                                className={`text-[10px] font-bold ${isParking
                                     ? "text-emerald-700"
                                     : isAttraction
-                                    ? "text-[#1856FF]"
-                                    : "text-[#CE7636]"
-                                } font-sans`}
+                                      ? "text-[#1856FF]"
+                                      : "text-[#CE7636]"
+                                  } font-sans`}
                               >
                                 #{tag}
                               </Text>
@@ -1042,6 +1038,32 @@ export default function App() {
               })}
             </ScrollView>
           )}
+
+          {/* Fixed Sidebar - 1280px 이상에서만 표시 */}
+          {isWideScreen && (
+            <HamburgerMenuModal
+              visible={true}
+              isFixed={true}
+              onClose={() => {}}
+              mainTab={mainTab}
+              onSelectMainTab={(tab) => {
+                setMainTab(tab);
+                setDrivingRoute(null);
+              }}
+              activeCategory={activeCategory}
+              onSelectCategory={(catId) => {
+                setActiveCategory(catId);
+                setDrivingRoute(null);
+              }}
+              categories={currentCategories}
+              viewMode={viewMode}
+              onSelectViewMode={setViewMode}
+              sortByDistance={sortByDistance}
+              onToggleSortByDistance={() => setSortByDistance(!sortByDistance)}
+              totalCounts={totalCounts}
+              locationName={locationName}
+            />
+          )}
         </View>
 
         {/* Fullscreen Place Detail Modal */}
@@ -1056,29 +1078,32 @@ export default function App() {
           onStartRoute={handleStartDrivingRoute}
         />
 
-        {/* Slide-over Hamburger Menu Drawer Modal */}
-        <HamburgerMenuModal
-          visible={isHamburgerOpen}
-          onClose={() => setIsHamburgerOpen(false)}
-          mainTab={mainTab}
-          onSelectMainTab={(tab) => {
-            setMainTab(tab);
-            setDrivingRoute(null);
-          }}
-          activeCategory={activeCategory}
-          onSelectCategory={(catId) => {
-            setActiveCategory(catId);
-            setDrivingRoute(null);
-          }}
-          categories={currentCategories}
-          viewMode={viewMode}
-          onSelectViewMode={setViewMode}
-          sortByDistance={sortByDistance}
-          onToggleSortByDistance={() => setSortByDistance(!sortByDistance)}
-          totalCounts={totalCounts}
-          locationName={locationName}
-        />
+        {/* Slide-over Hamburger Menu Drawer Modal - 1280px 미만에서만 */}
+        {!isWideScreen && (
+          <HamburgerMenuModal
+            visible={isHamburgerOpen}
+            onClose={() => setIsHamburgerOpen(false)}
+            mainTab={mainTab}
+            onSelectMainTab={(tab) => {
+              setMainTab(tab);
+              setDrivingRoute(null);
+            }}
+            activeCategory={activeCategory}
+            onSelectCategory={(catId) => {
+              setActiveCategory(catId);
+              setDrivingRoute(null);
+            }}
+            categories={currentCategories}
+            viewMode={viewMode}
+            onSelectViewMode={setViewMode}
+            sortByDistance={sortByDistance}
+            onToggleSortByDistance={() => setSortByDistance(!sortByDistance)}
+            totalCounts={totalCounts}
+            locationName={locationName}
+          />
+        )}
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
+

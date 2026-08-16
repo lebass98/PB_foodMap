@@ -8,6 +8,7 @@ import {
   Image,
   Animated,
   Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import {
   X,
@@ -47,6 +48,8 @@ interface HamburgerMenuModalProps {
     parking: number;
   };
   locationName: string;
+  /** 1280px 이상 넓은 화면에서 항상 우측 고정 사이드바로 표시 */
+  isFixed?: boolean;
 }
 
 const DRAWER_WIDTH = Math.min(Dimensions.get("window").width * 0.82, 360);
@@ -65,7 +68,9 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
   onToggleSortByDistance,
   totalCounts,
   locationName,
+  isFixed = false,
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
   const slideAnim = useRef(new Animated.Value(DRAWER_WIDTH)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -155,6 +160,228 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
     },
   ];
 
+  // 공통 사이드바 컨텐츠 (Modal 모드 + Fixed 모드 모두 재사용)
+  const sidebarContent = (
+    <>
+      {/* Section 1: Main Tabs */}
+      <View className="mb-6">
+        <Text className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5 font-sans px-1">
+          메인 여행 카테고리
+        </Text>
+        <View className="gap-2">
+          {mainTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isSelected = mainTab === tab.id;
+            const iconGradient =
+              tab.id === "food"
+                ? "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)"
+                : tab.id === "attraction"
+                ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                : tab.id === "parking"
+                ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                : "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)";
+            return (
+              <TouchableOpacity
+                key={tab.id}
+                onPress={() => {
+                  onSelectMainTab(tab.id);
+                  onSelectCategory("all");
+                }}
+                activeOpacity={0.8}
+                className={`p-3 rounded-2xl border transition-all ${
+                  isSelected
+                    ? tab.activeBg + " shadow-sm"
+                    : "bg-slate-50/70 border-slate-200/70"
+                }`}
+              >
+                <View className="flex-row items-center justify-between">
+                  <View className="flex-row items-center flex-1 mr-2">
+                    <View
+                      style={isSelected ? ({ background: iconGradient } as any) : undefined}
+                      className={`w-8 h-8 rounded-xl items-center justify-center mr-2.5 ${
+                        isSelected
+                          ? "shadow-sm border border-white/40"
+                          : "bg-white border border-slate-200/70"
+                      }`}
+                    >
+                      <Icon size={16} color={isSelected ? "#ffffff" : tab.color} />
+                    </View>
+                    <View className="flex-1">
+                      <Text className={`text-sm font-black font-sans ${isSelected ? tab.activeText : "text-slate-800"}`}>
+                        {tab.title}
+                      </Text>
+                      <Text className="text-[11px] text-slate-500 font-medium font-sans mt-0.5" numberOfLines={1}>
+                        {tab.desc}
+                      </Text>
+                    </View>
+                  </View>
+                  <View className={`px-2.5 py-1 rounded-full ${isSelected ? tab.badgeBg : "bg-slate-200/80 text-slate-700"}`}>
+                    <Text className="text-xs font-black font-sans">{tab.count}곳</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+
+      {/* Section 2: Sub-categories Filter */}
+      <View className="mb-6">
+        <Text className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5 font-sans px-1">
+          세부 테마 필터 ({mainTab === "all" ? "전체" : mainTab === "food" ? "맛집" : mainTab === "attraction" ? "명소" : "주차장"})
+        </Text>
+        <View className="flex-row flex-wrap gap-1.5">
+          {categories.map((cat) => {
+            const Icon = cat.icon;
+            const isCatActive = activeCategory === cat.id;
+            const chipGradient =
+              mainTab === "food"
+                ? "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)"
+                : mainTab === "parking"
+                ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                : "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)";
+            return (
+              <TouchableOpacity
+                key={cat.id}
+                onPress={() => onSelectCategory(cat.id)}
+                activeOpacity={0.8}
+                style={isCatActive ? ({ background: chipGradient } as any) : undefined}
+                className={`flex-row items-center px-3 py-2 rounded-xl border ${
+                  isCatActive ? "shadow-md border-white/30" : "bg-slate-50 border-slate-200/80"
+                }`}
+              >
+                <Icon size={13} color={isCatActive ? "#ffffff" : "#64748b"} />
+                <Text className={`text-xs font-bold ml-1.5 font-sans ${isCatActive ? "text-white" : "text-slate-700"}`}>
+                  {cat.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+
+      {/* Section 3: View Mode & Quick Controls */}
+      <View className="mb-4">
+        <Text className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5 font-sans px-1">
+          보기 및 정렬 설정
+        </Text>
+        <View className="flex-row bg-slate-100 p-1 rounded-2xl border border-slate-200/80 mb-2.5 shadow-xs">
+          <TouchableOpacity
+            onPress={() => onSelectViewMode("map")}
+            activeOpacity={0.8}
+            style={viewMode === "map" ? ({ background: "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)" } as any) : undefined}
+            className={`flex-1 flex-row items-center justify-center py-2.5 rounded-xl ${
+              viewMode === "map" ? "shadow-sm shadow-blue-500/30 border border-white/30" : ""
+            }`}
+          >
+            <MapIcon size={16} color={viewMode === "map" ? "#ffffff" : "#64748b"} />
+            <Text className={`ml-2 text-xs font-black font-sans ${viewMode === "map" ? "text-white" : "text-slate-600"}`}>
+              지도 보기
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onSelectViewMode("list")}
+            activeOpacity={0.8}
+            style={viewMode === "list" ? ({ background: "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)" } as any) : undefined}
+            className={`flex-1 flex-row items-center justify-center py-2.5 rounded-xl ${
+              viewMode === "list" ? "shadow-sm shadow-blue-500/30 border border-white/30" : ""
+            }`}
+          >
+            <ListIcon size={16} color={viewMode === "list" ? "#ffffff" : "#64748b"} />
+            <Text className={`ml-2 text-xs font-black font-sans ${viewMode === "list" ? "text-white" : "text-slate-600"}`}>
+              목록 보기
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          onPress={onToggleSortByDistance}
+          activeOpacity={0.8}
+          className={`p-3 rounded-2xl border flex-row items-center justify-between ${
+            sortByDistance ? "bg-blue-50 border-blue-300 shadow-xs" : "bg-slate-50 border-slate-200/80"
+          }`}
+        >
+          <View className="flex-row items-center">
+            <ArrowUpDown size={16} color={sortByDistance ? "#1856FF" : "#64748b"} />
+            <Text className={`text-xs font-bold ml-2 font-sans ${sortByDistance ? "text-[#1856FF]" : "text-slate-700"}`}>
+              거리순 정렬 ({sortByDistance ? "적용 중" : "기본 추천순"})
+            </Text>
+          </View>
+          <View
+            style={sortByDistance ? ({ background: "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)" } as any) : undefined}
+            className={`w-6 h-6 rounded-full items-center justify-center ${sortByDistance ? "shadow-xs border border-white/30" : "bg-slate-300"}`}
+          >
+            <Text className="text-[10px] font-black text-white">{sortByDistance ? "ON" : "OFF"}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+
+
+
+  // 고정 사이드바 모드 (1280px 이상): Modal 없이 인라인 View로 렌더링
+  if (isFixed) {
+    return (
+      <View
+        style={{ width: DRAWER_WIDTH }}
+        className="bg-white h-full shadow-2xl flex-col border-l border-slate-100 z-50"
+      >
+        {/* Fixed Sidebar Header */}
+        <View className="pt-4 px-5 pb-4 bg-white border-b border-slate-100 shadow-xs">
+          <View className="flex-row items-center justify-between mb-3.5">
+            <View className="flex-row items-center">
+              <View className="w-9 h-9 rounded-xl overflow-hidden border border-slate-200/90 bg-white items-center justify-center mr-2.5 shadow-sm">
+                <Image
+                  source={require("../../assets/glory_logo.png")}
+                  style={{ width: 32, height: 32 }}
+                  resizeMode="contain"
+                />
+              </View>
+              <View>
+                <Text className="text-base font-black text-[#141414] font-sans tracking-tight">
+                  Glory Travel
+                </Text>
+                <Text className="text-[11px] font-medium text-slate-500 font-sans">
+                  부산 여행 종합 내비 지도
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Current Base Location Info */}
+          <View className="flex-row items-center bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80">
+            <MapPin size={13} color="#1856FF" />
+            <Text className="text-xs font-bold text-slate-700 ml-1.5 font-sans flex-1" numberOfLines={1}>
+              출발 기준: {locationName}
+            </Text>
+          </View>
+        </View>
+
+        {/* Sidebar Scrollable Content (same as drawer content) */}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 16, paddingBottom: 30 }}
+          className="flex-1 bg-white"
+        >
+          {sidebarContent}
+        </ScrollView>
+
+        {/* Footer */}
+        <View className="p-4 bg-white border-t border-slate-100">
+          <View
+            style={{
+              background: "linear-gradient(135deg, #1856FF 0%, #3B82F6 50%, #6366F1 100%)",
+            } as any}
+            className="py-3.5 rounded-2xl items-center justify-center shadow-xl shadow-blue-500/30 border border-white/30"
+          >
+            <Text className="text-sm font-black text-white font-sans">Glory Travel</Text>
+            <Text className="text-[10px] text-white/80 font-sans mt-0.5">부산 여행 종합 내비</Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <Modal
       visible={visible}
@@ -228,263 +455,9 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
             contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 16, paddingBottom: 30 }}
             className="flex-1 bg-white"
           >
-            {/* Section 1: Main Tabs */}
-            <View className="mb-6">
-              <Text className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5 font-sans px-1">
-                메인 여행 카테고리
-              </Text>
-
-              <View className="gap-2">
-                {mainTabs.map((tab) => {
-                  const Icon = tab.icon;
-                  const isSelected = mainTab === tab.id;
-
-                  const iconGradient =
-                    tab.id === "food"
-                      ? "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)"
-                      : tab.id === "attraction"
-                      ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
-                      : tab.id === "parking"
-                      ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
-                      : "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)";
-
-                  return (
-                    <TouchableOpacity
-                      key={tab.id}
-                      onPress={() => {
-                        onSelectMainTab(tab.id);
-                        onSelectCategory("all");
-                      }}
-                      activeOpacity={0.8}
-                      className={`p-3 rounded-2xl border transition-all ${
-                        isSelected
-                          ? tab.activeBg + " shadow-sm"
-                          : "bg-slate-50/70 border-slate-200/70"
-                      }`}
-                    >
-                      <View className="flex-row items-center justify-between">
-                        <View className="flex-row items-center flex-1 mr-2">
-                          <View
-                            style={
-                              isSelected
-                                ? ({
-                                    background: iconGradient,
-                                  } as any)
-                                : undefined
-                            }
-                            className={`w-8 h-8 rounded-xl items-center justify-center mr-2.5 ${
-                              isSelected
-                                ? "shadow-sm border border-white/40"
-                                : "bg-white border border-slate-200/70"
-                            }`}
-                          >
-                            <Icon size={16} color={isSelected ? "#ffffff" : tab.color} />
-                          </View>
-                          <View className="flex-1">
-                            <Text
-                              className={`text-sm font-black font-sans ${
-                                isSelected ? tab.activeText : "text-slate-800"
-                              }`}
-                            >
-                              {tab.title}
-                            </Text>
-                            <Text
-                              className="text-[11px] text-slate-500 font-medium font-sans mt-0.5"
-                              numberOfLines={1}
-                            >
-                              {tab.desc}
-                            </Text>
-                          </View>
-                        </View>
-
-                        <View
-                          className={`px-2.5 py-1 rounded-full ${
-                            isSelected
-                              ? tab.badgeBg
-                              : "bg-slate-200/80 text-slate-700"
-                          }`}
-                        >
-                          <Text className="text-xs font-black font-sans">
-                            {tab.count}곳
-                          </Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            </View>
-
-            {/* Section 2: Sub-categories Filter */}
-            <View className="mb-6">
-              <Text className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5 font-sans px-1">
-                세부 테마 필터 ({mainTab === "all" ? "전체" : mainTab === "food" ? "맛집" : mainTab === "attraction" ? "명소" : "주차장"})
-              </Text>
-
-              <View className="flex-row flex-wrap gap-1.5">
-                {categories.map((cat) => {
-                  const Icon = cat.icon;
-                  const isCatActive = activeCategory === cat.id;
-
-                  const chipGradient =
-                    mainTab === "food"
-                      ? "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)"
-                      : mainTab === "parking"
-                      ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
-                      : "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)";
-
-                  return (
-                    <TouchableOpacity
-                      key={cat.id}
-                      onPress={() => {
-                        onSelectCategory(cat.id);
-                      }}
-                      activeOpacity={0.8}
-                      style={
-                        isCatActive
-                          ? ({
-                              background: chipGradient,
-                            } as any)
-                          : undefined
-                      }
-                      className={`flex-row items-center px-3 py-2 rounded-xl border ${
-                        isCatActive
-                          ? "shadow-md border-white/30"
-                          : "bg-slate-50 border-slate-200/80"
-                      }`}
-                    >
-                      <Icon
-                        size={13}
-                        color={isCatActive ? "#ffffff" : "#64748b"}
-                      />
-                      <Text
-                        className={`text-xs font-bold ml-1.5 font-sans ${
-                          isCatActive ? "text-white" : "text-slate-700"
-                        }`}
-                      >
-                        {cat.name}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            </View>
-
-            {/* Section 3: View Mode & Quick Controls */}
-            <View className="mb-4">
-              <Text className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5 font-sans px-1">
-                보기 및 정렬 설정
-              </Text>
-
-              {/* View Mode Toggle Button */}
-              <View className="flex-row bg-slate-100 p-1 rounded-2xl border border-slate-200/80 mb-2.5 shadow-xs">
-                <TouchableOpacity
-                  onPress={() => onSelectViewMode("map")}
-                  activeOpacity={0.8}
-                  style={
-                    viewMode === "map"
-                      ? ({
-                          background:
-                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
-                        } as any)
-                      : undefined
-                  }
-                  className={`flex-1 flex-row items-center justify-center py-2.5 rounded-xl ${
-                    viewMode === "map"
-                      ? "shadow-sm shadow-blue-500/30 border border-white/30"
-                      : ""
-                  }`}
-                >
-                  <MapIcon
-                    size={16}
-                    color={viewMode === "map" ? "#ffffff" : "#64748b"}
-                  />
-                  <Text
-                    className={`ml-2 text-xs font-black font-sans ${
-                      viewMode === "map" ? "text-white" : "text-slate-600"
-                    }`}
-                  >
-                    지도 보기
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => onSelectViewMode("list")}
-                  activeOpacity={0.8}
-                  style={
-                    viewMode === "list"
-                      ? ({
-                          background:
-                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
-                        } as any)
-                      : undefined
-                  }
-                  className={`flex-1 flex-row items-center justify-center py-2.5 rounded-xl ${
-                    viewMode === "list"
-                      ? "shadow-sm shadow-blue-500/30 border border-white/30"
-                      : ""
-                  }`}
-                >
-                  <ListIcon
-                    size={16}
-                    color={viewMode === "list" ? "#ffffff" : "#64748b"}
-                  />
-                  <Text
-                    className={`ml-2 text-xs font-black font-sans ${
-                      viewMode === "list" ? "text-white" : "text-slate-600"
-                    }`}
-                  >
-                    목록 보기
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              {/* Distance Sort Button */}
-              <TouchableOpacity
-                onPress={onToggleSortByDistance}
-                activeOpacity={0.8}
-                className={`p-3 rounded-2xl border flex-row items-center justify-between ${
-                  sortByDistance
-                    ? "bg-blue-50 border-blue-300 shadow-xs"
-                    : "bg-slate-50 border-slate-200/80"
-                }`}
-              >
-                <View className="flex-row items-center">
-                  <ArrowUpDown
-                    size={16}
-                    color={sortByDistance ? "#1856FF" : "#64748b"}
-                  />
-                  <Text
-                    className={`text-xs font-bold ml-2 font-sans ${
-                      sortByDistance ? "text-[#1856FF]" : "text-slate-700"
-                    }`}
-                  >
-                    거리순 정렬 ({sortByDistance ? "적용 중" : "기본 추천순"})
-                  </Text>
-                </View>
-
-                <View
-                  style={
-                    sortByDistance
-                      ? ({
-                          background:
-                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
-                        } as any)
-                      : undefined
-                  }
-                  className={`w-6 h-6 rounded-full items-center justify-center ${
-                    sortByDistance
-                      ? "shadow-xs border border-white/30"
-                      : "bg-slate-300"
-                  }`}
-                >
-                  <Text className="text-[10px] font-black text-white">
-                    {sortByDistance ? "ON" : "OFF"}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+            {sidebarContent}
           </ScrollView>
+
 
           {/* Pure White Drawer Footer */}
           <View className="p-4 bg-white border-t border-slate-100">
