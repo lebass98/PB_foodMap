@@ -1183,7 +1183,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 3820,
     phone: "051-733-2600",
-    image: "https://images.unsplash.com/photo-1538485399081-7191377e8241?w=900&q=85",
+    image: require("../../assets/busan_x_the_sky.jpg"),
     tags: ["한국관광100선", "100층전망대", "쇼킹브릿지370m", "세계최고층스타벅스", "호텔도보10분"],
     distance: "약 1.0km",
     hotelDistanceInfo: "거리: 약 1.0km · 차량 약 3~4분 (도보 약 10~12분)",
