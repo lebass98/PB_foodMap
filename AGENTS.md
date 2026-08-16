@@ -10,3 +10,9 @@
   npx tsc --noEmit && npx expo-doctor
   ```
 - Expo SDK 버전 호환성(SDK 54 / React 19 / React Native 0.81) 및 Expo Go 실행 환경에 이상이 없는지 항상 확인합니다.
+
+## 3. macOS 임시 파일(`._*`) 자동 정리 규칙
+- 작업 중 또는 커밋 전 macOS/외장하드에서 자동 생성되는 `._*` (AppleDouble 리소스 포크) 파일이 발견될 때마다 아래 명령어를 실행하여 즉시 일괄 삭제합니다:
+  ```bash
+  find . -name "._*" -delete
+  ```

@@ -71,3 +71,4 @@ npx expo start -c
   - 우측 위치찾기 버튼 아래 세로형 확대/축소(`+ / -`) 컨트롤러 추가.
 - **Git 저장소 연결 및 규칙 정의**:
   - 원격 저장소(`https://github.com/lebass98/PB_foodMap.git`) 연동 및 작업 규칙(`AGENTS.md`) 추가.
+  - macOS 외장하드 임시 파일(`._*`) 자동 일괄 삭제 규칙 및 정리 스크립트 적용.
