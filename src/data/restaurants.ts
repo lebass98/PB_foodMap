@@ -1632,7 +1632,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 3890,
     phone: "051-247-9900",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85",
+    image: require("../../assets/songdo_cable_car.png"),
     tags: ["한국관광100선", "바다위86m", "크리스탈캐빈", "127m용궁구름다리", "암남공원비경"],
     distance: "약 21.0km",
     hotelDistanceInfo: "거리: 약 21.0~22.0km · 차량 약 35~45분 (남항대교 경유)",
