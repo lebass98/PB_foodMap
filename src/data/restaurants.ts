@@ -424,7 +424,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 690,
     phone: "051-731-0886",
-    image: "https://images.unsplash.com/photo-1557872943-16a5ac26437e?w=900&q=85",
+    image: require("../../assets/nagahama_mangetsu.png"),
     tags: ["미쉐린 가이드", "블루리본", "후쿠오카 정통", "야끼라멘", "수제교자"],
     distance: "약 1.4km",
     hotelDistanceInfo: "거리: 약 1.4km · 차량 약 5분 (도보 약 15~18분 가능)",
