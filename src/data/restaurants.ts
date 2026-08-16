@@ -17,7 +17,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 820,
     phone: "054-571-5600",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=85",
+    image: require("../../assets/saejae_halmae.png"),
     tags: ["문경새재IC5분", "40년전통", "약돌돼지석쇠구이", "더덕구이", "고속도로경유맛집"],
     distance: "시흥 162km / 부산 233km",
     hotelDistanceInfo: "시흥 출발 약 162km (1시간 50분) · 해운대까지 약 233km (2시간 40분)",
