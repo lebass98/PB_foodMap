@@ -1856,7 +1856,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 2890,
     phone: "051-607-6395",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85",
+    image: require("../../assets/oryukdo_skywalk.jpg"),
     tags: ["35m해안절벽", "유리바닥스카이워크", "동해남해분기점", "수선화유채꽃", "해파랑카페"],
     distance: "약 18.5km",
     hotelDistanceInfo: "거리: 약 18.5km · 차량 약 30~35분 (광안·부산항대교 경유)",
