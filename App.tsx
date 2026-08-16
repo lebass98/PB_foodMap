@@ -79,11 +79,11 @@ const ATTRACTION_CATEGORIES = [
 ];
 
 const ALL_CATEGORIES = [
-  { id: "all", name: "전체 (37곳)", icon: Sparkles },
+  { id: "all", name: "전체 (41곳)", icon: Sparkles },
   { id: "food_all", name: "맛집 (12곳)", icon: Utensils },
-  { id: "attraction_all", name: "가볼만한곳 (25곳)", icon: FerrisWheel },
+  { id: "attraction_all", name: "가볼만한곳 (29곳)", icon: FerrisWheel },
   { id: "beach", name: "해변/요트/해변열차", icon: Palmtree },
-  { id: "view", name: "전망대/야경/스카이워크", icon: Camera },
+  { id: "view", name: "전망대/케이블카/야경", icon: Camera },
   { id: "nature", name: "자연/해안산책로", icon: Trees },
   { id: "culture", name: "역사/문화/시장/사찰", icon: Ticket },
   { id: "korean", name: "한식/국밥", icon: Utensils },
@@ -365,7 +365,7 @@ export default function App() {
           </View>
         </View>
 
-        {/* Main Section Tab: [전체 (37)] / [🍽️ 맛집 (12)] / [🎡 가볼만한곳 (25)] */}
+        {/* Main Section Tab: [전체 (41)] / [🍽️ 맛집 (12)] / [🎡 가볼만한곳 (29)] */}
         <View className="bg-white px-5 pt-2.5 pb-2">
           <View className="flex-row bg-slate-100 p-1 rounded-2xl border border-slate-200/80">
             <TouchableOpacity
@@ -383,7 +383,7 @@ export default function App() {
                   mainTab === "all" ? "text-slate-900" : "text-slate-500"
                 }`}
               >
-                전체 (37)
+                전체 (41)
               </Text>
             </TouchableOpacity>
 
@@ -421,7 +421,7 @@ export default function App() {
                   mainTab === "attraction" ? "text-white" : "text-slate-600"
                 }`}
               >
-                🎡 가볼만한곳 (25)
+                🎡 가볼만한곳 (29)
               </Text>
             </TouchableOpacity>
           </View>
