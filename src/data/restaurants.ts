@@ -798,7 +798,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 410,
     phone: "070-8829-0513",
-    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=900&q=85",
+    image: require("../../assets/maitre_artisan.jpg"),
     tags: ["3년 연속 블루리본", "프랑스인 제빵사", "호두 크루아상", "앙버터 바게트"],
     distance: "약 9.2km",
     hotelDistanceInfo: "거리: 약 9.2km · 차량 약 20~25분",
