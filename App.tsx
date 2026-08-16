@@ -674,7 +674,11 @@ export default function App() {
                   >
                     <View className="flex-row">
                       <Image
-                        source={{ uri: selectedPlace.image }}
+                        source={
+                          typeof selectedPlace.image === "string"
+                            ? { uri: selectedPlace.image }
+                            : selectedPlace.image
+                        }
                         className="w-24 h-24 rounded-2xl bg-slate-100/80 border border-white/70 shadow-sm"
                         resizeMode="cover"
                       />
@@ -890,7 +894,11 @@ export default function App() {
                   >
                     <View className="relative">
                       <Image
-                        source={{ uri: item.image }}
+                        source={
+                          typeof item.image === "string"
+                            ? { uri: item.image }
+                            : item.image
+                        }
                         className="w-full h-44 bg-slate-100"
                         resizeMode="cover"
                       />

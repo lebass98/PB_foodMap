@@ -165,7 +165,11 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           {/* Hero Image with Frosted Gradient Overlays */}
           <View className="relative w-full h-80 bg-slate-100">
             <Image
-              source={{ uri: restaurant.image }}
+              source={
+                typeof restaurant.image === "string"
+                  ? { uri: restaurant.image }
+                  : restaurant.image
+              }
               className="w-full h-full"
               resizeMode="cover"
             />

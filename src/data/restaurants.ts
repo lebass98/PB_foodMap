@@ -1463,7 +1463,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 2120,
     phone: "051-464-9898",
-    image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=900&q=85",
+    image: require("../../assets/busan_port_bridge.png"),
     tags: ["360도나선형램프", "부산롤러코스터", "2층오픈탑버스", "무지개야경", "부산역출발"],
     distance: "약 17.5km",
     hotelDistanceInfo: "거리: 약 17.5km · 차량 약 35~40분 (부산역 탑승장 기준)",

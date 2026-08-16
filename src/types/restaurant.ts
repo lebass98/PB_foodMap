@@ -27,7 +27,7 @@ export interface Place {
   longitude: number;
   rating: number;
   reviews: number;
-  image: string;
+  image: any; // URL 문자열 또는 require 로컬 에셋
   phone: string;
   tags: string[];
   distance: string;
