@@ -57,7 +57,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
       await Share.share({
         message: `[Glory Travel] ${restaurant.name}\n위치: ${restaurant.address}\n${restaurant.hotelDistanceInfo}\n\n${restaurant.highlight}`,
       });
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleShowMapRoute = () => {
@@ -68,6 +68,30 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
   const isAttraction = restaurant.mainType === "attraction";
   const isParking = restaurant.mainType === "parking";
 
+  const typeConfig = isParking
+    ? {
+        bg: "bg-emerald-600",
+        label: "🅿️ 공영주차장",
+        tagBg: "bg-emerald-50/80",
+        tagBorder: "border-emerald-200/80",
+        tagText: "text-emerald-700",
+      }
+    : isAttraction
+    ? {
+        bg: "bg-[#1856FF]",
+        label: "🎡 가볼만한곳",
+        tagBg: "bg-blue-50/80",
+        tagBorder: "border-blue-200/80",
+        tagText: "text-[#1856FF]",
+      }
+    : {
+        bg: "bg-[#E89558]",
+        label: "🍽️ 맛집",
+        tagBg: "bg-orange-50/80",
+        tagBorder: "border-orange-200/80",
+        tagText: "text-[#CE7636]",
+      };
+
   return (
     <Modal
       visible={visible}
@@ -77,7 +101,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
     >
       <View className="flex-1 bg-slate-50 font-sans">
         {/* Floating Frosted Glass Top Navigation Bar */}
-        <View className="absolute top-0 left-0 right-0 z-50 flex-row items-center justify-between px-5 pt-3 pb-3 bg-white/85 backdrop-blur-xl border-b border-white/60 shadow-sm">
+        <View className="absolute top-0 left-0 right-0 z-50 flex-row items-center justify-between px-5 pt-3 pb-3">
           <TouchableOpacity
             onPress={onClose}
             activeOpacity={0.8}
@@ -131,20 +155,10 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
 
             {/* Category Tag Badge */}
             <View
-              className={`absolute top-16 left-5 ${
-                isParking
-                  ? "bg-emerald-600"
-                  : isAttraction
-                  ? "bg-[#1856FF]"
-                  : "bg-[#E89558]"
-              } px-3 py-1 rounded-full shadow-md border border-white/30`}
+              className={`absolute top-16 left-5 ${typeConfig.bg} px-3 py-1 rounded-full shadow-md border border-white/30`}
             >
               <Text className="text-xs font-black text-white font-sans">
-                {isParking
-                  ? "🅿️ 공영주차장"
-                  : isAttraction
-                  ? "🎡 가볼만한곳"
-                  : "🍽️ 맛집"}
+                {typeConfig.label}
               </Text>
             </View>
           </View>
@@ -176,22 +190,10 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               {restaurant.tags.map((tag, idx) => (
                 <View
                   key={idx}
-                  className={`${
-                    isParking
-                      ? "bg-emerald-50/80 border-emerald-200/80"
-                      : isAttraction
-                      ? "bg-blue-50/80 border-blue-200/80"
-                      : "bg-orange-50/80 border-orange-200/80"
-                  } px-2.5 py-1 rounded-lg border shadow-xs`}
+                  className={`${typeConfig.tagBg} ${typeConfig.tagBorder} px-2.5 py-1 rounded-lg border shadow-xs`}
                 >
                   <Text
-                    className={`text-xs font-bold ${
-                      isParking
-                        ? "text-emerald-700"
-                        : isAttraction
-                        ? "text-[#1856FF]"
-                        : "text-[#CE7636]"
-                    } font-sans`}
+                    className={`text-xs font-bold ${typeConfig.tagText} font-sans`}
                   >
                     #{tag}
                   </Text>
@@ -215,9 +217,8 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               <TouchableOpacity
                 onPress={handleShowMapRoute}
                 activeOpacity={0.8}
-                className={`flex-1 ${
-                  isParking ? "bg-emerald-50/90 border-emerald-200" : "bg-blue-50/90 border-blue-200"
-                } border py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98`}
+                className={`flex-1 ${isParking ? "bg-emerald-50/90 border-emerald-200" : "bg-blue-50/90 border-blue-200"
+                  } border py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98`}
               >
                 <Route size={16} color={isParking ? "#059669" : "#1856FF"} />
                 <Text className={`text-xs font-black ${isParking ? "text-emerald-700" : "text-[#1856FF]"} ml-1.5 font-sans`}>
@@ -274,18 +275,17 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                 {isParking
                   ? "주차 요금 & 할인 혜택"
                   : isAttraction
-                  ? "이용 요금 & 주요 코스"
-                  : "대표 메뉴 & 가격"}
+                    ? "이용 요금 & 주요 코스"
+                    : "대표 메뉴 & 가격"}
               </Text>
               <View className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card flex flex-col gap-3.5">
                 {restaurant.menuItems.map((menu, index) => (
                   <View
                     key={index}
-                    className={`pb-3.5 ${
-                      index !== restaurant.menuItems.length - 1
+                    className={`pb-3.5 ${index !== restaurant.menuItems.length - 1
                         ? "border-b border-slate-100"
                         : ""
-                    }`}
+                      }`}
                   >
                     <View className="flex-row justify-between items-center">
                       <View className="flex-row items-center flex-1 mr-2">
@@ -322,8 +322,8 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                   {isParking
                     ? "주차 요금 체계 & 인근 연계 명소 (1km 반경)"
                     : isAttraction
-                    ? "영상 속 상세 리뷰 & 여행 꿀팁 (타임스탬프)"
-                    : "영상 속 상세 리뷰 & 메뉴 평 (타임스탬프)"}
+                      ? "영상 속 상세 리뷰 & 여행 꿀팁 (타임스탬프)"
+                      : "영상 속 상세 리뷰 & 메뉴 평 (타임스탬프)"}
                 </Text>
               </View>
               <View className="space-y-1.5">
