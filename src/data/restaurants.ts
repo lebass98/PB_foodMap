@@ -504,7 +504,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.8,
     reviews: 1120,
     phone: "051-754-9292",
-    image: "https://images.unsplash.com/photo-1547496502-affa22d38842?w=900&q=85",
+    image: require("../../assets/subyeon_gukbap.jpg"),
     tags: ["부산 3대 국밥", "수육백반", "고기순대국밥", "24시간 영업", "원격줄서기"],
     distance: "약 5.7km",
     hotelDistanceInfo: "거리: 약 5.7km · 차량 약 15~18분",
