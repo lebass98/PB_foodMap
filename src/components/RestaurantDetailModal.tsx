@@ -70,26 +70,29 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
 
   const typeConfig = isParking
     ? {
-        bg: "bg-emerald-600",
+        gradient: "linear-gradient(135deg, #059669 0%, #10B981 100%)",
         label: "🅿️ 공영주차장",
-        tagBg: "bg-emerald-50/80",
+        tagBg: "rgba(5, 150, 105, 0.12)",
         tagBorder: "border-emerald-200/80",
         tagText: "text-emerald-700",
+        btnGradient: "linear-gradient(135deg, #059669 0%, #10B981 100%)",
       }
     : isAttraction
     ? {
-        bg: "bg-[#1856FF]",
+        gradient: "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)",
         label: "🎡 가볼만한곳",
-        tagBg: "bg-blue-50/80",
+        tagBg: "rgba(24, 86, 255, 0.12)",
         tagBorder: "border-blue-200/80",
         tagText: "text-[#1856FF]",
+        btnGradient: "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
       }
     : {
-        bg: "bg-[#E89558]",
+        gradient: "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
         label: "🍽️ 맛집",
-        tagBg: "bg-orange-50/80",
+        tagBg: "rgba(255, 107, 74, 0.12)",
         tagBorder: "border-orange-200/80",
         tagText: "text-[#CE7636]",
+        btnGradient: "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
       };
 
   return (
@@ -99,13 +102,13 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
       presentationStyle="pageSheet"
       onRequestClose={onClose}
     >
-      <View className="flex-1 bg-slate-50 font-sans">
+      <View className="flex-1 bg-slate-100/90 font-sans">
         {/* Floating Frosted Glass Top Navigation Bar */}
-        <View className="absolute top-0 left-0 right-0 z-50 flex-row items-center justify-between px-5 pt-3 pb-3">
+        <View className="absolute top-0 left-0 right-0 z-50 flex-row items-center justify-between px-5 pt-3 pb-3 bg-white/70 backdrop-blur-2xl border-b border-white/50 shadow-glass">
           <TouchableOpacity
             onPress={onClose}
             activeOpacity={0.8}
-            className="w-10 h-10 rounded-full bg-white/90 border border-slate-200/80 items-center justify-center shadow-sm active:scale-95"
+            className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
           >
             <ArrowLeft size={20} color="#141414" />
           </TouchableOpacity>
@@ -114,7 +117,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             <TouchableOpacity
               onPress={handleShare}
               activeOpacity={0.8}
-              className="w-10 h-10 rounded-full bg-white/90 border border-slate-200/80 items-center justify-center shadow-sm active:scale-95"
+              className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
             >
               <Share2 size={18} color="#141414" />
             </TouchableOpacity>
@@ -122,7 +125,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             <TouchableOpacity
               onPress={() => onToggleFavorite(restaurant.id)}
               activeOpacity={0.8}
-              className="w-10 h-10 rounded-full bg-white/90 border border-slate-200/80 items-center justify-center shadow-sm active:scale-95"
+              className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xl border border-white/80 items-center justify-center shadow-sm active:scale-95"
             >
               <Bookmark
                 size={18}
@@ -153,9 +156,10 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               </Text>
             </View>
 
-            {/* Category Tag Badge */}
+            {/* Category Tag Badge with Vivid Gradient */}
             <View
-              className={`absolute top-16 left-5 ${typeConfig.bg} px-3 py-1 rounded-full shadow-md border border-white/30`}
+              style={{ background: typeConfig.gradient } as any}
+              className="absolute top-16 left-5 px-3 py-1 rounded-full shadow-lg border border-white/30"
             >
               <Text className="text-xs font-black text-white font-sans">
                 {typeConfig.label}
@@ -163,13 +167,13 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             </View>
           </View>
 
-          {/* Place Header Info Card */}
-          <View className="px-5 pt-5 pb-6 bg-white border-b border-slate-100/90 shadow-sm">
+          {/* Place Header Info Card (Frosted Glass Card) */}
+          <View className="px-5 pt-5 pb-6 bg-white/80 backdrop-blur-2xl border-b border-white/70 shadow-sm">
             <View className="flex-row items-center justify-between mb-2">
               <Text className="text-2xl font-black text-[#141414] tracking-tight flex-1 mr-3 font-sans">
                 {restaurant.name}
               </Text>
-              <View className="flex-row items-center bg-amber-50/90 px-3 py-1 rounded-full border border-amber-200 shadow-sm">
+              <View className="flex-row items-center bg-amber-50/90 backdrop-blur-sm px-3 py-1 rounded-full border border-amber-200/80 shadow-sm">
                 <Star size={14} color="#f59e0b" fill="#f59e0b" />
                 <Text className="text-xs font-black text-amber-900 ml-1 font-sans">
                   {restaurant.rating}
@@ -190,7 +194,8 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               {restaurant.tags.map((tag, idx) => (
                 <View
                   key={idx}
-                  className={`${typeConfig.tagBg} ${typeConfig.tagBorder} px-2.5 py-1 rounded-lg border shadow-xs`}
+                  style={{ background: typeConfig.tagBg } as any}
+                  className={`${typeConfig.tagBorder} px-2.5 py-1 rounded-lg border backdrop-blur-sm shadow-xs`}
                 >
                   <Text
                     className={`text-xs font-bold ${typeConfig.tagText} font-sans`}
@@ -201,12 +206,12 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               ))}
             </View>
 
-            {/* Quick Action Buttons (Call & Route) */}
+            {/* Quick Action Buttons (Call & Route with Gradient) */}
             <View className="flex-row gap-2.5 pt-2">
               <TouchableOpacity
                 onPress={handlePhoneCall}
                 activeOpacity={0.8}
-                className="flex-1 bg-white border border-slate-200/90 py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98"
+                className="flex-1 bg-white/80 backdrop-blur-xl border border-white/80 py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98"
               >
                 <Phone size={16} color="#141414" />
                 <Text className="text-xs font-bold text-[#141414] ml-1.5 font-sans">
@@ -217,11 +222,11 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               <TouchableOpacity
                 onPress={handleShowMapRoute}
                 activeOpacity={0.8}
-                className={`flex-1 ${isParking ? "bg-emerald-50/90 border-emerald-200" : "bg-blue-50/90 border-blue-200"
-                  } border py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98`}
+                style={{ background: typeConfig.btnGradient } as any}
+                className="flex-1 py-3.5 rounded-2xl flex-row items-center justify-center shadow-md border border-white/30 active:scale-98"
               >
-                <Route size={16} color={isParking ? "#059669" : "#1856FF"} />
-                <Text className={`text-xs font-black ${isParking ? "text-emerald-700" : "text-[#1856FF]"} ml-1.5 font-sans`}>
+                <Route size={16} color="#ffffff" />
+                <Text className="text-xs font-black text-white ml-1.5 font-sans">
                   지도 경로 보기
                 </Text>
               </TouchableOpacity>
@@ -231,7 +236,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           {/* Detailed Info Sections with Glass Containers */}
           <View className="px-5 py-6 flex flex-col gap-6">
             {/* Address & Operating Hours Glass Card */}
-            <View className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card flex flex-col gap-3.5">
+            <View className="bg-white/80 backdrop-blur-2xl rounded-3xl p-5 border border-white/70 shadow-card flex flex-col gap-3.5">
               <View className="flex-row items-start">
                 <MapPin size={16} color={isParking ? "#059669" : "#1856FF"} className="mt-0.5" />
                 <View className="flex-1 ml-2.5">
@@ -244,7 +249,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                 </View>
               </View>
 
-              <View className="h-px bg-slate-100" />
+              <View className="h-px bg-white/60" />
 
               <View className="flex-row items-start">
                 <Clock size={16} color={isParking ? "#059669" : "#1856FF"} className="mt-0.5" />
@@ -257,7 +262,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                   </Text>
                   {restaurant.breakTime && (
                     <Text className="text-[11px] font-semibold text-amber-600 mt-1 font-sans">
-                      브레이크타임: {restaurant.breakTime}
+                       브레이크타임: {restaurant.breakTime}
                     </Text>
                   )}
                   {restaurant.lastOrder && (
@@ -278,7 +283,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                     ? "이용 요금 & 주요 코스"
                     : "대표 메뉴 & 가격"}
               </Text>
-              <View className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card flex flex-col gap-3.5">
+              <View className="bg-white/80 backdrop-blur-2xl rounded-3xl p-5 border border-white/70 shadow-card flex flex-col gap-3.5">
                 {restaurant.menuItems.map((menu, index) => (
                   <View
                     key={index}
@@ -290,8 +295,15 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                     <View className="flex-row justify-between items-center">
                       <View className="flex-row items-center flex-1 mr-2">
                         {menu.isSignature && (
-                          <View className={`${isParking ? "bg-emerald-600" : "bg-[#1856FF]"} px-1.5 py-0.5 rounded mr-1.5`}>
-                            <Text className="text-[10px] font-bold text-white font-sans">
+                          <View
+                            style={{
+                              background: isParking
+                                ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                                : "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                            } as any}
+                            className="px-1.5 py-0.5 rounded shadow-xs mr-1.5"
+                          >
+                            <Text className="text-[10px] font-black text-white font-sans">
                               {isParking ? "기본" : "대표"}
                             </Text>
                           </View>
@@ -315,7 +327,14 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             </View>
 
             {/* Video Timestamp / Parking Tips Review Glass Card */}
-            <View className={`${isParking ? "bg-emerald-50/80 border-emerald-200/80" : "bg-blue-50/80 border-blue-200/80"} rounded-3xl p-5 shadow-card`}>
+            <View
+              style={{
+                background: isParking
+                  ? "rgba(5, 150, 105, 0.08)"
+                  : "rgba(24, 86, 255, 0.08)",
+              } as any}
+              className={`rounded-3xl p-5 border ${isParking ? "border-emerald-200/80" : "border-blue-200/80"} backdrop-blur-xl shadow-card`}
+            >
               <View className="flex-row items-center mb-2.5">
                 <PlayCircle size={17} color={isParking ? "#059669" : "#1856FF"} />
                 <Text className="text-sm font-bold text-slate-900 ml-1.5 font-sans">
@@ -352,7 +371,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
               {restaurant.reviewsList.map((review) => (
                 <View
                   key={review.id}
-                  className="bg-white rounded-3xl p-5 border border-slate-100 shadow-card flex flex-col gap-2.5"
+                  className="bg-white/80 backdrop-blur-2xl rounded-3xl p-5 border border-white/70 shadow-card flex flex-col gap-2.5"
                 >
                   <View className="flex-row items-center gap-2.5">
                     <View className="w-8 h-8 rounded-full bg-blue-100 items-center justify-center">
@@ -388,12 +407,15 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           </View>
         </ScrollView>
 
-        {/* Sticky Bottom Bar: Show Route on Map (Primary Action) */}
-        <View className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-slate-100 p-4 pb-6 flex-row gap-3 shadow-modal">
+        {/* Sticky Bottom Bar: Show Route on Map with Vivid Glass Gradient */}
+        <View className="absolute bottom-0 left-0 right-0 bg-white/75 backdrop-blur-2xl border-t border-white/60 p-4 pb-6 flex-row gap-3 shadow-modal">
           <TouchableOpacity
             onPress={handleShowMapRoute}
             activeOpacity={0.85}
-            className="flex-1 bg-[#1856FF] py-4 rounded-2xl shadow-lg shadow-blue-500/25 flex-row items-center justify-center active:scale-[0.98]"
+            style={{
+              background: "linear-gradient(135deg, #1856FF 0%, #3B82F6 50%, #6366F1 100%)",
+            } as any}
+            className="flex-1 py-4 rounded-2xl shadow-xl shadow-blue-500/30 border border-white/30 flex-row items-center justify-center active:scale-[0.98]"
           >
             <Navigation size={18} color="#ffffff" />
             <Text className="text-sm font-black text-white ml-2 font-sans">

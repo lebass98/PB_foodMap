@@ -124,10 +124,15 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
           className="flex-1"
         />
 
-        {/* Sidebar Drawer Container */}
-        <View className="w-4/5 max-w-sm bg-white h-full shadow-2xl flex-col">
+        {/* Sidebar Drawer Container (Frosted Glass) */}
+        <View className="w-4/5 max-w-sm bg-white/85 backdrop-blur-3xl h-full shadow-2xl flex-col border-l border-white/60">
           {/* Drawer Header */}
-          <View className="pt-12 px-5 pb-4 bg-slate-900 border-b border-slate-800">
+          <View
+            style={{
+              background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
+            } as any}
+            className="pt-12 px-5 pb-5 border-b border-white/10"
+          >
             <View className="flex-row items-center justify-between mb-4">
               <View className="flex-row items-center">
                 <View className="w-9 h-9 rounded-xl overflow-hidden border border-blue-400/50 bg-white items-center justify-center mr-2.5 shadow-md">
@@ -141,7 +146,7 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                   <Text className="text-base font-black text-white font-sans tracking-tight">
                     Glory Travel
                   </Text>
-                  <Text className="text-[11px] font-medium text-slate-400 font-sans">
+                  <Text className="text-[11px] font-medium text-slate-300 font-sans">
                     부산 여행 종합 내비 지도
                   </Text>
                 </View>
@@ -150,14 +155,14 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
               <TouchableOpacity
                 onPress={onClose}
                 activeOpacity={0.8}
-                className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 items-center justify-center"
+                className="w-8 h-8 rounded-full bg-white/10 border border-white/20 items-center justify-center active:scale-95"
               >
                 <X size={18} color="#ffffff" />
               </TouchableOpacity>
             </View>
 
             {/* Current Base Location Info */}
-            <View className="flex-row items-center bg-slate-800/90 px-3 py-2 rounded-xl border border-slate-700">
+            <View className="flex-row items-center bg-white/10 backdrop-blur-md px-3 py-2 rounded-xl border border-white/15">
               <MapPin size={13} color="#60A5FA" />
               <Text className="text-xs font-bold text-slate-200 ml-1.5 font-sans flex-1" numberOfLines={1}>
                 기준: {locationName}
@@ -182,6 +187,24 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                   const Icon = tab.icon;
                   const isSelected = mainTab === tab.id;
 
+                  const gradientBg =
+                    tab.id === "food"
+                      ? "linear-gradient(135deg, rgba(255, 107, 74, 0.12), rgba(245, 158, 11, 0.12))"
+                      : tab.id === "attraction"
+                      ? "linear-gradient(135deg, rgba(24, 86, 255, 0.12), rgba(139, 92, 246, 0.12))"
+                      : tab.id === "parking"
+                      ? "linear-gradient(135deg, rgba(5, 150, 105, 0.12), rgba(16, 185, 129, 0.12))"
+                      : "linear-gradient(135deg, rgba(24, 86, 255, 0.12), rgba(99, 102, 241, 0.12))";
+
+                  const iconGradient =
+                    tab.id === "food"
+                      ? "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)"
+                      : tab.id === "attraction"
+                      ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                      : tab.id === "parking"
+                      ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                      : "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)";
+
                   return (
                     <TouchableOpacity
                       key={tab.id}
@@ -190,20 +213,40 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                         onSelectCategory("all");
                       }}
                       activeOpacity={0.8}
-                      className={`p-3 rounded-2xl border transition-all ${
+                      style={
                         isSelected
-                          ? `${tab.activeBg} shadow-sm`
-                          : "bg-slate-50/80 border-slate-200/80"
+                          ? ({
+                              background: gradientBg,
+                            } as any)
+                          : undefined
+                      }
+                      className={`p-3 rounded-2xl border backdrop-blur-md transition-all ${
+                        isSelected
+                          ? tab.id === "food"
+                            ? "border-orange-400 shadow-sm"
+                            : tab.id === "parking"
+                            ? "border-emerald-400 shadow-sm"
+                            : "border-blue-400 shadow-sm"
+                          : "bg-white/60 border-white/80"
                       }`}
                     >
                       <View className="flex-row items-center justify-between">
                         <View className="flex-row items-center flex-1 mr-2">
                           <View
+                            style={
+                              isSelected
+                                ? ({
+                                    background: iconGradient,
+                                  } as any)
+                                : undefined
+                            }
                             className={`w-8 h-8 rounded-xl items-center justify-center mr-2.5 ${
-                              isSelected ? "bg-white shadow-xs" : "bg-white/80"
+                              isSelected
+                                ? "shadow-sm border border-white/30"
+                                : "bg-white/80 border border-slate-200/60"
                             }`}
                           >
-                            <Icon size={18} color={tab.color} />
+                            <Icon size={16} color={isSelected ? "#ffffff" : tab.color} />
                           </View>
                           <View className="flex-1">
                             <Text
@@ -251,6 +294,13 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                   const Icon = cat.icon;
                   const isCatActive = activeCategory === cat.id;
 
+                  const chipGradient =
+                    mainTab === "food"
+                      ? "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)"
+                      : mainTab === "parking"
+                      ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                      : "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)";
+
                   return (
                     <TouchableOpacity
                       key={cat.id}
@@ -258,14 +308,17 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                         onSelectCategory(cat.id);
                       }}
                       activeOpacity={0.8}
-                      className={`flex-row items-center px-3 py-2 rounded-xl border ${
+                      style={
                         isCatActive
-                          ? mainTab === "food"
-                            ? "bg-[#E89558] border-[#E89558] shadow-sm"
-                            : mainTab === "parking"
-                            ? "bg-emerald-600 border-emerald-600 shadow-sm"
-                            : "bg-[#1856FF] border-[#1856FF] shadow-sm"
-                          : "bg-slate-50 border-slate-200/80"
+                          ? ({
+                              background: chipGradient,
+                            } as any)
+                          : undefined
+                      }
+                      className={`flex-row items-center px-3 py-2 rounded-xl border backdrop-blur-sm ${
+                        isCatActive
+                          ? "shadow-md border-white/30"
+                          : "bg-white/70 border-white/80"
                       }`}
                     >
                       <Icon
@@ -292,21 +345,31 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
               </Text>
 
               {/* View Mode Toggle Button */}
-              <View className="flex-row bg-slate-100 p-1 rounded-2xl border border-slate-200/80 mb-2.5">
+              <View className="flex-row bg-white/60 backdrop-blur-md p-1 rounded-2xl border border-white/80 mb-2.5 shadow-xs">
                 <TouchableOpacity
                   onPress={() => onSelectViewMode("map")}
                   activeOpacity={0.8}
+                  style={
+                    viewMode === "map"
+                      ? ({
+                          background:
+                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                        } as any)
+                      : undefined
+                  }
                   className={`flex-1 flex-row items-center justify-center py-2.5 rounded-xl ${
-                    viewMode === "map" ? "bg-white shadow-sm" : ""
+                    viewMode === "map"
+                      ? "shadow-sm shadow-blue-500/30 border border-white/30"
+                      : ""
                   }`}
                 >
                   <MapIcon
                     size={16}
-                    color={viewMode === "map" ? "#1856FF" : "#64748b"}
+                    color={viewMode === "map" ? "#ffffff" : "#64748b"}
                   />
                   <Text
                     className={`ml-2 text-xs font-black font-sans ${
-                      viewMode === "map" ? "text-[#1856FF]" : "text-slate-600"
+                      viewMode === "map" ? "text-white" : "text-slate-600"
                     }`}
                   >
                     지도 보기
@@ -316,17 +379,27 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                 <TouchableOpacity
                   onPress={() => onSelectViewMode("list")}
                   activeOpacity={0.8}
+                  style={
+                    viewMode === "list"
+                      ? ({
+                          background:
+                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                        } as any)
+                      : undefined
+                  }
                   className={`flex-1 flex-row items-center justify-center py-2.5 rounded-xl ${
-                    viewMode === "list" ? "bg-white shadow-sm" : ""
+                    viewMode === "list"
+                      ? "shadow-sm shadow-blue-500/30 border border-white/30"
+                      : ""
                   }`}
                 >
                   <ListIcon
                     size={16}
-                    color={viewMode === "list" ? "#1856FF" : "#64748b"}
+                    color={viewMode === "list" ? "#ffffff" : "#64748b"}
                   />
                   <Text
                     className={`ml-2 text-xs font-black font-sans ${
-                      viewMode === "list" ? "text-[#1856FF]" : "text-slate-600"
+                      viewMode === "list" ? "text-white" : "text-slate-600"
                     }`}
                   >
                     목록 보기
@@ -338,10 +411,10 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
               <TouchableOpacity
                 onPress={onToggleSortByDistance}
                 activeOpacity={0.8}
-                className={`p-3 rounded-2xl border flex-row items-center justify-between ${
+                className={`p-3 rounded-2xl border flex-row items-center justify-between backdrop-blur-md ${
                   sortByDistance
-                    ? "bg-blue-50 border-blue-300"
-                    : "bg-slate-50 border-slate-200/80"
+                    ? "bg-blue-50/90 border-blue-300 shadow-xs"
+                    : "bg-white/60 border-white/80"
                 }`}
               >
                 <View className="flex-row items-center">
@@ -359,8 +432,18 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
                 </View>
 
                 <View
-                  className={`w-5 h-5 rounded-full items-center justify-center ${
-                    sortByDistance ? "bg-[#1856FF]" : "bg-slate-300"
+                  style={
+                    sortByDistance
+                      ? ({
+                          background:
+                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                        } as any)
+                      : undefined
+                  }
+                  className={`w-6 h-6 rounded-full items-center justify-center ${
+                    sortByDistance
+                      ? "shadow-xs border border-white/30"
+                      : "bg-slate-300"
                   }`}
                 >
                   <Text className="text-[10px] font-black text-white">
@@ -372,11 +455,15 @@ export const HamburgerMenuModal: React.FC<HamburgerMenuModalProps> = ({
           </ScrollView>
 
           {/* Drawer Footer */}
-          <View className="p-4 bg-slate-50 border-t border-slate-200">
+          <View className="p-4 bg-white/70 backdrop-blur-xl border-t border-white/60">
             <TouchableOpacity
               onPress={onClose}
-              activeOpacity={0.8}
-              className="bg-[#1856FF] py-3.5 rounded-2xl items-center justify-center shadow-md active:scale-98"
+              activeOpacity={0.85}
+              style={{
+                background:
+                  "linear-gradient(135deg, #1856FF 0%, #3B82F6 50%, #6366F1 100%)",
+              } as any}
+              className="py-3.5 rounded-2xl items-center justify-center shadow-xl shadow-blue-500/30 border border-white/30 active:scale-98"
             >
               <Text className="text-sm font-black text-white font-sans">
                 선택 완료 및 지도 보기

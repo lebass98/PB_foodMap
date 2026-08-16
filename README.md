@@ -98,6 +98,11 @@ npx expo export --platform web
 ## 📝 작업 이력 (Changelog)
 
 ### [2026-08-16]
+- **투명 글래스모피즘(Glassmorphism) 및 비비드 그라데이션 전면 적용**:
+  - **상단 헤더 & 검색창**: 불투명 흰색을 제거하고 지도 위로 은은하게 비치는 반투명 Frosted Glass(`bg-white/70 backdrop-blur-2xl border-b border-white/50 shadow-glass`)로 개편하여 지도 뷰포트와의 일체감 강화.
+  - **하단 요약 카드 & 경로 대시보드**: 반투명 글래스(`bg-white/75 backdrop-blur-2xl border border-white/70 shadow-modal`) 및 비비드 그라데이션 버튼(`linear-gradient(135deg, #1856FF 0%, #3B82F6 50%, #6366F1 100%)`) 적용.
+  - **상세 정보 모달(`RestaurantDetailModal`)**: 모달 상단 네비바, 뱃지, 주소/영업시간/메뉴 카드들을 반투명 블러 글래스로 렌더링하고, 카테고리별 테마 비비드 그라데이션 뱃지 및 '지도에서 가는 길 & 소요시간 확인' 그라데이션 액션 버튼 구축.
+  - **햄버거 사이드 메뉴(`HamburgerMenuModal`)**: 반투명 글래스 드로어(`bg-white/85 backdrop-blur-3xl border-l border-white/60`)와 4단 메인 탭/서브 필터 칩에 글래스모피즘 그라데이션 하이라이트 효과 적용.
 - **상단 메뉴(4단 탭 & 세부 카테고리 필터) 햄버거 사이드 드로어 메뉴로 통합 및 상단 UI 슬림화**:
   - 상단에 노출되던 복잡한 4단 탭 및 가로 스크롤 서브 카테고리 칩 영역을 제거하고, 우측 상단 **햄버거 메뉴(`Menu`)** 안으로 일원화.
   - 지도가 상단부터 시원하고 넓게 펼쳐지도록 뷰포트 영역 대폭 확장.

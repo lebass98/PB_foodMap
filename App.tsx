@@ -382,7 +382,7 @@ export default function App() {
         <StatusBar style="dark" />
 
         {/* Top Header with Glassmorphism, Glory Travel Logo, View Toggle & Hamburger Menu */}
-        <View className="bg-white/95 backdrop-blur-xl px-4 pt-2.5 pb-2.5 border-b border-slate-100/90 shadow-sm z-30">
+        <View className="bg-white/70 backdrop-blur-2xl px-4 pt-2.5 pb-2.5 border-b border-white/50 shadow-glass z-30">
           {/* Row 1: Logo, Title, Quick Status Badge, View Mode Toggle, Hamburger Button */}
           <View className="flex-row items-center justify-between mb-2">
             {/* Left: Brand Logo & Title */}
@@ -391,7 +391,7 @@ export default function App() {
               activeOpacity={0.8}
               className="flex-row items-center"
             >
-              <View className="w-8 h-8 rounded-xl overflow-hidden border border-blue-200/80 shadow-xs items-center justify-center bg-white mr-2">
+              <View className="w-8 h-8 rounded-xl overflow-hidden border border-white/80 shadow-xs items-center justify-center bg-white/90 mr-2">
                 <Image
                   source={require("./assets/glory_logo.png")}
                   style={{ width: 30, height: 30 }}
@@ -409,14 +409,24 @@ export default function App() {
               <TouchableOpacity
                 onPress={() => setIsHamburgerOpen(true)}
                 activeOpacity={0.8}
-                className={`px-2.5 py-1.5 rounded-xl border flex-row items-center ${
+                style={{
+                  background:
+                    mainTab === "food"
+                      ? "linear-gradient(135deg, rgba(255, 107, 74, 0.15), rgba(245, 158, 11, 0.15))"
+                      : mainTab === "attraction"
+                      ? "linear-gradient(135deg, rgba(24, 86, 255, 0.15), rgba(99, 102, 241, 0.15))"
+                      : mainTab === "parking"
+                      ? "linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(16, 185, 129, 0.15))"
+                      : "rgba(255, 255, 255, 0.7)",
+                } as any}
+                className={`px-3 py-1.5 rounded-xl border backdrop-blur-md flex-row items-center shadow-xs ${
                   mainTab === "food"
-                    ? "bg-orange-50 border-orange-200"
+                    ? "border-orange-300/80"
                     : mainTab === "attraction"
-                    ? "bg-blue-50 border-blue-200"
+                    ? "border-blue-300/80"
                     : mainTab === "parking"
-                    ? "bg-emerald-50 border-emerald-200"
-                    : "bg-slate-100 border-slate-200"
+                    ? "border-emerald-300/80"
+                    : "border-white/80"
                 }`}
               >
                 <Text
@@ -441,13 +451,21 @@ export default function App() {
               </TouchableOpacity>
 
               {/* View Mode Toggle (Map <-> List) */}
-              <View className="flex-row bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 items-center shadow-xs">
+              <View className="flex-row bg-white/60 backdrop-blur-md p-0.5 rounded-xl border border-white/80 items-center shadow-xs">
                 <TouchableOpacity
                   onPress={() => setViewMode("map")}
                   activeOpacity={0.8}
+                  style={
+                    viewMode === "map"
+                      ? ({
+                          background:
+                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                        } as any)
+                      : undefined
+                  }
                   className={`w-7 h-7 items-center justify-center rounded-lg ${
                     viewMode === "map"
-                      ? "bg-[#1856FF] shadow-xs"
+                      ? "shadow-sm shadow-blue-500/30 border border-white/25"
                       : ""
                   }`}
                 >
@@ -460,9 +478,17 @@ export default function App() {
                 <TouchableOpacity
                   onPress={() => setViewMode("list")}
                   activeOpacity={0.8}
+                  style={
+                    viewMode === "list"
+                      ? ({
+                          background:
+                            "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                        } as any)
+                      : undefined
+                  }
                   className={`w-7 h-7 items-center justify-center rounded-lg ${
                     viewMode === "list"
-                      ? "bg-[#1856FF] shadow-xs"
+                      ? "shadow-sm shadow-blue-500/30 border border-white/25"
                       : ""
                   }`}
                 >
@@ -473,19 +499,23 @@ export default function App() {
                 </TouchableOpacity>
               </View>
 
-              {/* Hamburger Menu Trigger Button */}
+              {/* Hamburger Menu Trigger Button with Vivid Gradient */}
               <TouchableOpacity
                 onPress={() => setIsHamburgerOpen(true)}
                 activeOpacity={0.8}
-                className="w-8 h-8 rounded-xl bg-slate-900 items-center justify-center shadow-sm active:scale-95 ml-0.5"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
+                } as any}
+                className="w-8 h-8 rounded-xl items-center justify-center shadow-md border border-white/20 active:scale-95 ml-0.5"
               >
                 <Menu size={17} color="#ffffff" />
               </TouchableOpacity>
             </View>
           </View>
 
-          {/* Row 2: Slim Search Bar */}
-          <View className="flex-row items-center bg-slate-100/90 rounded-xl px-3 py-2 border border-slate-200/80 shadow-xs">
+          {/* Row 2: Slim Glassmorphism Search Bar */}
+          <View className="flex-row items-center bg-white/60 backdrop-blur-md rounded-xl px-3 py-2 border border-white/80 shadow-xs">
             <Search size={15} color="#94a3b8" />
             <TextInput
               placeholder="맛집, 해변열차, 전망대, 메뉴, 주차장 검색..."
@@ -519,14 +549,18 @@ export default function App() {
 
               {/* In-App Driving Route Top Dashboard (Frosted Glass Panel with Luminous Border) */}
               {drivingRoute && selectedPlace && (
-                <View className="absolute top-3 left-4 right-4 bg-white/95 backdrop-blur-2xl rounded-3xl p-4 border border-blue-500/30 shadow-glassHover flex-row items-center justify-between z-50">
+                <View className="absolute top-3 left-4 right-4 bg-white/75 backdrop-blur-2xl rounded-3xl p-4 border border-white/80 shadow-glassHover flex-row items-center justify-between z-50">
                   <View className="flex-row items-center flex-1 mr-2">
                     <View
-                      className={`w-12 h-12 rounded-2xl ${
-                        selectedPlace.mainType === "attraction"
-                          ? "bg-[#1856FF] shadow-blue-500/30"
-                          : "bg-[#E89558] shadow-orange-500/30"
-                      } items-center justify-center mr-3 shadow-md`}
+                      style={{
+                        background:
+                          selectedPlace.mainType === "parking"
+                            ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                            : selectedPlace.mainType === "attraction"
+                            ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                            : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
+                      } as any}
+                      className="w-12 h-12 rounded-2xl items-center justify-center mr-3 shadow-md border border-white/30"
                     >
                       <Car size={24} color="#ffffff" />
                     </View>
@@ -534,57 +568,49 @@ export default function App() {
                       <View className="flex-row items-center">
                         <Text
                           className={`text-base font-black ${
-                            selectedPlace.mainType === "attraction"
+                            selectedPlace.mainType === "parking"
+                              ? "text-emerald-700"
+                              : selectedPlace.mainType === "attraction"
                               ? "text-[#1856FF]"
                               : "text-[#CE7636]"
                           } font-sans`}
                         >
                           차량 약 {drivingRoute.durationText} 소요
                         </Text>
-                        <Text className="text-xs font-bold text-slate-500 ml-2 font-sans">
-                          ({drivingRoute.distanceText})
-                        </Text>
                       </View>
                       <Text
-                        className="text-xs text-[#141414] font-semibold mt-0.5 font-sans"
+                        className="text-xs text-slate-600 font-semibold font-sans mt-0.5"
                         numberOfLines={1}
                       >
-                        씨클라우드 호텔 ➔ {selectedPlace.name} 가는 길
+                        {selectedPlace.name} (거리: {drivingRoute.distanceText})
                       </Text>
                     </View>
                   </View>
 
                   <TouchableOpacity
                     onPress={handleClearRoute}
-                    activeOpacity={0.7}
-                    className="w-8 h-8 rounded-full bg-slate-100 items-center justify-center border border-slate-200"
+                    activeOpacity={0.8}
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
+                    } as any}
+                    className="px-3 py-2 rounded-xl shadow-md border border-white/20 active:scale-95"
                   >
-                    <X size={16} color="#64748b" />
+                    <Text className="text-xs font-black text-white font-sans">
+                      종료
+                    </Text>
                   </TouchableOpacity>
                 </View>
               )}
 
-              {/* Map Floating Location Badge (Frosted Pill) */}
+              {/* Floating Map Controller Buttons (Frosted Glass with Luminous Glow) */}
               {!drivingRoute && (
-                <View className="absolute top-4 left-4 bg-white/92 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/80 shadow-glass flex-row items-center">
-                  <MapPin size={14} color="#1856FF" />
-                  <Text className="text-xs font-bold text-[#141414] ml-1.5 font-sans">
-                    {selectedPlace ? selectedPlace.location : "부산 여행"}
-                  </Text>
-                  <Text className="text-[11px] text-[#1856FF] font-medium ml-2 font-sans">
-                    {filteredPlaces.length}곳 탐색 중
-                  </Text>
-                </View>
-              )}
-
-              {/* Right Floating Controls: Location + Vertical Zoom (+ / -) */}
-              {!drivingRoute && (
-                <View className="absolute top-4 right-4 flex-col items-center gap-2">
-                  {/* GPS My Location Floating Button */}
+                <View className="absolute right-4 top-4 gap-3 items-center z-40">
+                  {/* Current Location GPS Button */}
                   <TouchableOpacity
                     onPress={() => fetchCurrentLocation(true)}
-                    activeOpacity={0.85}
-                    className="w-11 h-11 bg-white/92 backdrop-blur-md rounded-2xl border border-white/80 items-center justify-center shadow-glass active:scale-95"
+                    activeOpacity={0.8}
+                    className="w-11 h-11 bg-white/80 backdrop-blur-xl rounded-2xl border border-white/80 items-center justify-center shadow-glass active:scale-95"
                   >
                     {isLoadingLocation ? (
                       <ActivityIndicator size="small" color="#1856FF" />
@@ -594,11 +620,11 @@ export default function App() {
                   </TouchableOpacity>
 
                   {/* Vertical Zoom Controls (+ / -) */}
-                  <View className="bg-white/92 backdrop-blur-md rounded-2xl border border-white/80 shadow-glass overflow-hidden">
+                  <View className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/80 shadow-glass overflow-hidden">
                     <TouchableOpacity
                       onPress={() => mapViewRef.current?.zoomIn()}
                       activeOpacity={0.8}
-                      className="w-11 h-11 items-center justify-center border-b border-slate-100 active:bg-blue-50"
+                      className="w-11 h-11 items-center justify-center border-b border-white/50 active:bg-blue-50"
                     >
                       <Plus size={20} color="#141414" />
                     </TouchableOpacity>
@@ -616,7 +642,7 @@ export default function App() {
 
               {/* Bottom Floating Place Preview Card (Frosted Glass Card) */}
               {selectedPlace && (
-                <View className="absolute bottom-6 left-4 right-4 bg-white/95 backdrop-blur-2xl rounded-3xl p-4 border border-white/80 shadow-modal">
+                <View className="absolute bottom-6 left-4 right-4 bg-white/75 backdrop-blur-2xl rounded-3xl p-4 border border-white/70 shadow-modal">
                   <TouchableOpacity
                     onPress={() => handleOpenDetailModal(selectedPlace)}
                     activeOpacity={0.9}
@@ -624,7 +650,7 @@ export default function App() {
                     <View className="flex-row">
                       <Image
                         source={{ uri: selectedPlace.image }}
-                        className="w-24 h-24 rounded-2xl bg-slate-100"
+                        className="w-24 h-24 rounded-2xl bg-slate-100 border border-white/60"
                         resizeMode="cover"
                       />
                       <View className="flex-1 ml-3.5 justify-between">
@@ -634,7 +660,9 @@ export default function App() {
                               className="text-base font-black text-[#141414] flex-1 mr-2 font-sans"
                               numberOfLines={1}
                             >
-                              {selectedPlace.mainType === "attraction"
+                              {selectedPlace.mainType === "parking"
+                                ? "🅿️ "
+                                : selectedPlace.mainType === "attraction"
                                 ? "🎡 "
                                 : "🍽️ "}
                               {selectedPlace.name}
@@ -686,13 +714,21 @@ export default function App() {
 
                         {/* Hotel Distance Badge */}
                         <View
-                          className={`${
+                          style={{
+                            background:
+                              selectedPlace.mainType === "parking"
+                                ? "rgba(5, 150, 105, 0.12)"
+                                : selectedPlace.mainType === "attraction"
+                                ? "rgba(24, 86, 255, 0.12)"
+                                : "rgba(255, 107, 74, 0.12)",
+                          } as any}
+                          className={`px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center backdrop-blur-sm ${
                             selectedPlace.mainType === "parking"
-                              ? "bg-emerald-50/80 border-emerald-100"
+                              ? "border-emerald-200/80"
                               : selectedPlace.mainType === "attraction"
-                              ? "bg-blue-50/80 border-blue-100"
-                              : "bg-orange-50/80 border-orange-100"
-                          } px-2.5 py-1 rounded-lg border mt-1.5 flex-row items-center`}
+                              ? "border-blue-200/80"
+                              : "border-orange-200/80"
+                          }`}
                         >
                           <Car
                             size={11}
@@ -720,12 +756,16 @@ export default function App() {
                     </View>
                   </TouchableOpacity>
 
-                  {/* Navigation Action Buttons */}
-                  <View className="flex-row items-center gap-2.5 mt-3.5 pt-3 border-t border-slate-100">
+                  {/* Navigation Action Buttons with Vivid Glassmorphism Gradients */}
+                  <View className="flex-row items-center gap-2.5 mt-3.5 pt-3 border-t border-white/60">
                     <TouchableOpacity
                       onPress={() => handleOpenDetailModal(selectedPlace)}
                       activeOpacity={0.8}
-                      className="flex-1 bg-[#141414] py-3.5 rounded-2xl flex-row items-center justify-center shadow-sm active:scale-98"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, #1856FF 0%, #3B82F6 50%, #6366F1 100%)",
+                      } as any}
+                      className="flex-1 py-3.5 rounded-2xl flex-row items-center justify-center shadow-lg shadow-blue-500/25 border border-white/30 active:scale-98"
                     >
                       <Info size={15} color="#ffffff" />
                       <Text className="text-xs font-black text-white ml-1.5 font-sans">
@@ -736,13 +776,15 @@ export default function App() {
                     <TouchableOpacity
                       onPress={() => handleStartDrivingRoute(selectedPlace)}
                       activeOpacity={0.8}
-                      className={`w-12 h-12 ${
-                        selectedPlace.mainType === "parking"
-                          ? "bg-emerald-600 shadow-emerald-600/25"
-                          : selectedPlace.mainType === "attraction"
-                          ? "bg-[#1856FF] shadow-blue-500/25"
-                          : "bg-[#E89558] shadow-orange-500/25"
-                      } rounded-2xl items-center justify-center shadow-md active:scale-95`}
+                      style={{
+                        background:
+                          selectedPlace.mainType === "parking"
+                            ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                            : selectedPlace.mainType === "attraction"
+                            ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                            : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)",
+                      } as any}
+                      className="w-12 h-12 rounded-2xl items-center justify-center shadow-lg border border-white/30 active:scale-95"
                     >
                       <Car size={20} color="#ffffff" />
                     </TouchableOpacity>
@@ -798,12 +840,18 @@ export default function App() {
                 const isAttraction = item.mainType === "attraction";
                 const isParking = item.mainType === "parking";
 
+                const typeGradient = isParking
+                  ? "linear-gradient(135deg, #059669 0%, #10B981 100%)"
+                  : isAttraction
+                  ? "linear-gradient(135deg, #1856FF 0%, #8B5CF6 100%)"
+                  : "linear-gradient(135deg, #FF6B4A 0%, #F59E0B 100%)";
+
                 return (
                   <TouchableOpacity
                     key={item.id}
                     onPress={() => handleOpenDetailModal(item)}
                     activeOpacity={0.85}
-                    className="bg-white rounded-3xl overflow-hidden mb-4 border border-slate-100 shadow-card"
+                    className="bg-white/80 backdrop-blur-2xl rounded-3xl overflow-hidden mb-4 border border-white/70 shadow-modal"
                   >
                     <View className="relative">
                       <Image
@@ -829,13 +877,8 @@ export default function App() {
                         </Text>
                       </View>
                       <View
-                        className={`absolute top-3 left-3 ${
-                          isParking
-                            ? "bg-emerald-600"
-                            : isAttraction
-                            ? "bg-[#1856FF]"
-                            : "bg-[#E89558]"
-                        } px-2.5 py-1 rounded-full border border-white/30`}
+                        style={{ background: typeGradient } as any}
+                        className="absolute top-3 left-3 px-2.5 py-1 rounded-full border border-white/30 shadow-md"
                       >
                         <Text className="text-[10px] font-black text-white font-sans">
                           {isParking
@@ -852,7 +895,7 @@ export default function App() {
                         <Text className="text-base font-black text-[#141414] font-sans">
                           {item.name}
                         </Text>
-                        <View className="flex-row items-center">
+                        <View className="flex-row items-center bg-amber-50/90 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-amber-200/80">
                           <Star size={13} color="#f59e0b" fill="#f59e0b" />
                           <Text className="text-xs font-bold text-[#141414] ml-1 font-sans">
                             {item.rating}
@@ -874,8 +917,15 @@ export default function App() {
                         {item.highlight}
                       </Text>
 
-                      {/* Review / Parking Summary Box */}
-                      <View className={`${isParking ? "bg-emerald-50/80 border-emerald-200/60" : "bg-blue-50/80 border-blue-200/60"} border rounded-2xl p-3 mb-3`}>
+                      {/* Review / Parking Summary Box with Glass Tint */}
+                      <View
+                        style={{
+                          background: isParking
+                            ? "rgba(5, 150, 105, 0.08)"
+                            : "rgba(24, 86, 255, 0.08)",
+                        } as any}
+                        className={`border ${isParking ? "border-emerald-200/80" : "border-blue-200/80"} backdrop-blur-sm rounded-2xl p-3 mb-3`}
+                      >
                         <View className="flex-row items-center mb-1">
                           <PlayCircle size={13} color={isParking ? "#059669" : "#1856FF"} />
                           <Text className="text-[11px] font-bold text-slate-900 ml-1 font-sans">
@@ -901,18 +951,25 @@ export default function App() {
                         </Text>
                       </View>
 
-                      <View className="flex-row items-center justify-between pt-2 border-t border-slate-100">
+                      <View className="flex-row items-center justify-between pt-2 border-t border-white/60">
                         <View className="flex-row flex-wrap gap-1.5 flex-1 mr-2">
                           {item.tags.slice(0, 2).map((tag, idx) => (
                             <View
                               key={idx}
-                              className={`${
-                                isParking
-                                  ? "bg-emerald-50 border-emerald-100"
+                              style={{
+                                background: isParking
+                                  ? "rgba(5, 150, 105, 0.1)"
                                   : isAttraction
-                                  ? "bg-blue-50 border-blue-100"
-                                  : "bg-orange-50 border-orange-100"
-                              } px-2 py-0.5 rounded-md border`}
+                                  ? "rgba(24, 86, 255, 0.1)"
+                                  : "rgba(255, 107, 74, 0.1)",
+                              } as any}
+                              className={`px-2 py-0.5 rounded-md border ${
+                                isParking
+                                  ? "border-emerald-200/80"
+                                  : isAttraction
+                                  ? "border-blue-200/80"
+                                  : "border-orange-200/80"
+                              }`}
                             >
                               <Text
                                 className={`text-[10px] font-bold ${
@@ -929,21 +986,25 @@ export default function App() {
                           ))}
                         </View>
 
-                        {/* Direct Driving Route Button */}
+                        {/* Direct Driving Route Button with Gradient */}
                         <TouchableOpacity
                           onPress={() => handleStartDrivingRoute(item)}
                           activeOpacity={0.8}
-                          className="w-9 h-9 bg-blue-50 border border-blue-200 rounded-xl items-center justify-center mr-1.5 active:scale-95"
+                          style={{ background: typeGradient } as any}
+                          className="w-9 h-9 rounded-xl items-center justify-center mr-1.5 shadow-sm border border-white/30 active:scale-95"
                         >
-                          <Car size={16} color="#1856FF" />
+                          <Car size={16} color="#ffffff" />
                         </TouchableOpacity>
 
                         <TouchableOpacity
                           onPress={() => handleOpenDetailModal(item)}
                           activeOpacity={0.8}
-                          className="bg-[#141414] px-3.5 py-2 rounded-xl flex-row items-center active:scale-98"
+                          style={{
+                            background: "linear-gradient(135deg, #1856FF 0%, #3B82F6 100%)",
+                          } as any}
+                          className="px-3.5 py-2 rounded-xl flex-row items-center shadow-md border border-white/30 active:scale-98"
                         >
-                          <Text className="text-xs font-bold text-white font-sans">
+                          <Text className="text-xs font-black text-white font-sans">
                             상세보기 &gt;
                           </Text>
                         </TouchableOpacity>
