@@ -1031,7 +1031,7 @@ export const SAMPLE_PLACES: Place[] = [
     rating: 4.9,
     reviews: 1890,
     phone: "051-466-1478",
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=900&q=85",
+    image: require("../../assets/leejaemo_pizza.jpg"),
     tags: ["부산 대표 피자 성지", "KTX 필수코스", "치즈 크러스트", "임실치즈 폭포"],
     distance: "약 17.5km",
     hotelDistanceInfo: "거리: 약 17.5km · 차량 약 35~45분 (부산역 바로 앞)",
