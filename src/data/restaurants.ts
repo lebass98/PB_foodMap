@@ -2,10 +2,162 @@ import { Place } from "../types/restaurant";
 
 export const SAMPLE_PLACES: Place[] = [
   // =========================================================================
-  // 🍽️ [맛집 BEST 12] - 미쉐린 빕구르망, 블루리본, 성시경 먹을텐데, 백종원 3대천왕
+  // 🍽️ [맛집 BEST 15] - 부산 12대 핫플 + 고속도로/경유 맛집 3곳
   // =========================================================================
   {
     id: "f1",
+    name: "새재할매집 (문경새재IC)",
+    mainType: "food",
+    category: "korean",
+    categoryLabel: "한식/약돌돼지석쇠구이",
+    location: "경북 문경시 문경읍 (문경새재IC 5분)",
+    address: "경북 문경시 문경읍 새재로 922",
+    latitude: 36.7621,
+    longitude: 128.0772,
+    rating: 4.8,
+    reviews: 820,
+    phone: "054-571-5600",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+    tags: ["문경새재IC5분", "40년전통", "약돌돼지석쇠구이", "더덕구이", "고속도로경유맛집"],
+    distance: "시흥 162km / 부산 233km",
+    hotelDistanceInfo: "시흥 출발 약 162km (1시간 50분) · 해운대까지 약 233km (2시간 40분)",
+    operatingHours: "11:00 ~ 19:00 (주말 ~20:00) · 연중무휴",
+    todayHours: "11:00 - 19:00",
+    holiday: "연중무휴",
+    highlight: "시흥➔부산 가는 길 문경새재IC 5분! 40년 전통 불향 가득 약돌돼지 고추장 석쇠구이와 산채나물",
+    reviewSummary: [
+      "40년 전통의 문경새재 대표 노포",
+      "불향 가득 머금은 약돌돼지 석쇠구이와 정갈한 산채나물 반찬이 일품",
+      "시흥 은행동 출발 약 1시간 50분 지점으로 점심 식사 경유지로 최적",
+    ],
+    menuItems: [
+      {
+        name: "고추장양념 석쇠구이 정식 (시그니처)",
+        price: "15,000원",
+        isSignature: true,
+        description: "문경 특산 약돌돼지에 매콤달콤 고추장 양념을 발라 숯불에 구워낸 석쇠구이",
+      },
+      {
+        name: "더덕구이 정식",
+        price: "16,000원",
+        description: "향긋한 자연산 더덕을 양념해 숯불에 구운 건강 보양식",
+      },
+    ],
+    reviewsList: [
+      {
+        id: "r_sj1",
+        author: "고속도로여행자",
+        date: "어제",
+        rating: 5,
+        content: "부산 내려가는 길에 들렀는데 불향이 장난 아닙니다. 나물 반찬도 너무 정갈하고 맛있어요!",
+      },
+    ],
+  },
+  {
+    id: "f2",
+    name: "교리김밥 본점 (경주IC)",
+    mainType: "food",
+    category: "korean",
+    categoryLabel: "분식/전국3대김밥",
+    location: "경북 경주시 탑동 (경주IC 6분)",
+    address: "경북 경주시 탑리3길 2 (탑동)",
+    latitude: 35.8239,
+    longitude: 129.2178,
+    rating: 4.8,
+    reviews: 2150,
+    phone: "054-772-5130",
+    image: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=800&q=80",
+    tags: ["경주IC6분", "전국3대김밥", "계란지단김밥", "교리국수", "차안간식포장"],
+    distance: "시흥 332km / 부산 73km",
+    hotelDistanceInfo: "시흥 출발 약 332km (3시간 38분) · 해운대까지 약 73km (약 55분)",
+    operatingHours: "08:30 ~ 17:30 (주말 ~18:30) · 매주 수요일 정기휴무",
+    todayHours: "08:30 - 17:30",
+    holiday: "매주 수요일 정기휴무",
+    highlight: "경주IC 6분 거리! 얇게 썬 고소한 계란지단이 가득 찬 전국 3대 김밥, 부산 가는 길 차 안 간식 포장 추천",
+    reviewSummary: [
+      "얇게 썬 고소한 계란지단이 가득 찬 전국 3대 김밥집",
+      "부산 가는 길에 차 안 간식용으로 포장하기에 최적",
+      "진한 멸치 육수의 교리국수와 조합 추천",
+    ],
+    menuItems: [
+      {
+        name: "교리김밥 (2줄 / 시그니처)",
+        price: "11,000원",
+        isSignature: true,
+        description: "부드럽고 푹신한 계란지단이 꽉 찬 전국 3대 명품 김밥",
+      },
+      {
+        name: "교리국수",
+        price: "8,500원",
+        description: "진한 멸치 육수에 지단과 양념장이 올라간 온국수",
+      },
+    ],
+    reviewsList: [
+      {
+        id: "r_gr1",
+        author: "김밥매니아",
+        date: "2일 전",
+        rating: 5,
+        content: "경주IC 나와서 포장해 차에서 먹었는데 계란이 입안 가득 폭신하고 정말 맛있습니다!",
+      },
+    ],
+  },
+  {
+    id: "f3",
+    name: "금천 아지매 보리밥 (청도/밀양IC)",
+    mainType: "food",
+    category: "korean",
+    categoryLabel: "한식/시골보리밥",
+    location: "경북 청도군 금천면 (밀양/남청도IC 방면)",
+    address: "경북 청도군 금천면 금천로 471",
+    latitude: 35.6989,
+    longitude: 128.8789,
+    rating: 4.7,
+    reviews: 640,
+    phone: "054-372-9092",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+    tags: ["밀양남청도IC방면", "푸짐한시골밥상", "보리밥정식", "촌두부파전", "구수한촌된장"],
+    distance: "시흥 328km / 부산 78km",
+    hotelDistanceInfo: "시흥 출발 약 328km (3시간 40분) · 해운대까지 약 78km (1시간 5분)",
+    operatingHours: "10:30 ~ 19:00 · 매달 2·4번째 월요일 정기휴무",
+    todayHours: "10:30 - 19:00",
+    holiday: "매달 2·4번째 월요일 정기휴무",
+    highlight: "청도 현지인이 찾는 푸짐한 시골 밥상! 싱싱한 나물과 구수한 촌된장찌개, 촌두부로 속 편한 식사",
+    reviewSummary: [
+      "청도 현지인들이 찾는 푸짐한 시골 밥상",
+      "싱싱한 나물과 구수한 촌된장찌개로 속 편하게 든든한 점심 식사 가능",
+      "촌두부, 파전과 함께 즐기면 꿀조합",
+    ],
+    menuItems: [
+      {
+        name: "보리밥 정식 (시그니처)",
+        price: "9,000원",
+        isSignature: true,
+        description: "각종 제철 산나물과 구수한 촌된장찌개 보리비빔밥",
+      },
+      {
+        name: "촌두부",
+        price: "8,000원",
+        description: "직접 만든 고소하고 따뜻한 시골 촌두부와 겉절이",
+      },
+      {
+        name: "해물파전",
+        price: "10,000원",
+        description: "바삭하고 두툼하게 부쳐낸 시골 파전",
+      },
+    ],
+    reviewsList: [
+      {
+        id: "r_cd1",
+        author: "시골밥상러",
+        date: "3일 전",
+        rating: 5,
+        content: "된장찌개가 진짜 깊고 나물도 신선해서 비벼 먹으니 밥 두 그릇 뚝딱했습니다!",
+      },
+    ],
+  },
+  {
+    id: "f4",
     name: "융캉찌에",
     mainType: "food",
     category: "chinese",
@@ -69,7 +221,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f2",
+    id: "f5",
     name: "광안리 진미언양불고기",
     mainType: "food",
     category: "korean",
@@ -120,7 +272,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f3",
+    id: "f6",
     name: "나가하마만게츠",
     mainType: "food",
     category: "japanese",
@@ -172,7 +324,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f4",
+    id: "f7",
     name: "수변최고돼지국밥 민락본점",
     mainType: "food",
     category: "korean",
@@ -221,7 +373,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f5",
+    id: "f8",
     name: "소문난원조조방낙지 본점",
     mainType: "food",
     category: "korean",
@@ -267,7 +419,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f6",
+    id: "f9",
     name: "서희와제과",
     mainType: "food",
     category: "cafe",
@@ -311,7 +463,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f7",
+    id: "f10",
     name: "더베이베이커리",
     mainType: "food",
     category: "cafe",
@@ -354,7 +506,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f8",
+    id: "f11",
     name: "메트르 아티정 (Maître Artisan)",
     mainType: "food",
     category: "cafe",
@@ -398,7 +550,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f9",
+    id: "f12",
     name: "해목 (해운대점)",
     mainType: "food",
     category: "japanese",
@@ -444,7 +596,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f10",
+    id: "f13",
     name: "해운대 가야밀면",
     mainType: "food",
     category: "korean",
@@ -489,7 +641,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f11",
+    id: "f14",
     name: "이재모피자 (부산역점)",
     mainType: "food",
     category: "western",
@@ -534,7 +686,7 @@ export const SAMPLE_PLACES: Place[] = [
     ],
   },
   {
-    id: "f12",
+    id: "f15",
     name: "신발원 (본점 / 외전)",
     mainType: "food",
     category: "chinese",
